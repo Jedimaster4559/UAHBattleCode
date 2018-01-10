@@ -15,6 +15,12 @@ Project Language: Java
 ## <a name="resources"/>Useful Resources
  - [BattleCode Website](https://battlecode.org/)
  - [BattleCode Specs](https://s3.amazonaws.com/battlecode-2018/specs/battlecode-specs-2018.html)
+ - [BattleCode JavaAPI/Documentation](https://s3.amazonaws.com/battlecode-2018/api/java/index.html)
+ - [BattleCode Scaffold GitHub Repo](https://github.com/battlecode/bc18-scaffold)
+ - [BattleCode Windows Viewing Client](https://s3.amazonaws.com/battlecode-2018/viewer/WindowsRelease.zip)
+ - [Local Host Address](http://192.168.99.100:6147/run.html)
+ - [Docker Win10 Home Download](https://docs.docker.com/toolbox/toolbox_install_windows/)
+ - [Docker Win10 Not Home Download](https://www.docker.com/docker-windows)
 
 
 ## <a name="strategy"/>Strategy Plan
@@ -29,7 +35,7 @@ This is where Items left todo will be placed. There will be a place for you to c
 | Completed  |     Task      |    Claimed    | Completion Date |
 | ---------- | ------------- | ------------  | --------------- |
 |        | Create a Strategy Plan  | | |
-|         | Generate Important Data helpful to team  | Nathan | |
+|       |Install everything on everyones computers | | |
 
 
 ## <a name="completed"/>Completed Task List (Historical)
