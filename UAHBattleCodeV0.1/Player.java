@@ -94,20 +94,27 @@ public class Player {
   
   static void countUnits(VecUnit units){
 	  for(int = 0; i < unit.size(); i++){
-			if(unit.unitType() == UnitType.Factory)
-				numFactories++;
-			if(unit.unitType() == UnitType.Worker)
-				numWorkers++;
-			if(unit.unitType() == UnitType.Knight)
-				numKnights++;
-			if(unit.unitType() == UnitType.Mage)
-				numMages++;
-			if(unit.unitType() == UnitType.Ranger)
-				numRangers++;
-			if(unit.unitType() == UnitType.Healer)
-				numHealers++;
-			if(unit.unitType() == UnitType.Rocket)
-				numRockets++;
+		  numFactories = 0;
+		  numWorkers = 0;
+		  numKnights = 0;
+		  numMages = 0;
+		  numRangers = 0;
+		  numHealers = 0
+		  numRockets = 0;
+		  if(unit.unitType() == UnitType.Factory)
+			numFactories++;
+		  if(unit.unitType() == UnitType.Worker)
+			numWorkers++;
+		  if(unit.unitType() == UnitType.Knight)
+			numKnights++;
+		  if(unit.unitType() == UnitType.Mage)
+			numMages++;
+		  if(unit.unitType() == UnitType.Ranger)
+			numRangers++;
+		  if(unit.unitType() == UnitType.Healer)
+			numHealers++;
+		  if(unit.unitType() == UnitType.Rocket)
+			numRockets++;
 	  }
   }
   
