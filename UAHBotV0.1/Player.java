@@ -1,5 +1,4 @@
 import bc.*;
-import Worker;
 
 public class Player {
   public static void main(String[] args) {
@@ -13,23 +12,25 @@ public class Player {
 		VecUnit units = gc.myUnits();
 		for (int i = 0; i < units.size(); i++) {
 			Unit unit = units.get(i);
-			
+			System.out.println("looping through units");
 			
 			//This block determines unit type and then executes a method accordingly
-			if(unit.unitType() == UnitType.Factory)
+			if (unit.unitType() == UnitType.Factory) {
 				runFactory(unit);
-			else if(unit.unitType() == UnitType.Worker)
+			} else if (unit.unitType() == UnitType.Worker) {
+				System.out.println("Found worker!");
 				Worker.process(unit, gc);
-			else if(unit.unitType() == UnitType.Knight)
+			} else if (unit.unitType() == UnitType.Knight) {
 				runKnight(unit);
-			else if(unit.unitType() == UnitType.Mage)
+			} else if (unit.unitType() == UnitType.Mage) {
 				runMage(unit);
-			else if(unit.unitType() == UnitType.Ranger)
+			} else if (unit.unitType() == UnitType.Ranger) {
 				runRanger(unit);
-			else if(unit.unitType() == UnitType.Healer)
+			} else if (unit.unitType() == UnitType.Healer) {
 				runHealer(unit);
-			else if(unit.unitType() == UnitType.Rocket)
+			} else if (unit.unitType() == UnitType.Rocket) {
 				runRocket(unit);
+			}
 			
         }
 		gc.nextTurn();
