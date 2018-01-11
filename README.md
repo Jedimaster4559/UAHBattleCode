@@ -30,12 +30,12 @@ Project Language: Java
 
 
 ## <a name="todo"/>TODO List
-This is where Items left todo will be placed. There will be a place for you to claim an item and a place to mark an update as complete. Completed items will be moved to a seperate completed item list as soon as that version of the bot is uploaded for scrimmages
+This is where Items left todo will be placed. There will be a place for you to claim an item and a place to mark an update as complete. Completed items will be moved to a separate completed item list as soon as that version of the bot is uploaded for scrimmages
 
 | Completed  |     Task      |    Claimed    | Completion Date |
 | ---------- | ------------- | ------------  | --------------- |
 |        | Create a Strategy Plan  | | |
-|       |Install everything on everyones computers | | |
+|       |Install everything on everyone's computers | | |
 
 
 ## <a name="completed"/>Completed Task List (Historical)
@@ -43,3 +43,4 @@ This is where Items left todo will be placed. There will be a place for you to c
 
 ## <a name="members"/>Project Members
  - @Jedimaster4559
+ - GoldenPhsyics
