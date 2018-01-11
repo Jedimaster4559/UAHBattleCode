@@ -6,6 +6,13 @@ public class Player {
 	static Random rand = new Random();
 	static Direction[] directions;
 	static GameController gc;
+	static int numFactories;
+	static int numWorkers;
+	static int numKnights;
+	static int numMages;
+	static int numRangers;
+	static int numHealers;
+	static int numRockets;
 		
   public static void main(String[] args) {
 	
@@ -84,4 +91,24 @@ public class Player {
   static void runRocket(Unit unit){
 	  
   }
+  
+  static void countUnits(VecUnit units){
+	  for(int = 0; i < unit.size(); i++){
+			if(unit.unitType() == UnitType.Factory)
+				numFactories++;
+			if(unit.unitType() == UnitType.Worker)
+				numWorkers++;
+			if(unit.unitType() == UnitType.Knight)
+				numKnights++;
+			if(unit.unitType() == UnitType.Mage)
+				numMages++;
+			if(unit.unitType() == UnitType.Ranger)
+				numRangers++;
+			if(unit.unitType() == UnitType.Healer)
+				numHealers++;
+			if(unit.unitType() == UnitType.Rocket)
+				numRockets++;
+	  }
+  }
+  
 }
