@@ -7,7 +7,7 @@ public class Player {
 	GameController gc = new GameController();
 	
 	while (true){
-		System.Out.Println("CurrentRound: " + gc.round());
+		System.out.println("CurrentRound: " + gc.round());
 		
 		VecUnit units = gc.myUnits();
 		for (int i = 0; i < units.size(); i++) {
