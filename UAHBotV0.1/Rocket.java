@@ -1,6 +1,6 @@
 import bc.*;
 
-class Rocket {
+class Rocket implements UnitInterface {
 	public static boolean canProcess(Unit unit) {
 		if(unit.unitType() == UnitType.Rocket) {
 			return true;
@@ -8,7 +8,7 @@ class Rocket {
 		return false;
 	}
 	
-	public static void process(Unit unit, GameController gc) {
+	public static void process(GameController gc, Unit unit) {
 		
 	}
 	

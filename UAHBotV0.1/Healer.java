@@ -1,6 +1,6 @@
 import bc.*;
 
-class Healer {
+class Healer implements UnitInterface {
 	public static boolean canProcess(Unit unit) {
 		if(unit.unitType() == UnitType.Healer) {
 			return true;
@@ -8,7 +8,7 @@ class Healer {
 		return false;
 	}
 	
-	public static void process(Unit unit, GameController gc) {
+	public static void process(GameController gc, Unit unit) {
 		
 	}
 	

@@ -1,6 +1,6 @@
 import bc.*;
 
-class Ranger {
+class Ranger implements UnitInterface {
 	public static boolean canProcess(Unit unit) {
 		if(unit.unitType() == UnitType.Ranger) {
 			return true;
@@ -8,7 +8,7 @@ class Ranger {
 		return false;
 	}
 	
-	public static void process(Unit unit, GameController gc) {
+	public static void process(GameController gc, Unit unit) {
 		
 	}
 	
