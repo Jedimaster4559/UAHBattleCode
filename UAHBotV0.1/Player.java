@@ -1,10 +1,33 @@
 import bc.*;
+import java.util.ArrayList;
 
 public class Player {
   public static void main(String[] args) {
 	
 	//Add a Game Controller
 	GameController gc = new GameController();
+	
+	PlanetMap earthMap = gc.startingMap();
+	
+	ArrayList<ArrayList> karboniteEarth = new ArrayList<ArrayList>(earthMap.getHeight());
+	
+	MapLocation dummyLocation = new MapLocation(Planet.Earth, 0, 0);
+	for (int i = 0; i < earthMap.getHeight(); i++) {
+		dummyLocation.setY(i);
+		ArrayList<long> karboniteCol = new ArrayList<long>(earthMap.getWidth());
+		for (int j = 0; j < earthMap.getWidth(); j++) {
+			dummyLocation.setX(j);
+			karboniteCol.add(earthMap.initialKarboniteAt(dummyLocation));
+		}
+		karboniteEarth.add(karboniteCol);
+	}
+	
+	for (int i = 0; i < karboniteEarth.size()) {
+		ArrayList karboniteCol = karboniteEarth.get(i);
+		for (int j = 0; j < karboniteEarth.get(i).size()) {
+			
+		}
+	}
 	
 	while (true){
 		System.out.println("CurrentRound: " + gc.round());
