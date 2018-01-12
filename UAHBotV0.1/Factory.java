@@ -10,16 +10,21 @@ class Factory {
 		}
 
 		public static void process(Unit unit, GameController gc){
-			//Test to make sure the factory exists in a valid location
-			if (unit.location().mapLocation().getPlanet() == null) {
-				return;
-			}
-			System.out.println("Valid Location");
+			
+			/*
 			VecUnitID unitIDs = unit.structureGarrison();
 			for(long i = 0; i < unitIDs.size(); i++){
 				Unit garrisonedUnit = gc.unit(unitIDs.get(i));
-				gc.unload
+				gc.unload();
 				Player.runUnitLogic(garrisonedUnit);
+			}
+			*/
+			
+			//Attempts to unload all bots
+			Direction[] directions = Direction.values();
+			for(Direction direction:directions){
+				if(gc.canUnload(unit.id(), direction))
+					gc.unload(unit.id(), direction);
 			}
 			
 			//Creates a new unit if the factory isn't producing
@@ -41,4 +46,6 @@ class Factory {
 			return null;
 			
 		}
+		
+		
 }
