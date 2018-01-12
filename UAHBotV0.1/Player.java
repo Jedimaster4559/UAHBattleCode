@@ -7,7 +7,7 @@ public class Player {
 	//Add a Game Controller
 	GameController gc = new GameController();
 	
-	PlanetMap earthMap = gc.startingMap();
+	PlanetMap earthMap = gc.startingMap(Planet.Earth);
 	
 	ArrayList<ArrayList> karboniteEarth = new ArrayList<ArrayList>(earthMap.getHeight());
 	
