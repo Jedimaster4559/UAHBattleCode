@@ -16,18 +16,18 @@ public class Player {
 	int height = heightLong.intValue();
 	int width = widthLong.intValue();
 	
-	ArrayList<ArrayList<long>> karboniteEarth =
-			new ArrayList<ArrayList<long>>(height);
+	ArrayList<ArrayList<Long>> karboniteEarth =
+			new ArrayList<ArrayList<Long>>(height);
 	
 	MapLocation dummyLocation = new MapLocation(Planet.Earth, 0, 0);
 	
 	//put starting karbonite in 2d arrayList
 	for (int i = 0; i < height; i++) {
 		dummyLocation.setY(i);
-		ArrayList<long> karboniteCol = new ArrayList<long>(width);
+		ArrayList<Long> karboniteCol = new ArrayList<Long>(width);
 		for (int j = 0; j < width; j++) {
 			dummyLocation.setX(j);
-			karboniteCol.add(earthMap.initialKarboniteAt(dummyLocation));
+			karboniteCol.add(new Long(earthMap.initialKarboniteAt(dummyLocation)));
 		}
 		karboniteEarth.add(karboniteCol);
 	}
