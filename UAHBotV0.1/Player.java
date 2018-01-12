@@ -37,7 +37,7 @@ public class Player {
 			//RunFactory
 			if(unit.unitType() == UnitType.Factory){
 				try{
-					runFactory(unit);
+					Factory.process(unit,gc);
 				}
 				catch(Exception e){
 					System.out.println("A Factory Error Occurred:\nUnit Id: " + unit.id());
@@ -47,7 +47,7 @@ public class Player {
 			//Run Worker
 			if(unit.unitType() == UnitType.Worker){
 				try{
-					runWorker(unit);
+					Worker.process(unit,gc);
 				}
 				catch(Exception e) {
 					System.out.println("A Worker Error Occurred:\nUnit Id: " + unit.id());
@@ -57,7 +57,7 @@ public class Player {
 			//Run Knight
 			if(unit.unitType() == UnitType.Knight){
 				try{
-					runKnight(unit);
+					Knight.process(unit,gc);
 				}
 				catch(Exception e) {
 					System.out.println("A Knight Error Occurred:\nUnit Id: " + unit.id());
@@ -67,7 +67,7 @@ public class Player {
 			//Run Mage
 			if(unit.unitType() == UnitType.Mage){
 				try{
-					runMage(unit);
+					Mage.process(unit,gc);
 				}
 				catch(Exception e) {
 					System.out.println("A Mage Error Occurred:\nUnit Id: " + unit.id());
@@ -77,7 +77,7 @@ public class Player {
 			//Run Ranger
 			if(unit.unitType() == UnitType.Ranger){
 				try{
-					runRanger(unit);
+					Ranger.process(unit,gc);
 				}
 				catch(Exception e) {
 					System.out.println("A Ranger Error Occurred:\nUnit Id: " + unit.id());
@@ -87,7 +87,7 @@ public class Player {
 			//Run Healer
 			if(unit.unitType() == UnitType.Healer){
 				try{
-					runHealer(unit);
+					Healer.process(unit,gc);
 				}
 				catch(Exception e) {
 					System.out.println("A Healer Error Occurred:\nUnit Id: " + unit.id());
@@ -97,7 +97,7 @@ public class Player {
 			//Run Rocket
 			if(unit.unitType() == UnitType.Rocket){
 				try{
-					runRocket(unit);
+					Rocket.process(unit,gc);
 				}
 				catch(Exception e) {
 					System.out.println("A Rocket Error Occurred:\nUnit Id: " + unit.id());
