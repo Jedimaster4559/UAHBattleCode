@@ -25,9 +25,9 @@ public class Player {
 	}
 	
 	//print starting karbonite
-	for (int i = 0; i < karboniteEarth.size()) {
+	for (int i = 0; i < karboniteEarth.size(); i++) {
 		ArrayList karboniteCol = karboniteEarth.get(i);
-		for (int j = 0; j < karboniteCol.size()) {
+		for (int j = 0; j < karboniteCol.size(); j++) {
 			System.out.println("starting karbonite at " +
 					"(" + i + ", " + j + ") is: " + karboniteCol.get(j));
 		}
