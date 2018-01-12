@@ -54,7 +54,7 @@ public class Player {
 			}
 		}
 		//Run Worker
-		if(unit.unitType() == UnitType.Worker){
+		else if(unit.unitType() == UnitType.Worker){
 			try{
 				Worker.process(unit,gc);
 			}
@@ -64,7 +64,7 @@ public class Player {
 			}
 		}
 		//Run Knight
-		if(unit.unitType() == UnitType.Knight){
+		else if(unit.unitType() == UnitType.Knight){
 			try{
 				Knight.process(unit,gc);
 			}
@@ -74,7 +74,7 @@ public class Player {
 			}
 		}
 		//Run Mage
-		if(unit.unitType() == UnitType.Mage){
+		else if(unit.unitType() == UnitType.Mage){
 			try{
 				Mage.process(unit,gc);
 			}
@@ -84,7 +84,7 @@ public class Player {
 			}
 		}
 		//Run Ranger
-		if(unit.unitType() == UnitType.Ranger){
+		else if(unit.unitType() == UnitType.Ranger){
 			try{
 				Ranger.process(unit,gc);
 			}
@@ -94,7 +94,7 @@ public class Player {
 			}
 		}
 		//Run Healer
-		if(unit.unitType() == UnitType.Healer){
+		else if(unit.unitType() == UnitType.Healer){
 			try{
 				Healer.process(unit,gc);
 			}
@@ -104,7 +104,7 @@ public class Player {
 			}
 		}
 		//Run Rocket
-		if(unit.unitType() == UnitType.Rocket){
+		else if(unit.unitType() == UnitType.Rocket){
 			try{
 				Rocket.process(unit,gc);
 			}
