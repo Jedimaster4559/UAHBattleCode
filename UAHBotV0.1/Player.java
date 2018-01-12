@@ -9,15 +9,19 @@ public class Player {
 	
 	PlanetMap earthMap = gc.startingMap(Planet.Earth);
 	
-	ArrayList<ArrayList> karboniteEarth = new ArrayList<ArrayList>(earthMap.getHeight());
+	int height = (int) earthMap.getHeight();
+	int width = (int) earthMap.getWidth();
+	
+	ArrayList<ArrayList<long>> karboniteEarth =
+			new ArrayList<ArrayList<long>>(height);
 	
 	MapLocation dummyLocation = new MapLocation(Planet.Earth, 0, 0);
 	
 	//put starting karbonite in 2d arrayList
-	for (int i = 0; i < earthMap.getHeight(); i++) {
+	for (int i = 0; i < height; i++) {
 		dummyLocation.setY(i);
-		ArrayList<long> karboniteCol = new ArrayList<long>(earthMap.getWidth());
-		for (int j = 0; j < earthMap.getWidth(); j++) {
+		ArrayList<long> karboniteCol = new ArrayList<long>(width);
+		for (int j = 0; j < width; j++) {
 			dummyLocation.setX(j);
 			karboniteCol.add(earthMap.initialKarboniteAt(dummyLocation));
 		}
