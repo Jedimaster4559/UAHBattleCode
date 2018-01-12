@@ -32,83 +32,87 @@ public class Player {
 			for (int i = 0; i < units.size(); i++) {
 				Unit unit = units.get(i);
 				
+				runUnitLogic(unit);
 				
-				//This block determines unit type and then executes a method accordingly
-				//RunFactory
-				if(unit.unitType() == UnitType.Factory){
-					try{
-						runFactory(unit);
-					}
-					catch(Exception e){
-						System.out.println("A Factory Error Occurred:\nUnit Id: " + unit.id());
-						e.printStackTrace();
-					}
-				}
-				//Run Worker
-				if(unit.unitType() == UnitType.Worker){
-					try{
-						runWorker(unit);
-					}
-					catch(Exception e) {
-						System.out.println("A Worker Error Occurred:\nUnit Id: " + unit.id());
-						e.printStackTrace();
-					}
-				}
-				//Run Knight
-				if(unit.unitType() == UnitType.Knight){
-					try{
-						runKnight(unit);
-					}
-					catch(Exception e) {
-						System.out.println("A Knight Error Occurred:\nUnit Id: " + unit.id());
-						e.printStackTrace();
-					}
-				}
-				//Run Mage
-				if(unit.unitType() == UnitType.Mage){
-					try{
-						runMage(unit);
-					}
-					catch(Exception e) {
-						System.out.println("A Mage Error Occurred:\nUnit Id: " + unit.id());
-						e.printStackTrace();
-					}
-				}
-				//Run Ranger
-				if(unit.unitType() == UnitType.Ranger){
-					try{
-						runRanger(unit);
-					}
-					catch(Exception e) {
-						System.out.println("A Ranger Error Occurred:\nUnit Id: " + unit.id());
-						e.printStackTrace();
-					}
-				}
-				//Run Healer
-				if(unit.unitType() == UnitType.Healer){
-					try{
-						runHealer(unit);
-					}
-					catch(Exception e) {
-						System.out.println("A Healer Error Occurred:\nUnit Id: " + unit.id());
-						e.printStackTrace();
-					}
-				}
-				//Run Rocket
-				if(unit.unitType() == UnitType.Rocket){
-					try{
-						runRocket(unit);
-					}
-					catch(Exception e) {
-						System.out.println("A Rocket Error Occurred:\nUnit Id: " + unit.id());
-						e.printStackTrace();
-					}
-				}
 				
 			}
 			gc.nextTurn();
 		}
 	
+	}
+	
+	public static void runUnitLogic(Unit unit){
+		//This block determines unit type and then executes a method accordingly
+		//RunFactory
+		if(unit.unitType() == UnitType.Factory){
+			try{
+				runFactory(unit);
+			}
+			catch(Exception e){
+				System.out.println("A Factory Error Occurred:\nUnit Id: " + unit.id());
+				e.printStackTrace();
+			}
+		}
+		//Run Worker
+		if(unit.unitType() == UnitType.Worker){
+			try{
+				runWorker(unit);
+			}
+			catch(Exception e) {
+				System.out.println("A Worker Error Occurred:\nUnit Id: " + unit.id());
+				e.printStackTrace();
+			}
+		}
+		//Run Knight
+		if(unit.unitType() == UnitType.Knight){
+			try{
+				runKnight(unit);
+			}
+			catch(Exception e) {
+				System.out.println("A Knight Error Occurred:\nUnit Id: " + unit.id());
+				e.printStackTrace();
+			}
+		}
+		//Run Mage
+		if(unit.unitType() == UnitType.Mage){
+			try{
+				runMage(unit);
+			}
+			catch(Exception e) {
+				System.out.println("A Mage Error Occurred:\nUnit Id: " + unit.id());
+				e.printStackTrace();
+			}
+		}
+		//Run Ranger
+		if(unit.unitType() == UnitType.Ranger){
+			try{
+				runRanger(unit);
+			}
+			catch(Exception e) {
+				System.out.println("A Ranger Error Occurred:\nUnit Id: " + unit.id());
+				e.printStackTrace();
+			}
+		}
+		//Run Healer
+		if(unit.unitType() == UnitType.Healer){
+			try{
+				runHealer(unit);
+			}
+			catch(Exception e) {
+				System.out.println("A Healer Error Occurred:\nUnit Id: " + unit.id());
+				e.printStackTrace();
+			}
+		}
+		//Run Rocket
+		if(unit.unitType() == UnitType.Rocket){
+			try{
+				runRocket(unit);
+			}
+			catch(Exception e) {
+				System.out.println("A Rocket Error Occurred:\nUnit Id: " + unit.id());
+				e.printStackTrace();
+			}
+		}	
 	}
   
 	static void runFactory(Unit unit){
