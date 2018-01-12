@@ -13,7 +13,7 @@ class Worker {
 		if (unit.location().mapLocation().getPlanet() == null) {
 			return;
 		}
-		System.out.println("valid location");
+		
 		if (gc.karbonite() < 500 && gc.canHarvest(unit.id(), Direction.Center)) {
 			System.out.println("Harvesting!");
 			gc.harvest(unit.id(), Direction.Center);
