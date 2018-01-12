@@ -1,5 +1,6 @@
 import bc.*;
 import java.util.ArrayList;
+import java.lang.Long;
 
 public class Player {
   public static void main(String[] args) {
@@ -9,8 +10,11 @@ public class Player {
 	
 	PlanetMap earthMap = gc.startingMap(Planet.Earth);
 	
-	int height = (int) earthMap.getHeight();
-	int width = (int) earthMap.getWidth();
+	Long heightLong = new Long(earthMap.getHeight());
+	Long widthLong = new Long(earthMap.getWidth());
+	
+	int height = heightLong.intValue();
+	int width = widthLong.intValue();
 	
 	ArrayList<ArrayList<long>> karboniteEarth =
 			new ArrayList<ArrayList<long>>(height);
