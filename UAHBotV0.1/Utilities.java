@@ -32,7 +32,7 @@ class Utilities {
   
 	public static void moveRandomDirection(Unit unit){
 		Direction randomDirection = directions[rand.nextInt(directions.length)];
-		if(gc.isMoveReady(unit.id()) && gc.canMove(unit.id(), directions[rand.nextInt(directions.length)])){
+		if(gc.isMoveReady(unit.id()) && gc.canMove(unit.id(), directions[Player.rand.nextInt(directions.length)])){
 			gc.moveRobot(unit.id(), randomDirection);
 		}
 	}
