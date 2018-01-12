@@ -14,7 +14,7 @@ public class Player {
 	static int numHealers;
 	static int numRockets;
 		
-  public static void main(String[] args) {
+	public static void main(String[] args) {
 	
 	//Add a Game Controller
 	gc = new GameController();
@@ -111,33 +111,33 @@ public class Player {
 	
   }
   
-  static void runFactory(Unit unit){
+	static void runFactory(Unit unit){
 	  
-  }
+	}
   
-  static void runWorker(Unit unit){
+	static void runWorker(Unit unit){
 	  
-  }
+	}
   
-  static void runKnight(Unit unit){
+	static void runKnight(Unit unit){
 	  
-  }
+	}
   
-  static void runMage(Unit unit){
+	static void runMage(Unit unit){
 	  
-  }
+	}
   
-  static void runRanger(Unit unit){
+	static void runRanger(Unit unit){
 	  
-  }
+	}
   
-  static void runHealer(Unit unit){
+	static void runHealer(Unit unit){
 	  
-  }
+	}
   
-  static void runRocket(Unit unit){
+	static void runRocket(Unit unit){
 	  
-  }
+	}
   
   
   
