@@ -17,6 +17,8 @@ class Worker {
 		if (gc.karbonite() < 500 && gc.canHarvest(unit.id(), Direction.Center)) {
 			System.out.println("Harvesting!");
 			gc.harvest(unit.id(), Direction.Center);
+		//} else if (gc.canBuild(unit.id()) {
+		//	gc.Build(unit.id());
 		} else if (gc.canBlueprint(unit.id(), UnitType.Factory, Direction.Center)) {
 			System.out.println("Blueprinting!");
 			gc.blueprint(unit.id(), UnitType.Factory, Direction.Center);
