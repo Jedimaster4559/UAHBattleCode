@@ -25,10 +25,17 @@ public class Player {
 		//Create and Array of all Directions a bot can travel
 		directions = Direction.values();
 		
+		//loop through all units and process their turn
 		while (true){
 			System.out.println("CurrentRound: " + gc.round());
 			
+			//get all units
 			VecUnit units = gc.myUnits();
+			
+			//initialize count of all units
+			Utilities.countUnits(units);
+			
+			//loop through units
 			for (int i = 0; i < units.size(); i++) {
 				Unit unit = units.get(i);
 				
@@ -36,11 +43,14 @@ public class Player {
 				
 				
 			}
+			
+			//end turn
 			gc.nextTurn();
 		}
 	
 	}
 	
+	//This method will determine what type of unit each unit is and run it's processing code
 	public static void runUnitLogic(Unit unit){
 		//This block determines unit type and then executes a method accordingly
 		//RunFactory
