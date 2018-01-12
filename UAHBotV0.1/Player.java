@@ -1,10 +1,13 @@
 import bc.*;
-<<<<<<< HEAD
 import java.util.ArrayList;
 import java.lang.Long;
+import java.util.Random;
 
 public class Player {
   public static void main(String[] args) {
+	
+	static Random rand = new Random();
+	static Direction[] directions;
 	
 	//Add a Game Controller
 	GameController gc = new GameController();
@@ -73,86 +76,7 @@ public class Player {
 		gc.nextTurn();
 	}
 	
-  }
-  
-  static void runFactory(Unit unit){
-	  
-  }
-  
-  static void runWorker(Unit unit){
-	  
-  }
-  
-  static void runKnight(Unit unit){
-	  
-  }
-  
-  static void runMage(Unit unit){
-	  
-  }
-  
-  static void runRanger(Unit unit){
-	  
-  }
-  
-  static void runHealer(Unit unit){
-	  
-  }
-  
-  static void runRocket(Unit unit){
-	  
-  }
-=======
-import java.util.Random;;
-
-public class Player {
 	
-	static Random rand = new Random();
-	static Direction[] directions;
-	static GameController gc;
-	static int numFactories;
-	static int numWorkers;
-	static int numKnights;
-	static int numMages;
-	static int numRangers;
-	static int numHealers;
-	static int numRockets;
-		
-	public static void main(String[] args) {
-	
-		//Add a Game Controller
-		gc = new GameController();
-		
-		//Seed Randomizer for debugging purposes
-		rand.setSeed(4559);
-		
-		//Create and Array of all Directions a bot can travel
-		directions = Direction.values();
-		
-		//loop through all units and process their turn
-		while (true){
-			System.out.println("CurrentRound: " + gc.round());
-			
-			//get all units
-			VecUnit units = gc.myUnits();
-			
-			//initialize count of all units
-			Utilities.countUnits(units);
-			
-			//loop through units
-			for (int i = 0; i < units.size(); i++) {
-				Unit unit = units.get(i);
-				
-				runUnitLogic(unit);
-				
-				
-			}
-			
-			//end turn
-			gc.nextTurn();
-		}
-	
-	}
 	
 	//This method will determine what type of unit each unit is and run it's processing code
 	public static void runUnitLogic(Unit unit){
@@ -228,6 +152,4 @@ public class Player {
 			}
 		}				
 	}
-  
->>>>>>> master
 }
