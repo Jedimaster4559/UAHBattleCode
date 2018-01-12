@@ -111,34 +111,4 @@ public class Player {
 	
   }
   
-	static void runFactory(Unit unit){
-	  
-	}
-  
-	static void runWorker(Unit unit){
-	  
-	}
-  
-	static void runKnight(Unit unit){
-	  
-	}
-  
-	static void runMage(Unit unit){
-	  
-	}
-  
-	static void runRanger(Unit unit){
-	  
-	}
-  
-	static void runHealer(Unit unit){
-	  
-	}
-  
-	static void runRocket(Unit unit){
-	  
-	}
-  
-  
-  
 }
