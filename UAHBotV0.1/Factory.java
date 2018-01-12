@@ -21,11 +21,16 @@ class Factory {
 			*/
 			
 			//Attempts to unload all bots
-			Direction[] directions = Direction.values();
-			for(Direction direction:directions){
-				if(gc.canUnload(unit.id(), direction)) {
-					gc.unload(unit.id(), direction);
-					break;
+			if(unit.structureGarrison().size() > 0)
+			{
+				Direction[] directions = Direction.values();
+				for(Direction direction:directions){
+					if(gc.canUnload(unit.id(), direction)) {
+						gc.unload(unit.id(), direction);
+						if(unit.structureGarrison().size() == 0){
+							break;
+						}
+					}
 				}
 			}
 			
