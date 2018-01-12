@@ -33,6 +33,7 @@ public class Player {
 			}
 			
         }
+		System.out.println("total karbonite is: " + gc.karbonite());
 		gc.nextTurn();
 	}
 	
