@@ -10,29 +10,30 @@ class Utilities {
 		Player.numKnights = 0;
 		Player.numMages = 0;
 		Player.numRangers = 0;
-		Player.numHealers = 0
+		Player.numHealers = 0;
 		Player.numRockets = 0;
-		for(int = 0; i < unit.size(); i++){
+		for(int i = 0; i < units.size(); i++){
+			Unit unit = units.get(i);
 			if(unit.unitType() == UnitType.Factory)
-				numFactories++;
+				Player.numFactories++;
 			if(unit.unitType() == UnitType.Worker)
-				numWorkers++;
+				Player.numWorkers++;
 			if(unit.unitType() == UnitType.Knight)
-				numKnights++;
+				Player.numKnights++;
 			if(unit.unitType() == UnitType.Mage)
-				numMages++;
+				Player.numMages++;
 			if(unit.unitType() == UnitType.Ranger)
-				numRangers++;
+				Player.numRangers++;
 			if(unit.unitType() == UnitType.Healer)
-				numHealers++;
+				Player.numHealers++;
 			if(unit.unitType() == UnitType.Rocket)
-				numRockets++;
+				Player.numRockets++;
 		}
 	}
   
-	public static void moveRandomDirection(Unit unit){
-		Direction randomDirection = directions[rand.nextInt(directions.length)];
-		if(gc.isMoveReady(unit.id()) && gc.canMove(unit.id(), directions[Player.rand.nextInt(directions.length)])){
+	public static void moveRandomDirection(Unit unit, GameController gc){
+		Direction randomDirection = Player.directions[Player.rand.nextInt(Player.directions.length)];
+		if(gc.isMoveReady(unit.id()) && gc.canMove(unit.id(), randomDirection)){
 			gc.moveRobot(unit.id(), randomDirection);
 		}
 	}
