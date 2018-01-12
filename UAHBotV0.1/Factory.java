@@ -23,8 +23,10 @@ class Factory {
 			//Attempts to unload all bots
 			Direction[] directions = Direction.values();
 			for(Direction direction:directions){
-				if(gc.canUnload(unit.id(), direction))
+				if(gc.canUnload(unit.id(), direction)) {
 					gc.unload(unit.id(), direction);
+					break;
+				}
 			}
 			
 			//Creates a new unit if the factory isn't producing
