@@ -35,7 +35,7 @@ class Factory {
 			}
 			
 			//Creates a new unit if the factory isn't producing
-			if(!unit.isFactoryProducing()){
+			if(unit.isFactoryProducing() == 0){
 				UnitType unitCreateType = decideUnitType();
 				if(gc.canProduceRobot(unit.id(), unitCreateType)){
 					gc.produceRobot(unit.id(), unitCreateType);
