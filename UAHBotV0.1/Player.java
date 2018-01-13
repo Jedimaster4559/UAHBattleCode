@@ -35,6 +35,9 @@ public class Player {
 			//initialize count of all units
 			Utilities.countUnits(units);
 			
+			//initialize pathing variables
+			Path.initializePathing(gc);
+			
 			//loop through units
 			for (int i = 0; i < units.size(); i++) {
 				Unit unit = units.get(i);
