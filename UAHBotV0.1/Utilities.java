@@ -31,7 +31,6 @@ class Utilities {
 		}
 	}
   
-	//Method to move a bot in a random direction
 	public static void moveRandomDirection(Unit unit, GameController gc){
 		Direction randomDirection = Player.directions[Player.rand.nextInt(Player.directions.length)];
 		if(gc.isMoveReady(unit.id()) && gc.canMove(unit.id(), randomDirection)){
@@ -59,5 +58,17 @@ class Utilities {
 			gc.team();
 			return Team.Blue;
 		}
+	}
+	
+	//Method to return the index number of an object in an array
+	public static int getIndex(Object[] obj, Object target){
+		int counter = 0;
+		for(Object current:obj){
+			if(current.equals(target)){
+				return counter;
+			}
+			counter++;
+		}
+		return 0; //Not quite sure what the best thing would be to put here so we don't throw an error
 	}
 }
