@@ -31,10 +31,33 @@ class Utilities {
 		}
 	}
   
+	//Method to move a bot in a random direction
 	public static void moveRandomDirection(Unit unit, GameController gc){
 		Direction randomDirection = Player.directions[Player.rand.nextInt(Player.directions.length)];
 		if(gc.isMoveReady(unit.id()) && gc.canMove(unit.id(), randomDirection)){
 			gc.moveRobot(unit.id(), randomDirection);
+		}
+	}
+	
+	//Method to attack one enemy within range if possible
+	public static void senseAndAttackInRange(Unit unit, GameController gc){
+		VecUnit units = gc.senseNearbyUnitsByTeam(unit.location().mapLocation(), unit.attackRange(), enemyTeam(gc));
+		int enemyID = units.get(0).id();
+		if(gc.canAttack(unit.id(), enemyID)){
+			gc.attack(unit.id(), enemyID);
+		}
+	}
+	
+	//Method that returns enemy team
+	public static Team enemyTeam(GameController gc){
+		gc.team();
+		if(gc.team().equals(Team.Blue)){
+			gc.team();
+			return Team.Red;
+		}
+		else {
+			gc.team();
+			return Team.Blue;
 		}
 	}
 }
