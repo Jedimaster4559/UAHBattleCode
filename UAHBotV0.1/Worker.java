@@ -30,7 +30,7 @@ class Worker {
 			gc.blueprint(unit.id(), UnitType.Factory, Direction.Center);
 		} else if (gc.canMove(unit.id(), Direction.West)) {
 			System.out.println("Moving!");
-			Utilities.moveRandomDirection(unit);
+			Utilities.moveRandomDirection(unit, gc);
 		}
 	}
 }	
