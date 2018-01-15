@@ -25,6 +25,9 @@ public class Player {
 		//Create and Array of all Directions a bot can travel
 		directions = Direction.values();
 		
+		//initialize pathing variables
+		Path.initializePathing(gc);
+		
 		//loop through all units and process their turn
 		while (true){
 			System.out.println("CurrentRound: " + gc.round());
@@ -34,17 +37,13 @@ public class Player {
 			
 			//initialize count of all units
 			Utilities.countUnits(units);
-			
-			//initialize pathing variables
-			Path.initializePathing(gc);
-			
+									
 			//loop through units
 			for (int i = 0; i < units.size(); i++) {
 				Unit unit = units.get(i);
 				
 				runUnitLogic(unit);
-				
-				
+								
 			}
 			
 			//end turn
