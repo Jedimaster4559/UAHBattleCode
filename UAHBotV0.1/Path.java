@@ -103,6 +103,10 @@ class Path {
 		
 	}
 	
+	public static void turnOffFrenzy(){
+		frenzy = false;
+	}
+	
 	static void recursiveFillMap(MapLocation dest, int i, GameController gc){
 		//set x any y variables
 		int destx = dest.getX();
