@@ -1,5 +1,6 @@
 import bc.*;
 import java.util.*;
+import java.lang.Long;
 
 class Utilities {
 	
@@ -45,6 +46,22 @@ class Utilities {
 		if(gc.canAttack(unit.id(), enemyID)){
 			gc.attack(unit.id(), enemyID);
 		}
+	}
+	
+	//Method to move toward the closest enemy
+	public static void moveToNearestEnemy(Unit unit, GameController gc){
+		MapLocation currentLocation = unit.location().mapLocation();
+		VecUnit enemyUnits = gc.senseNearbyUnitsByTeam(currentLocation, unit.visionRange(), enemyTeam(gc));
+		long[] distances = new long[(int)enemyUnits.size()];
+		long lowest = Long.MAX_VALUE;
+		int index = 0;
+		for(int i = 0; i < (int)enemyUnits.size(); i++){
+			if(enemyUnits.get((int)i).location().mapLocation().distanceSquaredTo(currentLocation) < lowest){
+				index = i;
+			}
+		}
+		MapLocation enemyLocation = enemyUnits.get(index).location().mapLocation();
+		Path.determinePathing(unit, enemyLocation, gc);
 	}
 	
 	//Method that returns enemy team
