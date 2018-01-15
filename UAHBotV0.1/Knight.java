@@ -9,6 +9,14 @@ class Knight implements UnitInterface {
 	}
 	
 	public static void process(GameController gc, Unit unit) {
+		MapLocation currentLocation = unit.location().mapLocation();
+		if(unit.attackHeat() < 10){
+			Utilities.senseAndAttackInRange(unit, gc);
+		}
+		else if(unit.movementHeat() < 10){
+			Utilities.moveToNearestEnemy(unit, gc);
+		}
+		
 		
 	}
 	
