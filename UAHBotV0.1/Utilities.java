@@ -43,7 +43,7 @@ class Utilities {
 	public static void senseAndAttackInRange(Unit unit, GameController gc){
 		VecUnit units = gc.senseNearbyUnitsByTeam(unit.location().mapLocation(), unit.attackRange(), enemyTeam(gc));
 		int enemyID = units.get(0).id();
-		if(gc.canAttack(unit.id(), enemyID)){
+		if(units.size() > 0 && gc.canAttack(unit.id(), enemyID)){
 			gc.attack(unit.id(), enemyID);
 		}
 	}
@@ -52,16 +52,18 @@ class Utilities {
 	public static void moveToNearestEnemy(Unit unit, GameController gc){
 		MapLocation currentLocation = unit.location().mapLocation();
 		VecUnit enemyUnits = gc.senseNearbyUnitsByTeam(currentLocation, unit.visionRange(), enemyTeam(gc));
-		long[] distances = new long[(int)enemyUnits.size()];
-		long lowest = Long.MAX_VALUE;
-		int index = 0;
-		for(int i = 0; i < (int)enemyUnits.size(); i++){
-			if(enemyUnits.get((int)i).location().mapLocation().distanceSquaredTo(currentLocation) < lowest){
-				index = i;
+		if(enemyUnits.size() > 0){
+			long lowest = Long.MAX_VALUE;
+			int index = 0;
+			for(int i = 0; i < (int)enemyUnits.size(); i++){
+				if(enemyUnits.get((int)i).location().mapLocation().distanceSquaredTo(currentLocation) < lowest){
+					index = i;
+				}
 			}
+			MapLocation enemyLocation = enemyUnits.get(index).location().mapLocation();
+			Path.determinePathing(unit, enemyLocation, gc);
 		}
-		MapLocation enemyLocation = enemyUnits.get(index).location().mapLocation();
-		Path.determinePathing(unit, enemyLocation, gc);
+		
 	}
 	
 	//Method that returns enemy team
