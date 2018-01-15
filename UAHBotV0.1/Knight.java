@@ -16,6 +16,9 @@ class Knight implements UnitInterface {
 		else if(unit.movementHeat() < 10){
 			Utilities.moveToNearestEnemy(unit, gc);
 		}
+		else if(unit.movementHeat() < 10){
+			Utilities.moveRandomDirection(unit, gc);
+		}
 		
 		
 	}
