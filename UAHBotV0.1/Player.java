@@ -4,9 +4,8 @@ import java.lang.Long;
 import java.util.Random;
 
 public class Player {
-  public static void main(String[] args) {
 	
-	static Random rand = new Random();
+	static Random rand;
 	static Direction[] directions;
 	static GameController gc;
 	static int numFactories;
@@ -24,6 +23,7 @@ public class Player {
 		gc = new GameController();
 		
 		//Seed Randomizer for debugging purposes
+		rand = new Random();
 		rand.setSeed(4559);
 		
 		//Create and Array of all Directions a bot can travel
