@@ -47,28 +47,26 @@ public class Player {
 	
 	while (true){
 		System.out.println("CurrentRound: " + gc.round());
+
+		//initialize pathing variables
+		Path.initializePathing(gc);
 		
-		VecUnit units = gc.myUnits();
-		for (int i = 0; i < units.size(); i++) {
-			Unit unit = units.get(i);
-			System.out.println("looping through units");
+		//loop through all units and process their turn
+		while (true){
+			System.out.println("CurrentRound: " + gc.round());
 			
-			//This block determines unit type and then executes a method accordingly
-			if (unit.unitType() == UnitType.Factory) {
-				runFactory(unit);
-			} else if (unit.unitType() == UnitType.Worker) {
-				System.out.println("Found worker!");
-				Worker.process(unit, gc);
-			} else if (unit.unitType() == UnitType.Knight) {
-				runKnight(unit);
-			} else if (unit.unitType() == UnitType.Mage) {
-				runMage(unit);
-			} else if (unit.unitType() == UnitType.Ranger) {
-				runRanger(unit);
-			} else if (unit.unitType() == UnitType.Healer) {
-				runHealer(unit);
-			} else if (unit.unitType() == UnitType.Rocket) {
-				runRocket(unit);
+			//get all units
+			VecUnit units = gc.myUnits();
+			
+			//initialize count of all units
+			Utilities.countUnits(units);
+									
+			//loop through units
+			for (int i = 0; i < units.size(); i++) {
+				Unit unit = units.get(i);
+				
+				runUnitLogic(unit);
+								
 			}
 			
         }
