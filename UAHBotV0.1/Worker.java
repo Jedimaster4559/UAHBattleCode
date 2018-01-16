@@ -1,7 +1,7 @@
 import bc.*;
 
 class Worker {
-	
+	static UnitType productionType;
 	public static boolean canProcess(Unit unit) {
 		if (unit.unitType() == UnitType.Worker) {
 			return true;
@@ -13,24 +13,33 @@ class Worker {
 		if (unit.location().mapLocation().getPlanet() == null) {
 			return;
 		}
-		
-		if (gc.karbonite() < 500 && gc.canHarvest(unit.id(), Direction.Center)) {
-			System.out.println("Harvesting!");
-			gc.harvest(unit.id(), Direction.Center);
-		//} else if (gc.canBuild(unit.id()) {
-		//	VecUnit factories = gc.senseUnitAtLocation(
-		//			unit.location().mapLocation(), 50, UnitType.Factory);
-		//	for (int i = 0; i < factories.size(); i++) {
-		//		if (gc.canBuild(unit.id(), factories.get(i))) {
-		//			gc.build(unit.id(), factories.get(i));
-		//		}
-		//	}
-		} else if (gc.canBlueprint(unit.id(), UnitType.Factory, Direction.Center)) {
-			System.out.println("Blueprinting!");
-			gc.blueprint(unit.id(), UnitType.Factory, Direction.Center);
-		} else if (gc.canMove(unit.id(), Direction.West)) {
-			System.out.println("Moving!");
-			Utilities.moveRandomDirection(unit, gc);
-		}
-	}
+                // factory logic
+                else if ((Utilities.getNearbyBlueprint(unit, gc)!= null) &&(gc.canBuild(unit.id(),Utilities.getNearbyBlueprint(unit, gc))) && (Player.numFactories < 3)) // build
+                {
+                    System.out.println("Building");
+                    gc.build(unit.id(),Utilities.getNearbyBlueprint(unit, gc));
+                }
+                else
+                {   // blueprint logic
+                    for(Direction direction:Path.directions)
+                    {
+                        if(gc.canBlueprint(unit.id(), productionType.Factory, direction))
+                        {
+                            System.out.println("Blueprinting");
+                            gc.blueprint(unit.id(), productionType.Factory, direction);
+                        }
+                    }
+                }
+                
+                // harvest logic
+                if (gc.canHarvest(unit.id(), Direction.Center))
+                {
+			System.out.println("Harvesting");
+			gc.harvest(unit.id(), Direction.Center);             
+                }
+                else
+                {
+                    Utilities.moveRandomDirection(unit, gc);
+                }                 
+	}      
 }	
