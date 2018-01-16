@@ -3,46 +3,65 @@ import java.util.ArrayList;
 import java.lang.Long;
 import java.util.Random;
 
-public class Player {
-  public static void main(String[] args) {
-	
+public class Player 
+{
+  public static void main(String[] args) 
+  {
 	static Random rand = new Random();
 	static Direction[] directions;
-	static GameController gc;
-	static int numFactories;
-	static int numWorkers;
-	static int numKnights;
-	static int numMages;
-	static int numRangers;
-	static int numHealers;
-	static int numRockets;
-	static VecUnit units;
-		
-	public static void main(String[] args) {
 	
-		//Add a Game Controller
-		gc = new GameController();
-		
-		//Seed Randomizer for debugging purposes
-		rand.setSeed(4559);
-		
-		//Create and Array of all Directions a bot can travel
-		directions = Direction.values();
-		
-		//initialize logic handler
-		LogicHandler.initialize(gc);
+	//Add a Game Controller
+	GameController gc = new GameController();
+	
+	PlanetMap earthMap = gc.startingMap(Planet.Earth);
+	
+	Long heightLong = new Long(earthMap.getHeight());
+	Long widthLong = new Long(earthMap.getWidth());
+	
+	int height = heightLong.intValue();
+	int width = widthLong.intValue();
+	
+	ArrayList<ArrayList<Long>> karboniteEarth =
+			new ArrayList<ArrayList<Long>>(height);
+	
+	MapLocation dummyLocation = new MapLocation(Planet.Earth, 0, 0);
+	
+	//put starting karbonite in 2d arrayList
+	for (int i = 0; i < height; i++) {
+		dummyLocation.setY(i);
+		ArrayList<Long> karboniteCol = new ArrayList<Long>(width);
+		for (int j = 0; j < width; j++) {
+			dummyLocation.setX(j);
+			karboniteCol.add(new Long(earthMap.initialKarboniteAt(dummyLocation)));
+		}
+		karboniteEarth.add(karboniteCol);
+	}
+	
+	//print starting karbonite
+	for (int i = 0; i < karboniteEarth.size(); i++) {
+		ArrayList karboniteCol = karboniteEarth.get(i);
+		for (int j = 0; j < karboniteCol.size(); j++) {
+			System.out.println("starting karbonite at " +
+					"(" + i + ", " + j + ") is: " + karboniteCol.get(j));
+		}
+	}
+	
+	while (true){
+		System.out.println("CurrentRound: " + gc.round());
 
+		//initialize pathing variables
+		Path.initializePathing(gc);
 		
 		//loop through all units and process their turn
 		while (true){
 			System.out.println("CurrentRound: " + gc.round());
 			
 			//get all units
-			units = gc.myUnits();
-												
-			//Process Logic
-			LogicHandler.process(gc);
+			VecUnit units = gc.myUnits();
 			
+			//initialize count of all units
+			Utilities.countUnits(units);
+									
 			//loop through units
 			for (int i = 0; i < units.size(); i++) {
 				Unit unit = units.get(i);
