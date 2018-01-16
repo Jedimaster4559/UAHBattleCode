@@ -33,38 +33,102 @@ class Utilities {
 	}
   
 	public static void moveRandomDirection(Unit unit, GameController gc){
-		Direction randomDirection = Player.directions[Player.rand.nextInt(Player.directions.length)];
-		if(gc.isMoveReady(unit.id()) && gc.canMove(unit.id(), randomDirection)){
-			gc.moveRobot(unit.id(), randomDirection);
+		try{
+			Direction randomDirection = Player.directions[Player.rand.nextInt(Player.directions.length)];
+			if(gc.isMoveReady(unit.id()) && gc.canMove(unit.id(), randomDirection)){
+				gc.moveRobot(unit.id(), randomDirection);
+			}
 		}
+		catch(Exception e){
+			System.out.println("An error occurred in moveRandomDirection(Unit unit, GameController gc)");
+			System.out.println("Unit ID: " + unit.id());
+			e.printStackTrace();
+		}		
 	}
 	
 	//Method to attack one enemy within range if possible
 	public static void senseAndAttackInRange(Unit unit, GameController gc){
-		VecUnit units = gc.senseNearbyUnitsByTeam(unit.location().mapLocation(), unit.attackRange(), enemyTeam(gc));
-		int enemyID = units.get(0).id();
-		if(units.size() > 0 && gc.canAttack(unit.id(), enemyID)){
-			gc.attack(unit.id(), enemyID);
+		try{
+			VecUnit units = gc.senseNearbyUnitsByTeam(unit.location().mapLocation(), unit.attackRange(), enemyTeam(gc));
+			int enemyID = units.get(0).id();
+			if(units.size() > 0 && gc.canAttack(unit.id(), enemyID)){
+				gc.attack(unit.id(), enemyID);
+			}
 		}
+		catch(Exception e){
+			System.out.println("An error occurred in senseAndAttackInRange(Unit unit, GameController g)c");
+			System.out.println("Unit ID: " + unit.id());
+			e.printStackTrace();
+		}
+		
 	}
 	
 	//Method to move toward the closest enemy
 	public static void moveToNearestEnemy(Unit unit, GameController gc){
-		MapLocation currentLocation = unit.location().mapLocation();
-		VecUnit enemyUnits = gc.senseNearbyUnitsByTeam(currentLocation, unit.visionRange(), enemyTeam(gc));
-		if(enemyUnits.size() > 0){
+		try{
+			MapLocation currentLocation = unit.location().mapLocation();
+			VecUnit enemyUnits = gc.senseNearbyUnitsByTeam(currentLocation, unit.visionRange(), enemyTeam(gc));
+			if(enemyUnits.size() > 0){
+				long lowest = Long.MAX_VALUE;
+				int index = 0;
+				for(int i = 0; i < (int)enemyUnits.size(); i++){
+					if(enemyUnits.get((int)i).location().mapLocation().distanceSquaredTo(currentLocation) < lowest){
+						lowest = enemyUnits.get((int)i).location().mapLocation().distanceSquaredTo(currentLocation);
+						index = i;
+					}
+				}
+				MapLocation enemyLocation = enemyUnits.get(index).location().mapLocation();
+				Path.determinePathing(unit, enemyLocation, gc);
+			}
+		}
+		catch(Exception e){
+			System.out.println("An error occurred in moveToNearestEnemy(Unit unit, GameController gc)");
+			System.out.println("Unit ID: " + unit.id());
+			e.printStackTrace();
+		}
+				
+	}
+	
+	//Method to move toward the closest rocket
+	public static void moveTowardNearestRocket(Unit unit, GameController gc){
+		try{
+			MapLocation currentLocation = unit.location().mapLocation();
+			long distances[] = new long[LogicHandler.rockets.length];
 			long lowest = Long.MAX_VALUE;
 			int index = 0;
-			for(int i = 0; i < (int)enemyUnits.size(); i++){
-				if(enemyUnits.get((int)i).location().mapLocation().distanceSquaredTo(currentLocation) < lowest){
-					index = i;
-				}
+			for(Unit rocket:LogicHandler.rockets){
+					if(rocket.location().mapLocation().distanceSquaredTo(currentLocation) < lowest){
+						lowest = rocket.location().mapLocation().distanceSquaredTo(currentLocation);
+						index = 0;
+					}
 			}
-			MapLocation enemyLocation = enemyUnits.get(index).location().mapLocation();
-			Path.determinePathing(unit, enemyLocation, gc);
+			
+			Unit dest = LogicHandler.rockets[index];
+			if(gc.canLoad(dest.id(), unit.id())){
+				gc.load(dest.id(), unit.id());
+			}
+			Path.determinePathing(unit, dest.location().mapLocation(), gc);
+		}
+		catch(Exception e){
+			System.out.println("An error occurred in MoveTowardNearestRocket(Unit unit, GameController gc)");
+			System.out.println("Unit ID: " + unit.id());
+			e.printStackTrace();
 		}
 		
 	}
+	
+	//Returns int id of nearby blueprint
+	public static int getNearbyBlueprint(Unit unit, GameController gc){
+		VecUnit units = gc.senseNearbyUnits(unit.location().mapLocation(), 1);
+		for(long i = 0; i < units.size(); i++){
+			if(units.get(i).structureIsBuilt() == 0){
+				return (int)i;
+			}
+		}
+		return (Integer) null;
+	}
+	
+	
 	
 	//Method that returns enemy team
 	public static Team enemyTeam(GameController gc){
