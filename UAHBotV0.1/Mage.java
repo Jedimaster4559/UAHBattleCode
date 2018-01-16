@@ -8,7 +8,7 @@ class Mage implements UnitInterface {
 		return false;
 	}
 	
-	public static void process(GameController gc, Unit unit) {
+	public static void process(Unit unit, GameController gc) {
 		
 	}
 	

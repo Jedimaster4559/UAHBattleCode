@@ -8,6 +8,6 @@ interface UnitInterface {
 	
 	//process a unit with the appropriate logic for its
 	//type based on the class
-	public static void process(GameController gc, Unit unit);
+	public static void process(Unit unit, GameController gc);
 	
 }

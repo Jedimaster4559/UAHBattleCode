@@ -14,7 +14,7 @@ class Worker {
 			return;
 		}
                 // factory logic
-                else if ((Utilities.getNearbyBlueprint(unit, gc)!= null) &&(gc.canBuild(unit.id(),Utilities.getNearbyBlueprint(unit, gc))) && (Player.numFactories < 3)) // build
+                else if ((Utilities.getNearbyBlueprint(unit, gc)!= null) &&(gc.canBuild(unit.id(),Utilities.getNearbyBlueprint(unit, gc)))) // build
                 {
                     System.out.println("Building");
                     gc.build(unit.id(),Utilities.getNearbyBlueprint(unit, gc));
@@ -23,10 +23,10 @@ class Worker {
                 {   // blueprint logic
                     for(Direction direction:Path.directions)
                     {
-                        if(gc.canBlueprint(unit.id(), productionType.Factory, direction))
+                        if(gc.canBlueprint(unit.id(), productionType, direction))
                         {
                             System.out.println("Blueprinting");
-                            gc.blueprint(unit.id(), productionType.Factory, direction);
+                            gc.blueprint(unit.id(), productionType, direction);
                         }
                     }
                 }
