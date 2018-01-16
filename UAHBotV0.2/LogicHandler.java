@@ -32,7 +32,7 @@ class LogicHandler {
 		if(gc.round() == 720){
 			startEscaping(gc);
 		}
-		if(!(Worker.productionType = UnitType.Rocket)){
+		if(!(Worker.productionType == UnitType.Rocket)){
 			if(Player.numFactories >= 3 && Worker.productionType != UnitType.Rocket){
 				Worker.productionType = UnitType.Rocket;
 			}

@@ -1,4 +1,5 @@
 import bc.*;
+import java.lang.Integer;
 
 class Worker {
 	static UnitType productionType;
@@ -14,7 +15,7 @@ class Worker {
 			return;
 		}
                 // factory logic
-                else if ((Utilities.getNearbyBlueprint(unit, gc)!= null) &&(gc.canBuild(unit.id(),Utilities.getNearbyBlueprint(unit, gc)))) // build
+                else if ((Utilities.getNearbyBlueprint(unit, gc)!= Integer.MAX_VALUE) &&(gc.canBuild(unit.id(),Utilities.getNearbyBlueprint(unit, gc)))) // build
                 {
                     System.out.println("Building");
                     gc.build(unit.id(),Utilities.getNearbyBlueprint(unit, gc));

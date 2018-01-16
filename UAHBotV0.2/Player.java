@@ -51,9 +51,9 @@ public class Player {
 								
 			}
 			
+			gc.nextTurn();
         }
-		System.out.println("total karbonite is: " + gc.karbonite());
-		gc.nextTurn();
+		
 	}
 	
 	

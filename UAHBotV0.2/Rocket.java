@@ -1,8 +1,8 @@
 import bc.*;
 
-class Mage implements UnitInterface {
+class Rocket {
 	public static boolean canProcess(Unit unit) {
-		if(unit.unitType() == UnitType.Mage) {
+		if(unit.unitType() == UnitType.Rocket) {
 			return true;
 		}
 		return false;

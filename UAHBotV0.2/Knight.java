@@ -1,6 +1,6 @@
 import bc.*;
 
-class Knight implements UnitInterface {
+class Knight {
 	public static boolean canProcess(Unit unit) {
 		if(unit.unitType() == UnitType.Knight) {
 			return true;

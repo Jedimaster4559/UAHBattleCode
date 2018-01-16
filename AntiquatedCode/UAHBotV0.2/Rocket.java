@@ -1,6 +1,6 @@
 import bc.*;
 
-class Rocket implements UnitInterface {
+class Rocket {
 	public static boolean canProcess(Unit unit) {
 		if(unit.unitType() == UnitType.Rocket) {
 			return true;

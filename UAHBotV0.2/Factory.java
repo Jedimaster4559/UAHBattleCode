@@ -1,6 +1,6 @@
 import bc.*;
 
-class Factory implements UnitInterface {
+class Factory {
 		
 		public static boolean canProcess(Unit unit){
 			if (unit.unitType() == UnitType.Factory){

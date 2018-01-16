@@ -1,6 +1,7 @@
 import bc.*;
 import java.util.*;
 import java.lang.Long;
+import java.lang.Integer;
 
 class Utilities {
 	
@@ -121,11 +122,12 @@ class Utilities {
 	public static int getNearbyBlueprint(Unit unit, GameController gc){
 		VecUnit units = gc.senseNearbyUnits(unit.location().mapLocation(), 1);
 		for(long i = 0; i < units.size(); i++){
-			if(units.get(i).structureIsBuilt() == 0){
+			
+			if(((unit.unitType() == UnitType.Factory) || (unit.unitType() == UnitType.Rocket)) && (units.get(i).structureIsBuilt() == 0)){
 				return (int)i;
 			}
 		}
-		return (Integer) null;
+		return Integer.MAX_VALUE;
 	}
 	
 	

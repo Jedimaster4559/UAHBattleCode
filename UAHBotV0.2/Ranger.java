@@ -1,8 +1,8 @@
 import bc.*;
 
-class Healer implements UnitInterface {
+class Ranger {
 	public static boolean canProcess(Unit unit) {
-		if(unit.unitType() == UnitType.Healer) {
+		if(unit.unitType() == UnitType.Ranger) {
 			return true;
 		}
 		return false;
