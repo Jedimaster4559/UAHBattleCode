@@ -102,15 +102,16 @@ class Utilities {
 			MapLocation currentLocation = unit.location().mapLocation();
 			long distances[] = new long[LogicHandler.rockets.length];
 			long lowest = Long.MAX_VALUE;
-			int index = 0;
-			for(Unit rocket:LogicHandler.rockets){
-					if(rocket.location().mapLocation().distanceSquaredTo(currentLocation) < lowest){
-						lowest = rocket.location().mapLocation().distanceSquaredTo(currentLocation);
-						index = 0;
-					}
+			int closestRocketIndex = 0;
+			for(int i = 0; i < LogicHandler.rockets.size(); i++) {
+				Unit rocket = LogicHandler.rockets[i];
+				if(rocket.location().mapLocation().distanceSquaredTo(currentLocation) < lowest){
+					lowest = rocket.location().mapLocation().distanceSquaredTo(currentLocation);
+					closestRocketIndex = i;
+				}
 			}
 			
-			Unit dest = LogicHandler.rockets[index];
+			Unit dest = LogicHandler.rockets[closestRocketIndex];
 			if(gc.canLoad(dest.id(), unit.id())){
 				gc.load(dest.id(), unit.id());
 			}
