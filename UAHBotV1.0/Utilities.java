@@ -74,7 +74,7 @@ class Utilities {
 			MapLocation currentLocation = unit.location().mapLocation();
 			VecUnit enemyUnits = gc.senseNearbyUnitsByTeam(currentLocation, unit.visionRange(), enemyTeam(gc));
 			if(enemyUnits.size() > 0){
-				System.out.println("Finding");
+				//System.out.println("Finding");
 				long lowest = Long.MAX_VALUE;
 				int index = 0;
 				for(int i = 0; i < (int)enemyUnits.size(); i++){
@@ -84,7 +84,7 @@ class Utilities {
 					}
 				}
 				MapLocation enemyLocation = enemyUnits.get(index).location().mapLocation();
-				System.out.println("Moving");
+				//System.out.println("Moving");
 				Path.determinePathing(unit, enemyLocation, gc);
 			}
 		}

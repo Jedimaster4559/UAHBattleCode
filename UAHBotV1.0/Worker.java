@@ -18,29 +18,42 @@ class Worker {
 		}
 		
         // factory logic
-        if ((Utilities.getNearbyBlueprint(unit, gc)!= Integer.MAX_VALUE) && (gc.canBuild(unit.id(),Utilities.getNearbyBlueprint(unit, gc)))) // build
+        if ((Utilities.getNearbyBlueprint(unit, gc)!= Integer.MAX_VALUE) &&
+			(gc.canBuild(unit.id(),Utilities.getNearbyBlueprint(unit, gc)))) // build
         {
-            System.out.println("Building");
+            //System.out.println("Building");
             gc.build(unit.id(),Utilities.getNearbyBlueprint(unit, gc));
             isBuilding = true;
         }
-        else if(Player.numFactories + Player.numRockets <= 20)
+        else if(Player.numFactories <= 20)
         {   // blueprint logic
+			productionType = Unit.Factory;
             for(Direction direction:Path.directions)
             {
                 if(gc.canBlueprint(unit.id(), productionType, direction))
                 {
-                    System.out.println("Blueprinting");
+                    //System.out.println("Blueprinting");
+                    gc.blueprint(unit.id(), productionType, direction);
+                    isBuilding = true;
+                }
+            }
+        } else if (gc.round > 500) {
+			productionType = Unit.Rocket;
+            for(Direction direction:Path.directions)
+            {
+                if(gc.canBlueprint(unit.id(), productionType, direction))
+                {
+                    //System.out.println("Blueprinting");
                     gc.blueprint(unit.id(), productionType, direction);
                     isBuilding = true;
                 }
             }
         }
-        
+		
         // harvest logic
         if (gc.canHarvest(unit.id(), Direction.Center))
         {
-        	System.out.println("Harvesting");
+        	//System.out.println("Harvesting");
         	gc.harvest(unit.id(), Direction.Center);             
         }
         else if (!isBuilding)
