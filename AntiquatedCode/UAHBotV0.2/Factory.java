@@ -16,7 +16,7 @@ class Factory {
 			for(long i = 0; i < unitIDs.size(); i++){
 				Unit garrisonedUnit = gc.unit(unitIDs.get(i));
 				gc.unload();
-				Player.runUnitLogic(garrisonedUnit);
+				Player.runUnitLogic(garrinedUnit);
 			}
 			*/
 			
@@ -34,9 +34,11 @@ class Factory {
 				}
 			}
 			
+			
 			//Creates a new unit if the factory isn't producing
-			if(unit.isFactoryProducing() == 0){
+			if(unit.isFactoryProducing() == 0 && unit.structureIsBuilt() == 1){
 				UnitType unitCreateType = decideUnitType();
+				System.out.println("Creating new unit: " + unitCreateType);
 				if(gc.canProduceRobot(unit.id(), unitCreateType)){
 					gc.produceRobot(unit.id(), unitCreateType);
 				}
@@ -47,11 +49,17 @@ class Factory {
 		}
 		
 		public static UnitType decideUnitType(){
-			if(true){
+			if(Player.numWorkers < 10){
 				return UnitType.Worker;
 			}
-			return null;
+			else if(Player.numKnights <= Player.numRangers){
+				return UnitType.Knight;
+			}
+			else{
+				return UnitType.Knight;
+			}
 			
 		}
-
+		
+		
 }
