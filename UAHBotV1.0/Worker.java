@@ -24,6 +24,7 @@ class Worker {
             //System.out.println("Building");
             gc.build(unit.id(),Utilities.getNearbyBlueprint(unit, gc));
             isBuilding = true;
+			return;
         }
         else if(Player.numFactories <= 20)
         {   // blueprint logic
@@ -43,9 +44,10 @@ class Worker {
             {
                 if(gc.canBlueprint(unit.id(), Worker.productionType, direction))
                 {
-                    //System.out.println("Blueprinting");
+                    System.out.println("Blueprinting Rocket");
                     gc.blueprint(unit.id(), Worker.productionType, direction);
                     isBuilding = true;
+					return;
                 }
             }
         }

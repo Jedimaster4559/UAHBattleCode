@@ -54,7 +54,7 @@ class Utilities {
 				System.out.println("Targeting");
 				int enemyID = units.get(0).id();
 				if(gc.canAttack(unit.id(), enemyID)){
-					System.out.println("Attacking");
+					//System.out.println("Attacking");
 					gc.attack(unit.id(), enemyID);
 				}
 			}
