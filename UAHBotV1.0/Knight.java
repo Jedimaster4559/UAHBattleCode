@@ -14,6 +14,11 @@ class Knight {
 		}
 		
 		MapLocation currentLocation = unit.location().mapLocation();
+		
+		if (LogicHandler.escaping) {
+			Utilities.moveTowardNearestRocket(unit, gc);
+		}
+		
 		if (!Player.peaceful) {
 			if(unit.attackHeat() < 10){
 				Utilities.senseAndAttackInRange(unit, gc);
