@@ -40,8 +40,7 @@ class LogicHandler {
 				Worker.productionType = UnitType.Rocket;
 			}
 		}
-		
-		
+	
 	}
 	
 	public static void startEscaping(GameController gc){
