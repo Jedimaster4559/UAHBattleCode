@@ -37,7 +37,7 @@ class Worker {
                     isBuilding = true;
                 }
             }
-        } else if (gc.round > 500) {
+        } else if (gc.round() > 500) {
 			productionType = Unit.Rocket;
             for(Direction direction:Path.directions)
             {
