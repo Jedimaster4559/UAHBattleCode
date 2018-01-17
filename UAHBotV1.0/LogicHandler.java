@@ -30,7 +30,7 @@ class LogicHandler {
 		//initialize count of all units
 		Utilities.countUnits(Player.units);
 		
-		if(gc.round() == 720){
+		if(!escaping && gc.round() >= 720){
 			startEscaping(gc);
 		}
 		if (gc.round() > 500) {
