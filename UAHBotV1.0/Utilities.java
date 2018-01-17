@@ -103,7 +103,7 @@ class Utilities {
 			long distances[] = new long[LogicHandler.rockets.length];
 			long lowest = Long.MAX_VALUE;
 			int closestRocketIndex = 0;
-			for(int i = 0; i < LogicHandler.rockets.size(); i++) {
+			for(int i = 0; i < LogicHandler.rockets.length; i++) {
 				Unit rocket = LogicHandler.rockets[i];
 				if(rocket.location().mapLocation().distanceSquaredTo(currentLocation) < lowest){
 					lowest = rocket.location().mapLocation().distanceSquaredTo(currentLocation);

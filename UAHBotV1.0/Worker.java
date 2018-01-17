@@ -26,7 +26,9 @@ class Worker {
             isBuilding = true;
 			return;
         }
-        else if((gc.karbonite() + (950 - gc.round())) > 1000 || gc.round() > 500)
+        else if(Worker.productionType != null &&
+				(((gc.karbonite() + (950 - gc.round())) > 1000) 
+				|| gc.round() > 500))
         {   // blueprint logic
 			
             for(Direction direction:Path.directions)

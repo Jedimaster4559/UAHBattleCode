@@ -130,8 +130,9 @@ class Path {
 	//Should be used in the case where you
 	static void determinePathing(Unit unit, MapLocation dest, GameController gc){
 		//UnitType type = unit.unitType();
-		bugPath(unit, dest, gc);
-		
+		if (unit.movementHeat() < 10) {
+			bugPath(unit, dest, gc);
+		}
 	}
 	
 	
