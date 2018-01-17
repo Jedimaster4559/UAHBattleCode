@@ -26,7 +26,7 @@ class Worker {
             isBuilding = true;
 			return;
         }
-        else if(gc.Karbonite() > 500)
+        else if(gc.karbonite() > 500)
         {   // blueprint logic
 			Worker.productionType = UnitType.Factory;
             for(Direction direction:Path.directions)
