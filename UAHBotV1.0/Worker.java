@@ -26,7 +26,7 @@ class Worker {
             isBuilding = true;
 			return;
         }
-        else if(Player.numFactories <= 20)
+        else if(gc.Karbonite() > 500)
         {   // blueprint logic
 			Worker.productionType = UnitType.Factory;
             for(Direction direction:Path.directions)
@@ -36,18 +36,6 @@ class Worker {
                     //System.out.println("Blueprinting");
                     gc.blueprint(unit.id(), Worker.productionType, direction);
                     isBuilding = true;
-                }
-            }
-        } else if (gc.round() > 500) {
-			Worker.productionType = UnitType.Rocket;
-            for(Direction direction:Path.directions)
-            {
-                if(gc.canBlueprint(unit.id(), Worker.productionType, direction))
-                {
-                    System.out.println("Blueprinting Rocket");
-                    gc.blueprint(unit.id(), Worker.productionType, direction);
-                    isBuilding = true;
-					return;
                 }
             }
         }
