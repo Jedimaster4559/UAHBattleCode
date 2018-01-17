@@ -26,16 +26,18 @@ class Worker {
             isBuilding = true;
 			return;
         }
-        else if(gc.karbonite() > 500 || gc.round() > 650)
+        else if((gc.karbonite() + (950 - gc.round())) > 1000 || gc.round() > 500)
         {   // blueprint logic
-			Worker.productionType = UnitType.Factory;
+			
             for(Direction direction:Path.directions)
             {
                 if(gc.canBlueprint(unit.id(), Worker.productionType, direction))
                 {
                     //System.out.println("Blueprinting");
+					System.out.println("Bluprinting: " + Worker.productionType);
                     gc.blueprint(unit.id(), Worker.productionType, direction);
                     isBuilding = true;
+					return;
                 }
             }
         }
