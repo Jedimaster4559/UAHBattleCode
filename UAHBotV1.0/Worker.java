@@ -27,7 +27,7 @@ class Worker {
         }
         else if(Player.numFactories <= 20)
         {   // blueprint logic
-			Worker.productionType = Unit.Factory;
+			Worker.productionType = UnitType.Factory;
             for(Direction direction:Path.directions)
             {
                 if(gc.canBlueprint(unit.id(), Worker.productionType, direction))
@@ -38,7 +38,7 @@ class Worker {
                 }
             }
         } else if (gc.round() > 500) {
-			Worker.productionType = Unit.Rocket;
+			Worker.productionType = UnitType.Rocket;
             for(Direction direction:Path.directions)
             {
                 if(gc.canBlueprint(unit.id(), Worker.productionType, direction))
