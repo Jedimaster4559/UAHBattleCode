@@ -36,9 +36,10 @@ class Factory {
 			
 			
 			//Creates a new unit if the factory isn't producing
-			if(unit.isFactoryProducing() == 0 && unit.structureIsBuilt() == 1){
+			if(unit.isFactoryProducing() == 0 && unit.structureIsBuilt() == 1 &&
+					Player.numKnights < 40){
 				UnitType unitCreateType = decideUnitType();
-				System.out.println("Creating new unit: " + unitCreateType);
+				//System.out.println("Creating new unit: " + unitCreateType);
 				if(gc.canProduceRobot(unit.id(), unitCreateType)){
 					gc.produceRobot(unit.id(), unitCreateType);
 				}

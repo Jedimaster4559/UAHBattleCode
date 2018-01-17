@@ -4,6 +4,7 @@ import java.util.*;
 class LogicHandler {
 	static boolean escaping;
 	static Unit[] rockets;
+	static int factoryGoal = 10;
 	
 	public static void initialize(GameController gc){
 		//initialize Pathing
@@ -32,16 +33,15 @@ class LogicHandler {
 		if(gc.round() == 720){
 			startEscaping(gc);
 		}
-		if(!(Worker.productionType == UnitType.Rocket)){
-			if(Player.numFactories >= 3 && Worker.productionType != UnitType.Rocket){
-				Worker.productionType = UnitType.Rocket;
-			}
-			if(gc.round() > 150 && Player.numFactories >= 3){
-				Worker.productionType = UnitType.Rocket;
+		if (gc.round() > 500) {
+			Worker.productionType = UnitType.Rocket;
+		} else {
+			if (Player.numFactories >= factoryGoal) {
+				Worker.productionType = null;
+			} else {
+				Worker.productionType = UnitType.Factory;
 			}
 		}
-		
-		
 	}
 	
 	public static void startEscaping(GameController gc){
