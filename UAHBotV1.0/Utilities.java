@@ -54,7 +54,7 @@ class Utilities {
 				System.out.println("Targeting");
 				int enemyID = units.get(0).id();
 				if(gc.canAttack(unit.id(), enemyID)){
-					System.out.println("Attacking");
+					//System.out.println("Attacking");
 					gc.attack(unit.id(), enemyID);
 				}
 			}
@@ -74,7 +74,7 @@ class Utilities {
 			MapLocation currentLocation = unit.location().mapLocation();
 			VecUnit enemyUnits = gc.senseNearbyUnitsByTeam(currentLocation, unit.visionRange(), enemyTeam(gc));
 			if(enemyUnits.size() > 0){
-				System.out.println("Finding");
+				//System.out.println("Finding");
 				long lowest = Long.MAX_VALUE;
 				int index = 0;
 				for(int i = 0; i < (int)enemyUnits.size(); i++){
@@ -84,7 +84,7 @@ class Utilities {
 					}
 				}
 				MapLocation enemyLocation = enemyUnits.get(index).location().mapLocation();
-				System.out.println("Moving");
+				//System.out.println("Moving");
 				Path.determinePathing(unit, enemyLocation, gc);
 			}
 		}
@@ -102,15 +102,16 @@ class Utilities {
 			MapLocation currentLocation = unit.location().mapLocation();
 			long distances[] = new long[LogicHandler.rockets.length];
 			long lowest = Long.MAX_VALUE;
-			int index = 0;
-			for(Unit rocket:LogicHandler.rockets){
-					if(rocket.location().mapLocation().distanceSquaredTo(currentLocation) < lowest){
-						lowest = rocket.location().mapLocation().distanceSquaredTo(currentLocation);
-						index = 0;
-					}
+			int closestRocketIndex = 0;
+			for(int i = 0; i < LogicHandler.rockets.length; i++) {
+				Unit rocket = LogicHandler.rockets[i];
+				if(rocket.location().mapLocation().distanceSquaredTo(currentLocation) < lowest){
+					lowest = rocket.location().mapLocation().distanceSquaredTo(currentLocation);
+					closestRocketIndex = i;
+				}
 			}
 			
-			Unit dest = LogicHandler.rockets[index];
+			Unit dest = LogicHandler.rockets[closestRocketIndex];
 			if(gc.canLoad(dest.id(), unit.id())){
 				gc.load(dest.id(), unit.id());
 			}
