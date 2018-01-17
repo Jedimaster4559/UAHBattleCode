@@ -27,24 +27,24 @@ class Worker {
         }
         else if(Player.numFactories <= 20)
         {   // blueprint logic
-			productionType = Unit.Factory;
+			Worker.productionType = Unit.Factory;
             for(Direction direction:Path.directions)
             {
-                if(gc.canBlueprint(unit.id(), productionType, direction))
+                if(gc.canBlueprint(unit.id(), Worker.productionType, direction))
                 {
                     //System.out.println("Blueprinting");
-                    gc.blueprint(unit.id(), productionType, direction);
+                    gc.blueprint(unit.id(), Worker.productionType, direction);
                     isBuilding = true;
                 }
             }
         } else if (gc.round() > 500) {
-			productionType = Unit.Rocket;
+			Worker.productionType = Unit.Rocket;
             for(Direction direction:Path.directions)
             {
-                if(gc.canBlueprint(unit.id(), productionType, direction))
+                if(gc.canBlueprint(unit.id(), Worker.productionType, direction))
                 {
                     //System.out.println("Blueprinting");
-                    gc.blueprint(unit.id(), productionType, direction);
+                    gc.blueprint(unit.id(), Worker.productionType, direction);
                     isBuilding = true;
                 }
             }
