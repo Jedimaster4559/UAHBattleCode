@@ -1,7 +1,6 @@
 import bc.*;
 import java.util.*;
 import java.lang.Long;
-import java.lang.Integer;
 
 class Utilities {
 	
@@ -51,10 +50,15 @@ class Utilities {
 	public static void senseAndAttackInRange(Unit unit, GameController gc){
 		try{
 			VecUnit units = gc.senseNearbyUnitsByTeam(unit.location().mapLocation(), unit.attackRange(), enemyTeam(gc));
-			int enemyID = units.get(0).id();
-			if(units.size() > 0 && gc.canAttack(unit.id(), enemyID)){
-				gc.attack(unit.id(), enemyID);
+			if(units.size() > 0){
+				System.out.println("Targeting");
+				int enemyID = units.get(0).id();
+				if(gc.canAttack(unit.id(), enemyID)){
+					System.out.println("Attacking");
+					gc.attack(unit.id(), enemyID);
+				}
 			}
+			
 		}
 		catch(Exception e){
 			System.out.println("An error occurred in senseAndAttackInRange(Unit unit, GameController g)c");
@@ -70,6 +74,7 @@ class Utilities {
 			MapLocation currentLocation = unit.location().mapLocation();
 			VecUnit enemyUnits = gc.senseNearbyUnitsByTeam(currentLocation, unit.visionRange(), enemyTeam(gc));
 			if(enemyUnits.size() > 0){
+				System.out.println("Finding");
 				long lowest = Long.MAX_VALUE;
 				int index = 0;
 				for(int i = 0; i < (int)enemyUnits.size(); i++){
@@ -79,6 +84,7 @@ class Utilities {
 					}
 				}
 				MapLocation enemyLocation = enemyUnits.get(index).location().mapLocation();
+				System.out.println("Moving");
 				Path.determinePathing(unit, enemyLocation, gc);
 			}
 		}
@@ -120,11 +126,10 @@ class Utilities {
 	
 	//Returns int id of nearby blueprint
 	public static int getNearbyBlueprint(Unit unit, GameController gc){
-		VecUnit units = gc.senseNearbyUnits(unit.location().mapLocation(), 1);
+		VecUnit units = gc.senseNearbyUnits(unit.location().mapLocation(), 4);
 		for(long i = 0; i < units.size(); i++){
-			
-			if(((unit.unitType() == UnitType.Factory) || (unit.unitType() == UnitType.Rocket)) && (units.get(i).structureIsBuilt() == 0)){
-				return (int)i;
+			if((units.get(i).unitType() == UnitType.Factory || units.get(i).unitType() == UnitType.Rocket) && units.get(i).structureIsBuilt() == 0){
+				return (int)units.get(i).id();
 			}
 		}
 		return Integer.MAX_VALUE;
