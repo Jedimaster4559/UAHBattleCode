@@ -16,6 +16,7 @@ public class Player {
 	static int numHealers;
 	static int numRockets;
 	static VecUnit units;
+	static boolean peaceful = true;
 		
 	public static void main(String[] args) {
 	
