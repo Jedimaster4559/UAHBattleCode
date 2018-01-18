@@ -28,7 +28,7 @@ public class Player {
 		//rand.setSeed(4559);
 		
 		if (gc.planet() == Planet.Earth) {
-			System.out.println("find enemy team from earth");
+			//System.out.println("find enemy team from earth");
 			Utilities.findEnemyTeam(gc);
 		}
 		
@@ -41,7 +41,7 @@ public class Player {
 		
 		//loop through all units and process their turn
 		while (true){
-			System.out.println("CurrentRound: " + gc.round());
+			//System.out.println("CurrentRound: " + gc.round());
 			
 			//get all units
 			units = gc.myUnits();
