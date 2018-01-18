@@ -5,6 +5,7 @@ import java.lang.Long;
 class Utilities {
 	
 	static Team enemyTeam;
+	static MapLocation[] enemyStartLocations;
 	
 	//Method to count all units Should be run at the beginning of each turn.
 	public static void countUnits(VecUnit units){
@@ -143,7 +144,7 @@ class Utilities {
 	}
 	
 	//Method that returns enemy team
-	public static Team findEnemyTeam(GameController gc){
+	public static void findEnemyTeam(GameController gc){
 		if(gc.team().equals(Team.Blue)){
 			enemyTeam = Team.Red;
 		} else {
@@ -164,6 +165,7 @@ class Utilities {
 	}
 	
 	public static void invertPositions(Unit unit, GameController gc){
+		if (gc.planet() != Planet.Earth) return;
         VecUnit allUnits = Path.earth.getInitial_units();
         int counter = 0;
         enemyStartLocations = new MapLocation[(int)(allUnits.size()/2)];
