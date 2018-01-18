@@ -9,11 +9,12 @@ class Rocket {
 	}
 	
 	public static void process(Unit unit, GameController gc) {
-		if(unit.structureGarrison().size() == 8 || (gc.round() > 740 && unit.structureGarrison().size() > 4) || gc.round() > 745){
+		if(unit.structureGarrison().size() == 8 || ((unit.structureGarrison().size() * 2 + gc.round()) > 745)){
 			findLandableSpot(unit, gc);
-                        
-                        //Attempts to unload all bots
-                        if(unit.structureGarrison().size() > 0)
+		}
+		//Attempts to unload all bots
+		if(unit.rocketIsUsed() == 1) {
+			if(unit.structureGarrison().size() > 0)
 			{
 				Direction[] directions = Direction.values();
 				for(Direction direction:directions){
@@ -32,12 +33,15 @@ class Rocket {
 		MapLocation randomLocation;
 		int randx;
 		int randy;
-		while(true){
+		for (int i = 0; i < 100; i++) {
 			randx = Player.rand.nextInt((int)Path.mars.getWidth()-1);
 			randy = Player.rand.nextInt((int)Path.mars.getHeight()-1);
 			randomLocation = new MapLocation(Planet.Mars, randx,randy);
-			if(gc.canLaunchRocket(unit.id(), randomLocation) && (Path.mars.isPassableTerrainAt(randomLocation) == 1)){
+			if(gc.canLaunchRocket(unit.id(), randomLocation) && 
+					(Path.mars.isPassableTerrainAt(randomLocation) == 1)){
+				System.out.println("Launching rocket!");
 				gc.launchRocket(unit.id(), randomLocation);
+				break;
 			}
 		}
 	}

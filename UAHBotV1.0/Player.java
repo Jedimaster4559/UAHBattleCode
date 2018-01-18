@@ -16,6 +16,7 @@ public class Player {
 	static int numHealers;
 	static int numRockets;
 	static VecUnit units;
+	static boolean peaceful = false;
 		
 	public static void main(String[] args) {
 	
@@ -24,7 +25,12 @@ public class Player {
 		
 		//Seed Randomizer for debugging purposes
 		rand = new Random();
-		rand.setSeed(4559);
+		//rand.setSeed(4559);
+		
+		if (gc.planet() == Planet.Earth) {
+			//System.out.println("find enemy team from earth");
+			Utilities.findEnemyTeam(gc);
+		}
 		
 		//Create and Array of all Directions a bot can travel
 		directions = Direction.values();
@@ -35,7 +41,7 @@ public class Player {
 		
 		//loop through all units and process their turn
 		while (true){
-			System.out.println("CurrentRound: " + gc.round());
+			//System.out.println("CurrentRound: " + gc.round());
 			
 			//get all units
 			units = gc.myUnits();

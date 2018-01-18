@@ -4,6 +4,9 @@ import java.lang.Long;
 
 class Utilities {
 	
+	static Team enemyTeam;
+	static MapLocation[] enemyStartLocations;
+	
 	//Method to count all units Should be run at the beginning of each turn.
 	public static void countUnits(VecUnit units){
 		Player.numFactories = 0;
@@ -34,7 +37,11 @@ class Utilities {
   
 	public static void moveRandomDirection(Unit unit, GameController gc){
 		try{
-			Direction randomDirection = Player.directions[Player.rand.nextInt(Player.directions.length)];
+			/*Direction availible[8] = {};
+			for (int i = 0; i < 8; i++) {
+				if (gc.isOccupiable(unit.MapLocation.add(Path.directions[i])) {
+					availible*/
+			Direction randomDirection = Path.directions[Player.rand.nextInt(Path.directions.length)];
 			if(gc.isMoveReady(unit.id()) && gc.canMove(unit.id(), randomDirection)){
 				gc.moveRobot(unit.id(), randomDirection);
 			}
@@ -49,12 +56,12 @@ class Utilities {
 	//Method to attack one enemy within range if possible
 	public static void senseAndAttackInRange(Unit unit, GameController gc){
 		try{
-			VecUnit units = gc.senseNearbyUnitsByTeam(unit.location().mapLocation(), unit.attackRange(), enemyTeam(gc));
+			VecUnit units = gc.senseNearbyUnitsByTeam(unit.location().mapLocation(), unit.attackRange(), enemyTeam);
 			if(units.size() > 0){
 				System.out.println("Targeting");
 				int enemyID = units.get(0).id();
 				if(gc.canAttack(unit.id(), enemyID)){
-					System.out.println("Attacking");
+					//System.out.println("Attacking");
 					gc.attack(unit.id(), enemyID);
 				}
 			}
@@ -72,9 +79,9 @@ class Utilities {
 	public static void moveToNearestEnemy(Unit unit, GameController gc){
 		try{
 			MapLocation currentLocation = unit.location().mapLocation();
-			VecUnit enemyUnits = gc.senseNearbyUnitsByTeam(currentLocation, unit.visionRange(), enemyTeam(gc));
+			VecUnit enemyUnits = gc.senseNearbyUnitsByTeam(currentLocation, unit.visionRange(), enemyTeam);
 			if(enemyUnits.size() > 0){
-				System.out.println("Finding");
+				//System.out.println("Finding");
 				long lowest = Long.MAX_VALUE;
 				int index = 0;
 				for(int i = 0; i < (int)enemyUnits.size(); i++){
@@ -84,7 +91,7 @@ class Utilities {
 					}
 				}
 				MapLocation enemyLocation = enemyUnits.get(index).location().mapLocation();
-				System.out.println("Moving");
+				//System.out.println("Moving");
 				Path.determinePathing(unit, enemyLocation, gc);
 			}
 		}
@@ -102,15 +109,16 @@ class Utilities {
 			MapLocation currentLocation = unit.location().mapLocation();
 			long distances[] = new long[LogicHandler.rockets.length];
 			long lowest = Long.MAX_VALUE;
-			int index = 0;
-			for(Unit rocket:LogicHandler.rockets){
-					if(rocket.location().mapLocation().distanceSquaredTo(currentLocation) < lowest){
-						lowest = rocket.location().mapLocation().distanceSquaredTo(currentLocation);
-						index = 0;
-					}
+			int closestRocketIndex = 0;
+			for(int i = 0; i < LogicHandler.rockets.length; i++) {
+				Unit rocket = LogicHandler.rockets[i];
+				if(rocket.location().mapLocation().distanceSquaredTo(currentLocation) < lowest){
+					lowest = rocket.location().mapLocation().distanceSquaredTo(currentLocation);
+					closestRocketIndex = i;
+				}
 			}
 			
-			Unit dest = LogicHandler.rockets[index];
+			Unit dest = LogicHandler.rockets[closestRocketIndex];
 			if(gc.canLoad(dest.id(), unit.id())){
 				gc.load(dest.id(), unit.id());
 			}
@@ -135,18 +143,12 @@ class Utilities {
 		return Integer.MAX_VALUE;
 	}
 	
-	
-	
 	//Method that returns enemy team
-	public static Team enemyTeam(GameController gc){
-		gc.team();
+	public static void findEnemyTeam(GameController gc){
 		if(gc.team().equals(Team.Blue)){
-			gc.team();
-			return Team.Red;
-		}
-		else {
-			gc.team();
-			return Team.Blue;
+			enemyTeam = Team.Red;
+		} else {
+			enemyTeam = Team.Blue;
 		}
 	}
 	
@@ -161,4 +163,21 @@ class Utilities {
 		}
 		return 0; //Not quite sure what the best thing would be to put here so we don't throw an error
 	}
+	
+	public static void invertPositions(Unit unit, GameController gc){
+		if (gc.planet() != Planet.Earth) return;
+        VecUnit allUnits = Path.earth.getInitial_units();
+        int counter = 0;
+        enemyStartLocations = new MapLocation[(int)(allUnits.size()/2)];
+        for(long i = 0; i < allUnits.size(); i++){
+            if(allUnits.get(i).team() == enemyTeam){
+                enemyStartLocations[counter] = allUnits.get(i).location().mapLocation();
+                counter++;
+            }
+        }
+    }
+    
+    public static void moveTowardEnemyStart(Unit unit, GameController gc){
+        Path.bugPath(unit, enemyStartLocations[0], gc);
+    }
 }
