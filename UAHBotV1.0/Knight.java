@@ -9,7 +9,8 @@ class Knight {
 	}
 	
 	public static void process(Unit unit, GameController gc) {
-		if (!unit.location().isOnMap()) {
+
+		if (!unit.location().isOnMap() || unit.location().isInGarrison()) {
 			return;
 		}
 		
