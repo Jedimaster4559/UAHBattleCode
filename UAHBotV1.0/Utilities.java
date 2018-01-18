@@ -4,6 +4,8 @@ import java.lang.Long;
 
 class Utilities {
 	
+	static Team enemyTeam;
+	
 	//Method to count all units Should be run at the beginning of each turn.
 	public static void countUnits(VecUnit units){
 		Player.numFactories = 0;
@@ -34,6 +36,10 @@ class Utilities {
   
 	public static void moveRandomDirection(Unit unit, GameController gc){
 		try{
+			/*Direction availible[8] = {};
+			for (int i = 0; i < 8; i++) {
+				if (gc.isOccupiable(unit.MapLocation.add(Path.directions[i])) {
+					availible*/
 			Direction randomDirection = Player.directions[Player.rand.nextInt(Player.directions.length)];
 			if(gc.isMoveReady(unit.id()) && gc.canMove(unit.id(), randomDirection)){
 				gc.moveRobot(unit.id(), randomDirection);
@@ -139,15 +145,11 @@ class Utilities {
 	
 	
 	//Method that returns enemy team
-	public static Team enemyTeam(GameController gc){
-		gc.team();
+	public static Team findEnemyTeam(GameController gc){
 		if(gc.team().equals(Team.Blue)){
-			gc.team();
-			return Team.Red;
-		}
-		else {
-			gc.team();
-			return Team.Blue;
+			enemyTeam = Team.Red;
+		} else {
+			enemyTeam = Team.Blue;
 		}
 	}
 	
@@ -162,4 +164,20 @@ class Utilities {
 		}
 		return 0; //Not quite sure what the best thing would be to put here so we don't throw an error
 	}
+	
+	public static void invertPositions(Unit unit, GameController gc){
+        VecUnit allUnits = Path.earth.getInitial_units();
+        int counter = 0;
+        enemyStartLocations = new MapLocation[(int)(allUnits.size()/2)];
+        for(long i = 0; i < allUnits.size(); i++){
+            if(allUnits.get(i).team() == enemyTeam){
+                enemyStartLocations[counter] = allUnits.get(i).location().mapLocation();
+                counter++;
+            }
+        }
+    }
+    
+    public static void moveTowardEnemyStart(Unit unit, GameController gc){
+        Path.bugPath(unit, enemyStartLocations[0], gc);
+    }
 }

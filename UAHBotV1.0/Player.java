@@ -27,6 +27,8 @@ public class Player {
 		rand = new Random();
 		rand.setSeed(4559);
 		
+		Utilities.findEnemyTeam(gc);
+		
 		//Create and Array of all Directions a bot can travel
 		directions = Direction.values();
 		
