@@ -11,7 +11,7 @@ class Rocket {
 	public static void process(Unit unit, GameController gc) {
 		if(unit.structureGarrison().size() == 8 || ((unit.structureGarrison().size() * 2 + gc.round()) > 745)){
 			findLandableSpot(unit, gc);
-		}
+    }
 		//Attempts to unload all bots
 		if(unit.rocketIsUsed() == 1) {
 			if(unit.structureGarrison().size() > 0)
@@ -38,8 +38,7 @@ class Rocket {
 			randy = Player.rand.nextInt((int)Path.mars.getHeight()-1);
 			randomLocation = new MapLocation(Planet.Mars, randx,randy);
 			if(gc.canLaunchRocket(unit.id(), randomLocation) && 
-					(Path.mars.isPassableTerrainAt(randomLocation) == 1)) {
-				System.out.println("Launching rocket");
+					(Path.mars.isPassableTerrainAt(randomLocation) == 1)){
 				gc.launchRocket(unit.id(), randomLocation);
 			}
 		}
