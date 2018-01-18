@@ -41,6 +41,7 @@ class Rocket {
 					(Path.mars.isPassableTerrainAt(randomLocation) == 1)){
 				System.out.println("Launching rocket!");
 				gc.launchRocket(unit.id(), randomLocation);
+				break;
 			}
 		}
 	}
