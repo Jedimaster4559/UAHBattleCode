@@ -38,7 +38,8 @@ class Rocket {
 			randy = Player.rand.nextInt((int)Path.mars.getHeight()-1);
 			randomLocation = new MapLocation(Planet.Mars, randx,randy);
 			if(gc.canLaunchRocket(unit.id(), randomLocation) && 
-					(Path.mars.isPassableTerrainAt(randomLocation) == 1)){
+					(Path.mars.isPassableTerrainAt(randomLocation) == 1)) {
+				System.out.println("Launching rocket");
 				gc.launchRocket(unit.id(), randomLocation);
 			}
 		}

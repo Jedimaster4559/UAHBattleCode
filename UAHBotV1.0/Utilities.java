@@ -40,7 +40,7 @@ class Utilities {
 			for (int i = 0; i < 8; i++) {
 				if (gc.isOccupiable(unit.MapLocation.add(Path.directions[i])) {
 					availible*/
-			Direction randomDirection = Player.directions[Player.rand.nextInt(Player.directions.length)];
+			Direction randomDirection = Path.directions[Player.rand.nextInt(Path.directions.length)];
 			if(gc.isMoveReady(unit.id()) && gc.canMove(unit.id(), randomDirection)){
 				gc.moveRobot(unit.id(), randomDirection);
 			}
@@ -55,7 +55,7 @@ class Utilities {
 	//Method to attack one enemy within range if possible
 	public static void senseAndAttackInRange(Unit unit, GameController gc){
 		try{
-			VecUnit units = gc.senseNearbyUnitsByTeam(unit.location().mapLocation(), unit.attackRange(), enemyTeam(gc));
+			VecUnit units = gc.senseNearbyUnitsByTeam(unit.location().mapLocation(), unit.attackRange(), enemyTeam);
 			if(units.size() > 0){
 				System.out.println("Targeting");
 				int enemyID = units.get(0).id();
@@ -78,7 +78,7 @@ class Utilities {
 	public static void moveToNearestEnemy(Unit unit, GameController gc){
 		try{
 			MapLocation currentLocation = unit.location().mapLocation();
-			VecUnit enemyUnits = gc.senseNearbyUnitsByTeam(currentLocation, unit.visionRange(), enemyTeam(gc));
+			VecUnit enemyUnits = gc.senseNearbyUnitsByTeam(currentLocation, unit.visionRange(), enemyTeam);
 			if(enemyUnits.size() > 0){
 				//System.out.println("Finding");
 				long lowest = Long.MAX_VALUE;
@@ -141,8 +141,6 @@ class Utilities {
 		}
 		return Integer.MAX_VALUE;
 	}
-	
-	
 	
 	//Method that returns enemy team
 	public static Team findEnemyTeam(GameController gc){
