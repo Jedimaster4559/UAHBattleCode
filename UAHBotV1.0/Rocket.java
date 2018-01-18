@@ -11,6 +11,20 @@ class Rocket {
 	public static void process(Unit unit, GameController gc) {
 		if(unit.structureGarrison().size() == 8 || (gc.round() > 740 && unit.structureGarrison().size() > 4) || gc.round() > 745){
 			findLandableSpot(unit, gc);
+                        
+                        //Attempts to unload all bots
+                        if(unit.structureGarrison().size() > 0)
+			{
+				Direction[] directions = Direction.values();
+				for(Direction direction:directions){
+					if(gc.canUnload(unit.id(), direction)) {
+						gc.unload(unit.id(), direction);
+						if(unit.structureGarrison().size() == 0){
+							break;
+						}
+					}
+				}
+			}
 		}
 	}
 	
@@ -27,5 +41,5 @@ class Rocket {
 			}
 		}
 	}
-	
+
 }
