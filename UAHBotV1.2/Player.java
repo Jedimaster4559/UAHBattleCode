@@ -16,7 +16,7 @@ public class Player {
 	static int numHealers;
 	static int numRockets;
 	static VecUnit units;
-	static boolean peaceful = true;
+	static boolean peaceful = false;
 		
 	public static void main(String[] args) {
 	
@@ -25,7 +25,12 @@ public class Player {
 		
 		//Seed Randomizer for debugging purposes
 		rand = new Random();
-		rand.setSeed(4559);
+		//rand.setSeed(4559);
+		
+		if (gc.planet() == Planet.Earth) {
+			//System.out.println("find enemy team from earth");
+			Utilities.findEnemyTeam(gc);
+		}
 		
 		if (gc.planet() == Planet.Earth) {
 			//System.out.println("find enemy team from earth");
