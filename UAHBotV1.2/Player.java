@@ -41,7 +41,7 @@ public class Player {
 		
 		//loop through all units and process their turn
 		while (true){
-			System.out.println("CurrentRound: " + gc.round());
+			//System.out.println("CurrentRound: " + gc.round());
 			
 			//get all units
 			units = gc.myUnits();
