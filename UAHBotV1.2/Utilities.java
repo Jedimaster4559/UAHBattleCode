@@ -58,7 +58,7 @@ class Utilities {
 		try{
 			VecUnit units = gc.senseNearbyUnitsByTeam(unit.location().mapLocation(), unit.attackRange(), enemyTeam);
 			if(units.size() > 0){
-				System.out.println("Targeting");
+				//System.out.println("Targeting");
 				int enemyID = units.get(0).id();
 				if(gc.canAttack(unit.id(), enemyID)){
 					//System.out.println("Attacking");

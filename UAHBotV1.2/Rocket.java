@@ -12,6 +12,7 @@ class Rocket {
 		if(unit.structureGarrison().size() == 8 || ((unit.structureGarrison().size() * 2 + gc.round()) > 745)){
 			findLandableSpot(unit, gc);
 		}
+		
 		//Attempts to unload all bots
 		if(unit.rocketIsUsed() == 1) {
 			if(unit.structureGarrison().size() > 0)

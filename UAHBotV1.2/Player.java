@@ -32,6 +32,11 @@ public class Player {
 			Utilities.findEnemyTeam(gc);
 		}
 		
+		if (gc.planet() == Planet.Earth) {
+			//System.out.println("find enemy team from earth");
+			Utilities.findEnemyTeam(gc);
+		}
+		
 		//Create and Array of all Directions a bot can travel
 		directions = Direction.values();
 		

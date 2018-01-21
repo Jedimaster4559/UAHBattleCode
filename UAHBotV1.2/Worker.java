@@ -36,7 +36,7 @@ class Worker {
                 if(gc.canBlueprint(unit.id(), Worker.productionType, direction))
                 {
                     //System.out.println("Blueprinting");
-					System.out.println("Bluprinting: " + Worker.productionType);
+					//System.out.println("Bluprinting: " + Worker.productionType);
                     gc.blueprint(unit.id(), Worker.productionType, direction);
                     isBuilding = true;
 					return;
