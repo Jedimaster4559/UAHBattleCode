@@ -55,17 +55,16 @@ public class Worker extends MobileUnit {
         isBuilding = false;
 	}  
 
-		public decideProductionType() {
-		if (gc.round() > 500) {
-			productionType = UnitType.Rocket;
+	public void decideProductionType() {
+	if (gc.round() > 600) {
+		productionType = UnitType.Rocket;
+	}
+	else {
+		if (Player.numFactories >= Player.factoryGoal) {
+			productionType = null;
 		}
 		else {
-			if (Player.numFactories >= factoryGoal) {
-				productionType = null;
-			}
-			else {
-				productionType = UnitType.Factory;
-			}
+			productionType = UnitType.Factory;
 		}
 	}
 }	
