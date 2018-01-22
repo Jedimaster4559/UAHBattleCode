@@ -43,8 +43,8 @@ public class Player {
 
 		units = gc.myUnits();
 		
-		for (Unit unit : units) {
-			UAHUnits.add(new Worker(unit, gc));
+		for (int i = 0; i < units.size(); i++) {
+			UAHUnits.add(new Worker(units[i], gc));
 		}
 		
 		//loop through all units and process their turn
@@ -71,6 +71,7 @@ public class Player {
 	public static void runUnitLogic(Unit unit){
 		//This block determines unit type and then executes a method accordingly
 		//RunFactory
+		/**
 		if(unit.unitType() == UnitType.Factory){
 			try{
 				Factory.process(unit,gc);
@@ -139,6 +140,6 @@ public class Player {
 				System.out.println("A Rocket Error Occurred:\nUnit Id: " + unit.id());
 				e.printStackTrace();
 			}
-		}				
+		}*/				
 	}
 }
