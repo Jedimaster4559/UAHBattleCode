@@ -40,23 +40,23 @@ class Factory extends Structure {
 					switch (unloadType) {
 						case Worker:
 							Worker newWorker = new Worker(unloadUnit, gc);
-							UAHUnits.add(newWorker);
+							Player.UAHUnits.add(newWorker);
 							break;
 						case Knight:
 							Knight newKnight = new Knight(unloadUnit, gc);
-							UAHUnits.add(newKnight);
+							Player.UAHUnits.add(newKnight);
 							break;
 						case Ranger:
 							Ranger newRanger = new Ranger(unloadUnit, gc);
-							UAHUnits.add(newRanger);
+							Player.UAHUnits.add(newRanger);
 							break;
 						case Mage:
 							Mage newMage = new Mage(unloadUnit, gc);
-							UAHUnits.add(newMage);
+							Player.UAHUnits.add(newMage);
 							break;
 						case Healer:
 							Healer newHealer = new Healer(unloadUnit, gc);
-							UAHUnits.add(newHealer);
+							Player.UAHUnits.add(newHealer);
 							break;
 					}
 						
