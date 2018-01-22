@@ -1,6 +1,6 @@
 import bc.*;
 
-class Factory extends Structue{
+class Factory extends Structure {
 	
 	private boolean built = false;
 	
