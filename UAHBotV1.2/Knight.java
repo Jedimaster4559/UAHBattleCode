@@ -2,6 +2,10 @@ import bc.*;
 
 class Knight extends MobileUnit {
 	
+	public Knight(Unit unit, GameController gc) {
+		super(unit, gc);
+	}
+	
 	public static void process(Unit unit, GameController gc) {
 		
 		if (LogicHandler.escaping) {

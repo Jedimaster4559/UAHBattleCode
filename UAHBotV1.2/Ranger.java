@@ -2,6 +2,10 @@ import bc.*;
 
 class Ranger extends MobileUnit{
 
+	public Ranger(Unit unit, GameController gc) {
+		super(unit, gc);
+	}
+	
 	public static void process(Unit unit, GameController gc) {
 		
 		if (LogicHandler.escaping) {
