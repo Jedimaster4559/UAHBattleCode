@@ -15,6 +15,8 @@ public class Player {
 	static int numRangers;
 	static int numHealers;
 	static int numRockets;
+	static int factoryGoal = 5;
+	static int rocketGoal = 2;
 	static VecUnit units;
 	static boolean peaceful = false;
 	static ArrayList<UAHUnit> UAHUnits = new ArrayList<UAHUnit>();
