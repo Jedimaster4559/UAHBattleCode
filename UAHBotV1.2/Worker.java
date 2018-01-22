@@ -19,27 +19,29 @@ public class Worker extends MobileUnit {
         if ((Utilities.getNearbyBlueprint(unit, gc)!= Integer.MAX_VALUE) &&
 			(gc.canBuild(unit.id(),Utilities.getNearbyBlueprint(unit, gc)))) // build
         {
-			decideProductionType();
+			
             //System.out.println("Building");
             gc.build(unit.id(),Utilities.getNearbyBlueprint(unit, gc));
             isBuilding = true;
 			return;
         }
-        else if(productionType != null &&
-				(((gc.karbonite() + (950 - gc.round())) > 1000) 
+        else if((((gc.karbonite() + (950 - gc.round())) > 1000) 
 				|| gc.round() > 500))
         {   // blueprint logic
-			
-            for(Direction direction:Path.directions)
-            {
-                if(gc.canBlueprint(unit.id(), productionType, direction))
-                {
-					//System.out.println("Bluprinting: " + Worker.productionType);
-                    gc.blueprint(unit.id(), productionType, direction);
-                    isBuilding = true;
-					return;
-                }
-            }
+			decideProductionType();
+			if (productionType != null) {
+				for(Direction direction:Path.directions)
+				{
+					if(gc.canBlueprint(unit.id(), productionType, direction))
+					{
+						//System.out.println("Bluprinting: " + Worker.productionType);
+						
+						gc.blueprint(unit.id(), productionType, direction);
+						isBuilding = true;
+						return;
+					}
+				}
+			}
         }
 		
         // harvest logic

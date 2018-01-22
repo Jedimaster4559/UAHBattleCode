@@ -28,7 +28,7 @@ public class Player {
 		
 		//Seed Randomizer for debugging purposes
 		rand = new Random();
-		//rand.setSeed(4559);
+		rand.setSeed(1337);
 		
 		if (gc.planet() == Planet.Earth) {
 			//System.out.println("find enemy team from earth");
@@ -44,7 +44,7 @@ public class Player {
 		units = gc.myUnits();
 		
 		for (int i = 0; i < units.size(); i++) {
-			UAHUnits.add(new Worker(units[i], gc));
+			UAHUnits.add(new Worker(units.get(i), gc));
 		}
 		
 		//loop through all units and process their turn
