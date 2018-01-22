@@ -6,7 +6,7 @@ class Rocket extends Structure{
 		super(unit, gc);
 	}
 	
-	public void process(Unit unit, GameController gc) {
+	public void process() {
 		if(unit.structureGarrison().size() == 8 || ((unit.structureGarrison().size() * 2 + gc.round()) > 745)){
 			findLandableSpot(unit, gc);
 		}

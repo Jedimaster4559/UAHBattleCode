@@ -10,7 +10,7 @@ public class Worker extends MobileUnit {
 		super(unit, gc);
 	}
 	
-	public void process(Unit unit, GameController gc) {
+	public void process() {
 		if (!unit.location().isOnMap()) {
 			return;
 		}

@@ -6,7 +6,7 @@ class Mage extends MobileUnit{
 		super(unit, gc);
 	}
 	
-	public void process(Unit unit, GameController gc) {
+	public void process() {
         
 		if (LogicHandler.escaping) {
 			Utilities.moveTowardNearestRocket(unit, gc);
