@@ -20,6 +20,7 @@ public class Player {
 	static VecUnit units;
 	static boolean peaceful = false;
 	static ArrayList<UAHUnit> UAHUnits = new ArrayList<UAHUnit>();
+	static ArrayList<UAHUnit> newUnits = new ArrayList<UAHUnit>();
 		
 	public static void main(String[] args) {
 	
@@ -56,10 +57,22 @@ public class Player {
 			//Process Logic
 			LogicHandler.process(gc);
 			
-			//loop through units
-			for (UAHUnit unit : UAHUnits) {
+			//loop through units4
+			try {
+				for (UAHUnit unit : UAHUnits) {
+					unit.process();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			UAHUnits.addAll(newUnits);
+			
+			for (UAHUnit unit : newUnits) {
 				unit.process();
 			}
+			
+			newUnits.clear();
 			
 			gc.nextTurn();
         }

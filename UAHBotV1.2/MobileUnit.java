@@ -2,8 +2,8 @@ import bc.*;
 
 abstract class MobileUnit extends UAHUnit {
 	
-	private MapLocation currentLocation;
-	private MapLocation dest;
+	protected MapLocation currentLocation;
+	protected MapLocation dest;
 	
 	public MobileUnit(Unit unit, GameController gc) {
 		super(unit, gc);

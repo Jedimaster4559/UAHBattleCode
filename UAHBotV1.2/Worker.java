@@ -4,10 +4,12 @@ import java.lang.Integer;
 public class Worker extends MobileUnit {
 	
 	UnitType productionType;
-	boolean isBuilding;
+	boolean isBuilding = false;
 	
 	public Worker(Unit unit, GameController gc) {
 		super(unit, gc);
+		productionType = UnitType.Factory;
+		isBuilding = false;
 	}
 	
 	public void process() {
@@ -16,7 +18,7 @@ public class Worker extends MobileUnit {
 		}
 		
         // factory logic
-        if ((Utilities.getNearbyBlueprint(unit, gc)!= Integer.MAX_VALUE) &&
+        if ((Utilities.getNearbyBlueprint(unit, gc) != Integer.MAX_VALUE) &&
 			(gc.canBuild(unit.id(), Utilities.getNearbyBlueprint(unit, gc)))) // build
         {
 			
@@ -35,9 +37,19 @@ public class Worker extends MobileUnit {
 					if(gc.canBlueprint(unit.id(), productionType, direction))
 					{
 						//System.out.println("Bluprinting: " + Worker.productionType);
-						
-						gc.blueprint(unit.id(), productionType, direction);
-						isBuilding = true;
+						try {
+							gc.blueprint(unit.id(), productionType, direction);
+							Unit blueprintUnit = gc.senseUnitAtLocation(currentLocation.add(direction));
+							if (blueprintUnit.unitType() == UnitType.Factory) {
+								Player.newUnits.add(new Factory(blueprintUnit, gc));
+							} else {
+								Player.newUnits.add(new Rocket(blueprintUnit, gc));
+							}
+							isBuilding = true;
+						} catch (Exception e) {
+							System.out.println("error bluprinting or making factory object");
+							e.printStackTrace();
+						}
 						return;
 					}
 				}
@@ -53,6 +65,7 @@ public class Worker extends MobileUnit {
         else if (!isBuilding)
         {
             Utilities.moveRandomDirection(unit, gc);
+			currentLocation = unit.location().mapLocation();
         }  
         isBuilding = false;
 	}  

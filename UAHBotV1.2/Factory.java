@@ -40,23 +40,23 @@ class Factory extends Structure {
 					switch (unloadType) {
 						case Worker:
 							Worker newWorker = new Worker(unloadUnit, gc);
-							Player.UAHUnits.add(newWorker);
+							Player.newUnits.add(newWorker);
 							break;
 						case Knight:
 							Knight newKnight = new Knight(unloadUnit, gc);
-							Player.UAHUnits.add(newKnight);
+							Player.newUnits.add(newKnight);
 							break;
 						case Ranger:
 							Ranger newRanger = new Ranger(unloadUnit, gc);
-							Player.UAHUnits.add(newRanger);
+							Player.newUnits.add(newRanger);
 							break;
 						case Mage:
 							Mage newMage = new Mage(unloadUnit, gc);
-							Player.UAHUnits.add(newMage);
+							Player.newUnits.add(newMage);
 							break;
 						case Healer:
 							Healer newHealer = new Healer(unloadUnit, gc);
-							Player.UAHUnits.add(newHealer);
+							Player.newUnits.add(newHealer);
 							break;
 					}
 						
@@ -69,10 +69,9 @@ class Factory extends Structure {
 		}
 		
 		//Creates a new unit if the factory isn't producing
-		if(unit.isFactoryProducing() == 0 && built &&
-				Player.numKnights < 40){
+		if(unit.isFactoryProducing() == 0) {
 			UnitType unitCreateType = Factory.decideUnitType();
-			//System.out.println("Creating new unit: " + unitCreateType);
+			System.out.println("Creating new unit: " + unitCreateType);
 			if(gc.canProduceRobot(unit.id(), unitCreateType)){
 				gc.produceRobot(unit.id(), unitCreateType);
 			}
