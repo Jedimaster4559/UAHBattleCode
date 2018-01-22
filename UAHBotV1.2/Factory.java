@@ -70,7 +70,7 @@ class Factory extends Structure {
 		
 		//Creates a new unit if the factory isn't producing
 		if(unit.isFactoryProducing() == 0) {
-			UnitType unitCreateType = Factory.decideUnitType();
+			UnitType unitCreateType = decideUnitType();
 			System.out.println("Creating new unit: " + unitCreateType);
 			if(gc.canProduceRobot(unit.id(), unitCreateType)){
 				gc.produceRobot(unit.id(), unitCreateType);
@@ -79,12 +79,12 @@ class Factory extends Structure {
 
 	}
 	
-	public static UnitType decideUnitType(){
-		if(Player.numWorkers < 10){
+	public UnitType decideUnitType() {
+		if (Player.numWorkers < 10) {
 			return UnitType.Worker;
-		} else if(Player.numKnights <= Player.numRangers){
+		} else if (Player.numKnights <= Player.numRangers) {
 			return UnitType.Knight;
-		} else{
+		} else {
 			return UnitType.Ranger;
 		}
 	}
