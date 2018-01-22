@@ -18,20 +18,29 @@ class Utilities {
 		Player.numRockets = 0;
 		for(int i = 0; i < units.size(); i++){
 			Unit unit = units.get(i);
-			if(unit.unitType() == UnitType.Factory)
-				Player.numFactories++;
-			if(unit.unitType() == UnitType.Worker)
-				Player.numWorkers++;
-			if(unit.unitType() == UnitType.Knight)
-				Player.numKnights++;
-			if(unit.unitType() == UnitType.Mage)
-				Player.numMages++;
-			if(unit.unitType() == UnitType.Ranger)
-				Player.numRangers++;
-			if(unit.unitType() == UnitType.Healer)
-				Player.numHealers++;
-			if(unit.unitType() == UnitType.Rocket)
-				Player.numRockets++;
+			switch (unit.unitType()) {
+				case Factory:
+					Player.numFactories++;
+					break;
+				case Worker:
+					Player.numWorkers++;
+					break;
+				case Knight:
+					Player.numKnights++;
+					break;
+				case Mage:
+					Player.numMages++;
+					break;
+				case Ranger:
+					Player.numRangers++;
+					break;
+				case Healer:
+					Player.numHealers++;
+					break;
+				case Rocket:
+					Player.numRockets++;
+					break;
+			}
 		}
 	}
   
