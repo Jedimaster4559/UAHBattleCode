@@ -2,9 +2,9 @@ import bc.*;
 
 public abstract class UAHUnit {
 	
-	private GameController gc;
-	private Unit unit;
-	private int unitId;
+	protected GameController gc;
+	protected Unit unit;
+	protected int unitId;
 	
 	
 	public UAHUnit(Unit unit, GameController gc) {

@@ -1,9 +1,12 @@
 import bc.*;
 
-class Factory extends Structue{
+class Factory extends Structure {
+	
+	private boolean built = false;
 	
 	public Factory(Unit unit, GameController gc) {
 		super(unit, gc);
+		built = false;
 	}
 
 	public void process() {
@@ -16,6 +19,14 @@ class Factory extends Structue{
 			Player.runUnitLogic(garrinedUnit);
 		}
 		*/
+		
+		if (!built) {
+			if (unit.structureIsBuilt() == 1) {
+				built = true;
+			} else {
+				return;
+			}
+		}
 		
 		//Attempts to unload all bots
 		if(unit.structureGarrison().size() > 0)
@@ -32,9 +43,9 @@ class Factory extends Structue{
 		}
 		
 		//Creates a new unit if the factory isn't producing
-		if(unit.isFactoryProducing() == 0 && unit.structureIsBuilt() == 1 &&
+		if(unit.isFactoryProducing() == 0 && built &&
 				Player.numKnights < 40){
-			UnitType unitCreateType = decideUnitType();
+			UnitType unitCreateType = Factory.decideUnitType();
 			//System.out.println("Creating new unit: " + unitCreateType);
 			if(gc.canProduceRobot(unit.id(), unitCreateType)){
 				gc.produceRobot(unit.id(), unitCreateType);
@@ -46,11 +57,9 @@ class Factory extends Structue{
 	public static UnitType decideUnitType(){
 		if(Player.numWorkers < 10){
 			return UnitType.Worker;
-		}
-		else if(Player.numKnights <= Player.numRangers){
+		} else if(Player.numKnights <= Player.numRangers){
 			return UnitType.Knight;
-		}
-		else{
+		} else{
 			return UnitType.Ranger;
 		}
 	}
