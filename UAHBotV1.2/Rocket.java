@@ -1,13 +1,7 @@
 import bc.*;
 
-class Rocket {
-	public static boolean canProcess(Unit unit) {
-		if(unit.unitType() == UnitType.Rocket) {
-			return true;
-		}
-		return false;
-	}
-	
+class Rocket extends Structure{
+
 	public static void process(Unit unit, GameController gc) {
 		if(unit.structureGarrison().size() == 8 || ((unit.structureGarrison().size() * 2 + gc.round()) > 745)){
 			findLandableSpot(unit, gc);

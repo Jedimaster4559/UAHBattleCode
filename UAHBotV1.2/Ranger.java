@@ -1,19 +1,13 @@
 import bc.*;
 
-class Ranger {
-	public static boolean canProcess(Unit unit) {
-		if(unit.unitType() == UnitType.Ranger) {
-			return true;
-		}
-		return false;
-	}
-	
+class Ranger extends MobileUnit{
+
 	public static void process(Unit unit, GameController gc) {
-		if(!unit.location().isOnMap()){
-			return;
+		
+		if (LogicHandler.escaping) {
+			Utilities.moveTowardNearestRocket(unit, gc);
 		}
 		
-		MapLocation currentLocation = unit.location().mapLocation();
 		if (!Player.peaceful) {
 			if(unit.attackHeat() < 10){
 				Utilities.senseAndAttackInRange(unit, gc);
@@ -26,5 +20,4 @@ class Ranger {
 			Utilities.moveRandomDirection(unit, gc);
 		}
 	}
-	
 }

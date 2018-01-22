@@ -1,16 +1,10 @@
 import bc.*;
 import java.lang.Integer;
 
-class Worker {
+public class Worker extends MobileUnit {
+	
 	static UnitType productionType;
 	static boolean isBuilding;
-	
-	public static boolean canProcess(Unit unit) {
-		if (unit.unitType() == UnitType.Worker) {
-			return true;
-		}
-		return false;
-	}
 	
 	public static void process(Unit unit, GameController gc) {
 		if (!unit.location().isOnMap()) {
@@ -35,7 +29,6 @@ class Worker {
             {
                 if(gc.canBlueprint(unit.id(), Worker.productionType, direction))
                 {
-                    //System.out.println("Blueprinting");
 					//System.out.println("Bluprinting: " + Worker.productionType);
                     gc.blueprint(unit.id(), Worker.productionType, direction);
                     isBuilding = true;
