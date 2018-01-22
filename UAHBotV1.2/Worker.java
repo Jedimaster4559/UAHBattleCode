@@ -25,17 +25,17 @@ public class Worker extends MobileUnit {
             isBuilding = true;
 			return;
         }
-        else if(Worker.productionType != null &&
+        else if(productionType != null &&
 				(((gc.karbonite() + (950 - gc.round())) > 1000) 
 				|| gc.round() > 500))
         {   // blueprint logic
 			
             for(Direction direction:Path.directions)
             {
-                if(gc.canBlueprint(unit.id(), Worker.productionType, direction))
+                if(gc.canBlueprint(unit.id(), productionType, direction))
                 {
 					//System.out.println("Bluprinting: " + Worker.productionType);
-                    gc.blueprint(unit.id(), Worker.productionType, direction);
+                    gc.blueprint(unit.id(), productionType, direction);
                     isBuilding = true;
 					return;
                 }
