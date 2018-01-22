@@ -3,14 +3,14 @@ import java.lang.Integer;
 
 public class Worker extends MobileUnit {
 	
-	static UnitType productionType;
-	static boolean isBuilding;
+	UnitType productionType;
+	boolean isBuilding;
 	
 	public Worker(Unit unit, GameController gc) {
 		super(unit, gc);
 	}
 	
-	public static void process(Unit unit, GameController gc) {
+	public void process(Unit unit, GameController gc) {
 		if (!unit.location().isOnMap()) {
 			return;
 		}

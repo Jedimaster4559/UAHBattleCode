@@ -6,7 +6,7 @@ class Healer extends UAHUnit {
 		super(unit, gc);
 	}
 	
-	public static void process(Unit unit, GameController gc) {
+	public void process(Unit unit, GameController gc) {
 		
 	}
 	

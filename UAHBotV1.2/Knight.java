@@ -6,7 +6,7 @@ class Knight extends MobileUnit {
 		super(unit, gc);
 	}
 	
-	public static void process(Unit unit, GameController gc) {
+	public void process(Unit unit, GameController gc) {
 		
 		if (LogicHandler.escaping) {
 			Utilities.moveTowardNearestRocket(unit, gc);
