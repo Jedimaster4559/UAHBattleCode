@@ -22,8 +22,6 @@ class LogicHandler {
 		gc.queueResearch(UnitType.Knight);
 		gc.queueResearch(UnitType.Worker);
 		
-		//initialize production type
-		Worker.productionType = UnitType.Factory;
 	}
 	
 	public static void process(GameController gc) {
