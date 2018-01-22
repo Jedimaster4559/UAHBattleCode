@@ -1,11 +1,9 @@
 import bc.*;
 
-class Rocket {
-	public static boolean canProcess(Unit unit) {
-		if(unit.unitType() == UnitType.Rocket) {
-			return true;
-		}
-		return false;
+class Rocket extends Structure{
+
+	public Rocket(Unit unit, GameController gc) {
+		super(unit, gc);
 	}
 	
 	public static void process(Unit unit, GameController gc) {
