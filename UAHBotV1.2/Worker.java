@@ -17,7 +17,7 @@ public class Worker extends MobileUnit {
 		
         // factory logic
         if ((Utilities.getNearbyBlueprint(unit, gc)!= Integer.MAX_VALUE) &&
-			(gc.canBuild(unit.id(),Utilities.getNearbyBlueprint(unit, gc)))) // build
+			(gc.canBuild(unit.id(), Utilities.getNearbyBlueprint(unit, gc)))) // build
         {
 			
             //System.out.println("Building");

@@ -52,8 +52,9 @@ public class Player {
 			//System.out.println("CurrentRound: " + gc.round());
 			
 			//get all units
-												
+					
 			//Process Logic
+			LogicHandler.process(gc);
 			
 			//loop through units
 			for (UAHUnit unit : UAHUnits) {

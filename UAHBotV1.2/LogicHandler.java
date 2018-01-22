@@ -26,7 +26,7 @@ class LogicHandler {
 	
 	public static void process(GameController gc) {
 		//initialize count of all units
-		Utilities.countUnits(Player.units);
+		Utilities.countUnits(gc.myUnits());
 		
 		if(!escaping && gc.round() >= 720) {
 			startEscaping(gc);
