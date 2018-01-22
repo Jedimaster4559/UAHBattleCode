@@ -19,6 +19,7 @@ public class Worker extends MobileUnit {
         if ((Utilities.getNearbyBlueprint(unit, gc)!= Integer.MAX_VALUE) &&
 			(gc.canBuild(unit.id(),Utilities.getNearbyBlueprint(unit, gc)))) // build
         {
+			decideProductionType();
             //System.out.println("Building");
             gc.build(unit.id(),Utilities.getNearbyBlueprint(unit, gc));
             isBuilding = true;
@@ -52,5 +53,19 @@ public class Worker extends MobileUnit {
             Utilities.moveRandomDirection(unit, gc);
         }  
         isBuilding = false;
-	}      
+	}  
+
+		public decideProductionType() {
+		if (gc.round() > 500) {
+			productionType = UnitType.Rocket;
+		}
+		else {
+			if (Player.numFactories >= factoryGoal) {
+				productionType = null;
+			}
+			else {
+				productionType = UnitType.Factory;
+			}
+		}
+	}
 }	

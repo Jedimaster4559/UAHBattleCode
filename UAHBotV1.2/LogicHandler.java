@@ -32,16 +32,6 @@ class LogicHandler {
 		
 		if(!escaping && gc.round() >= 720){
 			startEscaping(gc);
-		}
-		if (gc.round() > 500) {
-			Worker.productionType = UnitType.Rocket;
-		} else {
-			if (Player.numFactories >= factoryGoal) {
-				Worker.productionType = null;
-			} else {
-				Worker.productionType = UnitType.Factory;
-			}
-		}
 	}
 	
 	public static void startEscaping(GameController gc){
