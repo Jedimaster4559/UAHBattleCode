@@ -23,6 +23,7 @@ class Factory extends Structure {
 		if (!built) {
 			if (unit.structureIsBuilt() == 1) {
 				built = true;
+				System.out.println("Structure built! " + unitId);
 			} else {
 				return;
 			}
@@ -32,8 +33,9 @@ class Factory extends Structure {
 		if(unit.structureGarrison().size() > 0)
 		{
 			Direction[] directions = Direction.values();
-			for(Direction direction : directions){
-				if(gc.canUnload(unit.id(), direction)) {
+			for (Direction direction : directions) {
+				if (gc.canUnload(unit.id(), direction)) {
+					System.out.println("Unloading unit" + unitId);
 					int unloadId = unit.structureGarrison().get(0);
 					Unit unloadUnit = gc.unit(unloadId);
 					UnitType unloadType = unloadUnit.unitType();
@@ -67,7 +69,7 @@ class Factory extends Structure {
 				}
 			}
 		}
-		
+		System.out.println("Trying production " + unitId);
 		//Creates a new unit if the factory isn't producing
 		if(unit.isFactoryProducing() == 0) {
 			UnitType unitCreateType = decideUnitType();

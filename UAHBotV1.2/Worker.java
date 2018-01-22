@@ -18,11 +18,12 @@ public class Worker extends MobileUnit {
 		}
 		
         // factory logic
-        if ((Utilities.getNearbyBlueprint(unit, gc) != Integer.MAX_VALUE) &&
-			(gc.canBuild(unit.id(), Utilities.getNearbyBlueprint(unit, gc)))) // build
+		int nearestBlueprintId = Utilities.getNearbyBlueprint(unit, gc);
+        if ((nearestBlueprintId != Integer.MAX_VALUE) &&
+			(gc.canBuild(unit.id(), nearestBlueprintId))) // build
         {
 			
-            //System.out.println("Building");
+            System.out.println("Building" + unitId);
             gc.build(unit.id(),Utilities.getNearbyBlueprint(unit, gc));
             isBuilding = true;
 			return;
@@ -36,18 +37,21 @@ public class Worker extends MobileUnit {
 				{
 					if(gc.canBlueprint(unit.id(), productionType, direction))
 					{
-						//System.out.println("Bluprinting: " + Worker.productionType);
+						System.out.println("Blueprinting: " + productionType);
 						try {
 							gc.blueprint(unit.id(), productionType, direction);
+							System.out.println(currentLocation + ":" + unit.location().mapLocation());
 							Unit blueprintUnit = gc.senseUnitAtLocation(currentLocation.add(direction));
 							if (blueprintUnit.unitType() == UnitType.Factory) {
+								System.out.println("Adding new factory");
 								Player.newUnits.add(new Factory(blueprintUnit, gc));
 							} else {
+								System.out.println("Adding new rocket");
 								Player.newUnits.add(new Rocket(blueprintUnit, gc));
 							}
 							isBuilding = true;
 						} catch (Exception e) {
-							System.out.println("error bluprinting or making factory object");
+							System.out.println("error blueprinting or making factory object");
 							e.printStackTrace();
 						}
 						return;
