@@ -34,6 +34,32 @@ class Factory extends Structure {
 			Direction[] directions = Direction.values();
 			for(Direction direction : directions){
 				if(gc.canUnload(unit.id(), direction)) {
+					int unloadId = unit.structureGarrison().get(0);
+					Unit unloadUnit = gc.unit(unloadId);
+					UnitType unloadType = unloadUnit.unitType();
+					switch (unloadType) {
+						case UnitType.Worker:
+							Worker newWorker = new Worker(unloadUnit, gc);
+							UAHUnits.add(newWorker);
+							break;
+						case UnitType.Knight:
+							Knight newKnight = new Knight(unloadUnit, gc);
+							UAHUnits.add(newKnight);
+							break;
+						case UnitType.Ranger:
+							Ranger newRanger = new Ranger(unloadUnit, gc);
+							UAHUnits.add(newRanger);
+							break;
+						case UnitType.Mage:
+							Mage newMage = new Mage(unloadUnit, gc);
+							UAHUnits.add(newMage);
+							break;
+						case UnitType.Healer:
+							Healer newHealer = new Healer(unloadUnit, gc);
+							UAHUnits.add(newHealer);
+							break;
+					}
+						
 					gc.unload(unit.id(), direction);
 					if(unit.structureGarrison().size() == 0){
 						break;

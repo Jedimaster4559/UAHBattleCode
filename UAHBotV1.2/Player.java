@@ -17,6 +17,7 @@ public class Player {
 	static int numRockets;
 	static VecUnit units;
 	static boolean peaceful = false;
+	static ArrayList<UAHUnit> UAHUnits = new ArrayList<UAHUnit>();
 		
 	public static void main(String[] args) {
 	
@@ -32,34 +33,29 @@ public class Player {
 			Utilities.findEnemyTeam(gc);
 		}
 		
-		if (gc.planet() == Planet.Earth) {
-			//System.out.println("find enemy team from earth");
-			Utilities.findEnemyTeam(gc);
-		}
-		
 		//Create and Array of all Directions a bot can travel
 		directions = Direction.values();
 		
 		//initialize logic handler
 		LogicHandler.initialize(gc);
 
+		units = gc.myUnits();
+		
+		for (Unit unit : units) {
+			UAHUnits.add(new Worker(unit, gc));
+		}
 		
 		//loop through all units and process their turn
 		while (true){
 			//System.out.println("CurrentRound: " + gc.round());
 			
 			//get all units
-			units = gc.myUnits();
 												
 			//Process Logic
-			LogicHandler.process(gc);
 			
 			//loop through units
-			for (int i = 0; i < units.size(); i++) {
-				Unit unit = units.get(i);
-				
-				runUnitLogic(unit);
-								
+			for (UAHUnit unit : UAHUnits) {
+				unit.process();
 			}
 			
 			gc.nextTurn();
