@@ -55,6 +55,7 @@ public class Player {
 			if(gc.planet() == Planet.Mars && gc.round() > 700){
 				Utilities.verifyList(gc);
 				UAHUnits.addAll(newUnits);
+				deadUnits.clear();
 				try {
 					for (UAHUnit unit : UAHUnits) {
 						if (unit.isAlive()) {
@@ -66,6 +67,7 @@ public class Player {
 					}
 					
 					UAHUnits.removeAll(deadUnits);
+					UAHUnits.addAll(newUnits);
 					
 					newUnits.clear();
 					deadUnits.clear();
