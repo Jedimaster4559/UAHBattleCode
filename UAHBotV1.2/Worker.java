@@ -23,7 +23,7 @@ public class Worker extends MobileUnit {
 			(gc.canBuild(unit.id(), nearestBlueprintId))) // build
         {
 			
-            System.out.println("Building" + unitId);
+            //System.out.println("Building" + unitId);
             gc.build(unit.id(),Utilities.getNearbyBlueprint(unit, gc));
             isBuilding = true;
 			return;
@@ -35,18 +35,18 @@ public class Worker extends MobileUnit {
 			if (productionType != null) {
 				for(Direction direction:Path.directions)
 				{
-					if(gc.canBlueprint(unit.id(), productionType, direction))
+					if(gc.canBlueprint(unitId, productionType, direction))
 					{
-						System.out.println("Blueprinting: " + productionType);
+						//System.out.println("Blueprinting: " + productionType);
 						try {
-							gc.blueprint(unit.id(), productionType, direction);
-							System.out.println(currentLocation + ":" + unit.location().mapLocation());
+							gc.blueprint(unitId, productionType, direction);
+							//System.out.println(currentLocation + ":" + unit.location().mapLocation());
 							Unit blueprintUnit = gc.senseUnitAtLocation(currentLocation.add(direction));
 							if (blueprintUnit.unitType() == UnitType.Factory) {
-								System.out.println("Adding new factory");
+								//System.out.println("Adding new factory");
 								Player.newUnits.add(new Factory(blueprintUnit, gc));
 							} else {
-								System.out.println("Adding new rocket");
+								//System.out.println("Adding new rocket");
 								Player.newUnits.add(new Rocket(blueprintUnit, gc));
 							}
 							isBuilding = true;
@@ -54,7 +54,6 @@ public class Worker extends MobileUnit {
 							System.out.println("error blueprinting or making factory object");
 							e.printStackTrace();
 						}
-						return;
 					}
 				}
 			}
@@ -71,6 +70,7 @@ public class Worker extends MobileUnit {
 			//System.out.println("Worker " + unit.id());
 			//System.out.println("Before move " + currentLocation + ":" + unit.location().mapLocation());
             Utilities.moveRandomDirection(unit, gc);
+			unit = gc.unit(unitId);
 			currentLocation = unit.location().mapLocation();
 			//System.out.println("After move " + currentLocation + ":" + unit.location().mapLocation());
         }  

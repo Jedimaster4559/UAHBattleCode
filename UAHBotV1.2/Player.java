@@ -62,8 +62,10 @@ public class Player {
 			//loop through units4
 			try {
 				for (UAHUnit unit : UAHUnits) {
-					unit.preProcess();
-					unit.process();
+					if (unit.isAlive()) {
+						unit.preProcess();
+						unit.process();
+					}
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
