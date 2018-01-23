@@ -68,13 +68,17 @@ public class Worker extends MobileUnit {
         }
         else if (!isBuilding)
         {
+			System.out.println("Worker " + unit.id());
+			System.out.println("Before move " + currentLocation + ":" + unit.location().mapLocation());
             Utilities.moveRandomDirection(unit, gc);
 			currentLocation = unit.location().mapLocation();
+			System.out.println("After move " + currentLocation + ":" + unit.location().mapLocation());
         }  
         isBuilding = false;
 	}  
 
 	public void decideProductionType() {
+		System.out.println("Deciding production type");
 		if (gc.round() > 600) {
 			productionType = UnitType.Rocket;
 		}
@@ -86,5 +90,6 @@ public class Worker extends MobileUnit {
 				productionType = UnitType.Factory;
 			}
 		}
+		System.out.println("production type = " + productionType);
 	}
 }	

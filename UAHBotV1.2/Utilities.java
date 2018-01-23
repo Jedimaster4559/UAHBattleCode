@@ -52,6 +52,7 @@ class Utilities {
 					availible*/
 			Direction randomDirection = Path.directions[Player.rand.nextInt(Path.directions.length)];
 			if(gc.isMoveReady(unit.id()) && gc.canMove(unit.id(), randomDirection)){
+				System.out.println("Moving robot");
 				gc.moveRobot(unit.id(), randomDirection);
 			}
 		}
