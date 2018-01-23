@@ -43,6 +43,26 @@ class Utilities {
 			}
 		}
 	}
+	
+	public static void verifyList(GameController gc){
+		VecUnit units = gc.myUnits();
+		boolean found = false;
+		for(long i = 0; i < units.size(); i++){
+			for(UAHUnit target:Player.UAHUnits){
+				if(units.get(i) == target.getUnit()){
+					found = true;
+					break;
+				}
+			}
+			if(!found){
+				Unit unit = units.get(i);
+				if(unit.unitType() == UnitType.Rocket){
+					Player.newUnits.add(new Rocket(unit,gc));
+					
+				}
+			}
+		}
+	}
   
 	public static void moveRandomDirection(Unit unit, GameController gc){
 		try{

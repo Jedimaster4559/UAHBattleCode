@@ -7,14 +7,22 @@ class Rocket extends Structure {
 	}
 	
 	public void process() {
+		MapLocation currentLocation = unit.location().mapLocation();
+		
+		if(!(currentLocation.getPlanet() == Planet.Earth || currentLocation.getPlanet() ==Planet.Mars)){
+			return;
+		}
+		
 		System.out.println("Rocket exists " + unitId + ":" + gc.round());
 		if (unit.location().isOnMap() && unit.location().mapLocation().getPlanet() == Planet.Mars) {
 			System.out.println("On mars");
 		}
 		
-		if (unit.structureIsBuilt() == 0) return;
+		if(!(unit.location().mapLocation().getPlanet() == Planet.Mars)){
+			if (unit.structureIsBuilt() == 0) return;
+		}
 		
-		if (unit.rocketIsUsed() == 0) {
+		if (unit.location().mapLocation().getPlanet() == Planet.Earth && unit.rocketIsUsed() == 0) {
 			if(unit.structureGarrison().size() == 8 ||
 					((unit.structureGarrison().size() * 2 + gc.round()) > 745))
 			{
@@ -22,16 +30,43 @@ class Rocket extends Structure {
 			}
 		
 		//Attempts to unload all bots
-		} else {
-			if(unit.structureGarrison().size() > 0)
-			{
-				Direction[] directions = Direction.values();
-				for(Direction direction:directions){
-					if(gc.canUnload(unit.id(), direction)) {
-						gc.unload(unit.id(), direction);
-						if(unit.structureGarrison().size() == 0){
+		}
+		
+		if(currentLocation.getPlanet() == Planet.Mars && unit.structureGarrison().size() > 0)
+		{
+			Direction[] directions = Direction.values();
+			for (Direction direction : directions) {
+				if (gc.canUnload(unit.id(), direction)) {
+					//System.out.println("Unloading unit" + unitId);
+					int unloadId = unit.structureGarrison().get(0);
+					Unit unloadUnit = gc.unit(unloadId);
+					UnitType unloadType = unloadUnit.unitType();
+					switch (unloadType) {
+						case Worker:
+							Worker newWorker = new Worker(unloadUnit, gc);
+							Player.newUnits.add(newWorker);
 							break;
-						}
+						case Knight:
+							Knight newKnight = new Knight(unloadUnit, gc);
+							Player.newUnits.add(newKnight);
+							break;
+						case Ranger:
+							Ranger newRanger = new Ranger(unloadUnit, gc);
+							Player.newUnits.add(newRanger);
+							break;
+						case Mage:
+							Mage newMage = new Mage(unloadUnit, gc);
+							Player.newUnits.add(newMage);
+							break;
+						case Healer:
+							Healer newHealer = new Healer(unloadUnit, gc);
+							Player.newUnits.add(newHealer);
+							break;
+					}
+						
+					gc.unload(unit.id(), direction);
+					if(unit.structureGarrison().size() == 0){
+						break;
 					}
 				}
 			}
