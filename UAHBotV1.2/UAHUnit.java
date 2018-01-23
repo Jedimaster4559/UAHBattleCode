@@ -21,6 +21,10 @@ public abstract class UAHUnit {
 		return unitId;
 	}
 	
+	public boolean isAlive() {
+		return false;
+	}
+	
 	public void preProcess() {
 		unit = gc.unit(unitId);
 	}
