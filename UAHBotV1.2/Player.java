@@ -21,6 +21,8 @@ public class Player {
 	static boolean peaceful = true;
 	static ArrayList<UAHUnit> UAHUnits = new ArrayList<UAHUnit>();
 	static ArrayList<UAHUnit> newUnits = new ArrayList<UAHUnit>();
+	static ArrayList<UAHUnit> deadUnits = new ArrayList<UAHUnit>();
+
 		
 	public static void main(String[] args) {
 	
@@ -68,12 +70,14 @@ public class Player {
 			}
 			
 			UAHUnits.addAll(newUnits);
+			UAHUnits.removeAll(deadUnits);
 			
 			for (UAHUnit unit : newUnits) {
 				unit.process();
 			}
 			
 			newUnits.clear();
+			deadUnits.clear();
 			
 			gc.nextTurn();
         }
