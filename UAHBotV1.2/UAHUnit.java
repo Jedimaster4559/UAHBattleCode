@@ -21,5 +21,9 @@ public abstract class UAHUnit {
 		return unitId;
 	}
 	
+	public void preProcess() {
+		unit = gc.unit(unitId);
+	}
+	
 	public abstract void process();
 }
