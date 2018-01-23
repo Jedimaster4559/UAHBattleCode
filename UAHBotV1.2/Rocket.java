@@ -7,6 +7,8 @@ class Rocket extends Structure{
 	}
 	
 	public void process() {
+		if (unit.structureIsBuilt() == 0) return;
+		
 		if(unit.structureGarrison().size() == 8 || ((unit.structureGarrison().size() * 2 + gc.round()) > 745)){
 			findLandableSpot(unit, gc);
 		}
