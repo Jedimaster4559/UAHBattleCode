@@ -115,15 +115,16 @@ class Utilities {
 	
 	//Method to move toward the closest rocket
 	public static void moveTowardNearestRocket(Unit unit, GameController gc){
-		try{
+		//try{
 			MapLocation currentLocation = unit.location().mapLocation();
 			long distances[] = new long[LogicHandler.rockets.length];
 			long lowest = Long.MAX_VALUE;
 			int closestRocketIndex = 0;
 			for(int i = 0; i < LogicHandler.rockets.length; i++) {
 				Unit rocket = LogicHandler.rockets[i];
-				if(rocket.location().mapLocation().distanceSquaredTo(currentLocation) < lowest){
-					lowest = rocket.location().mapLocation().distanceSquaredTo(currentLocation);
+				long currentDistance = rocket.location().mapLocation().distanceSquaredTo(currentLocation);
+				if(currentDistance < lowest){
+					lowest = currentDistance;
 					closestRocketIndex = i;
 				}
 			}
@@ -133,12 +134,12 @@ class Utilities {
 				gc.load(dest.id(), unit.id());
 			}
 			Path.determinePathing(unit, dest.location().mapLocation(), gc);
-		}
+		/*}
 		catch(Exception e){
 			System.out.println("An error occurred in MoveTowardNearestRocket(Unit unit, GameController gc)");
 			System.out.println("Unit ID: " + unit.id());
 			e.printStackTrace();
-		}
+		}*/
 		
 	}
 	
