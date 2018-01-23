@@ -7,14 +7,22 @@ class Rocket extends Structure {
 	}
 	
 	public void process() {
-		if (unit.structureIsBuilt() == 0) return;
-		
-		if(unit.structureGarrison().size() == 8 || ((unit.structureGarrison().size() * 2 + gc.round()) > 745)){
-			findLandableSpot(unit, gc);
+		System.out.println("Rocket exists " + unitId + ":" + gc.round());
+		if (unit.location().isOnMap() && unit.location().mapLocation().getPlanet() == Planet.Mars) {
+			System.out.println("On mars");
 		}
 		
+		if (unit.structureIsBuilt() == 0) return;
+		
+		if (unit.rocketIsUsed() == 0) {
+			if(unit.structureGarrison().size() == 8 ||
+					((unit.structureGarrison().size() * 2 + gc.round()) > 745))
+			{
+				findLandableSpot(unit, gc);
+			}
+		
 		//Attempts to unload all bots
-		if(unit.rocketIsUsed() == 1) {
+		} else {
 			if(unit.structureGarrison().size() > 0)
 			{
 				Direction[] directions = Direction.values();

@@ -31,7 +31,7 @@ public class Player {
 		
 		//Seed Randomizer for debugging purposes
 		rand = new Random();
-		rand.setSeed(1337);
+		//rand.setSeed(1337);
 		
 		if (gc.planet() == Planet.Earth) {
 			//System.out.println("find enemy team from earth");

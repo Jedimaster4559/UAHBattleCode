@@ -8,7 +8,11 @@ class Mage extends MobileUnit{
 	
 	public void process() {
         
-		if (LogicHandler.escaping) {
+		if (!unit.location().isOnMap()) {
+			return;
+		}
+		
+		if (LogicHandler.escaping && unit.movementHeat() < 10) {
 			Utilities.moveTowardNearestRocket(unit, gc);
 		}
 		

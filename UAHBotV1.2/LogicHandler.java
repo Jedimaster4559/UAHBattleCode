@@ -3,7 +3,7 @@ import java.util.*;
 
 class LogicHandler {
 	static boolean escaping;
-	static Unit[] rockets;
+	static ArrayList<UAHUnit> rockets = new ArrayList<UAHUnit>();
 	static int factoryGoal = 10;
 	
 	public static void initialize(GameController gc) {
@@ -30,6 +30,8 @@ class LogicHandler {
 		
 		if(!escaping && gc.round() >= 720) {
 			startEscaping(gc);
+		} else if (escaping) {
+			getRocketLocations(gc);
 		}
 	}
 	
@@ -42,12 +44,13 @@ class LogicHandler {
 	}
 	
 	public static void getRocketLocations(GameController gc) {
-		rockets = new Unit[Player.numRockets];
-		int i = 0;
-		for(long j = 0; j < Player.units.size(); j++) {
-			if(Player.units.get(j).unitType() == UnitType.Rocket) {
-				rockets[i] = Player.units.get(j);
-				i++;
+		rockets.clear();
+		for(int i = 0; i < Player.UAHUnits.size(); i++) {
+			UAHUnit rocket = Player.UAHUnits.get(i);
+			if(rocket.getUnit().unitType() == UnitType.Rocket &&
+					rocket.getUnit().location().isOnMap())
+			{
+				rockets.add(rocket);
 			}
 		}
 	}
