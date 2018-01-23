@@ -5,11 +5,12 @@ public abstract class UAHUnit {
 	protected GameController gc;
 	protected Unit unit;
 	protected int unitId;
-	
+	protected UnitType UAHUnitType;
 	
 	public UAHUnit(Unit unit, GameController gc) {
 		this.unit = unit;
 		unitId = unit.id();
+		UAHUnitType = unit.unitType();
 		this.gc = gc;
 	}
 	
@@ -28,7 +29,7 @@ public abstract class UAHUnit {
 		}
 		catch(NoSuchUnit e) {
 			System.out.println("Unit No Longer Exists");
-			System.out.println("Unit Type: " + unitType);
+			System.out.println("Unit Type: " + UAHUnitType);
 			System.out.println("Unit ID: " + unitId);
 			Player.deadUnits.add(this);
 			System.out.println("Removing Unit from Array of Units");

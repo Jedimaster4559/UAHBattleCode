@@ -1,6 +1,6 @@
 import bc.*;
 
-class Rocket extends Structure{
+class Rocket extends Structure {
 
 	public Rocket(Unit unit, GameController gc) {
 		super(unit, gc);
