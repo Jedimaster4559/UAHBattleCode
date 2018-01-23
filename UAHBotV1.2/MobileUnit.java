@@ -7,7 +7,11 @@ abstract class MobileUnit extends UAHUnit {
 	
 	public MobileUnit(Unit unit, GameController gc) {
 		super(unit, gc);
-		currentLocation = unit.location().mapLocation();
+		if (unit.location().isOnMap()) {
+			currentLocation = unit.location().mapLocation();
+		} else {
+			currentLocation = null;
+		}
 		dest = null;
 	}
 	
