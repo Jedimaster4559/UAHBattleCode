@@ -52,35 +52,61 @@ public class Player {
 		
 		//loop through all units and process their turn
 		while (true){
-			//System.out.println("CurrentRound: " + gc.round());
-			
-			//get all units
-					
-			//Process Logic
-			LogicHandler.process(gc);
-			
-			//loop through units4
-			try {
-				for (UAHUnit unit : UAHUnits) {
-					if (unit.isAlive()) {
-						unit.preProcess();
-						unit.process();
+			if(gc.planet() == Planet.Mars && gc.round() > 700){
+				Utilities.verifyList(gc);
+				UAHUnits.addAll(newUnits);
+				deadUnits.clear();
+				try {
+					for (UAHUnit unit : UAHUnits) {
+						if (unit.isAlive()) {
+							System.out.println("Running: " + unit.getUnit().unitType());
+							unit.preProcess();
+							unit.process();
+						}
+						
 					}
+					
+					UAHUnits.removeAll(deadUnits);
+					UAHUnits.addAll(newUnits);
+					
+					newUnits.clear();
+					deadUnits.clear();
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
-			
-			UAHUnits.addAll(newUnits);
-			UAHUnits.removeAll(deadUnits);
-			
-			for (UAHUnit unit : newUnits) {
-				unit.process();
+			else{
+				//System.out.println("CurrentRound: " + gc.round());
+				
+				//get all units
+						
+				//Process Logic
+				LogicHandler.process(gc);
+				
+				//loop through units4
+				try {
+					for (UAHUnit unit : UAHUnits) {
+						if (unit.isAlive()) {
+							unit.preProcess();
+							unit.process();
+						}
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				UAHUnits.addAll(newUnits);
+				UAHUnits.removeAll(deadUnits);
+				
+				for (UAHUnit unit : newUnits) {
+					unit.process();
+				}
+				
+				newUnits.clear();
+				deadUnits.clear();
+				
 			}
-			
-			newUnits.clear();
-			deadUnits.clear();
-			
+						
 			gc.nextTurn();
         }
 		
