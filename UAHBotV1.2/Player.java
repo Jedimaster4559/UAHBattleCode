@@ -33,7 +33,7 @@ public class Player {
 		//Seed Randomizer for debugging purposes
 		rand = new Random();
 		//rand.setSeed(1337);
-		
+
 		//Grab the enemy team locations
 		Utilities.findEnemyTeam(gc);
 		
@@ -51,11 +51,6 @@ public class Player {
 			UAHUnits.add(new Worker(units.get(i), gc));
 		}
 		
-		if (gc.planet() == Planet.Mars) {
-			peaceful = false;
-		} else {
-			peaceful = true;
-		}
 		
 		//loop through all units and process their turn
 		while (true){
