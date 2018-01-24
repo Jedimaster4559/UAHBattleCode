@@ -8,6 +8,7 @@ class LogicHandler {
 	
 	public static void initialize(GameController gc) {
 
+
 		//initialize Pathing
 		Path.initializePathing(gc);
 		
@@ -23,6 +24,7 @@ class LogicHandler {
 		gc.queueResearch(UnitType.Knight);
 		gc.queueResearch(UnitType.Worker);
 		
+
 	}
 	
 	public static void process(GameController gc) {
@@ -38,6 +40,7 @@ class LogicHandler {
 	
 	public static void startEscaping(GameController gc) {
 
+
 		//set escaping to true
 		escaping = true;
 		
@@ -45,6 +48,7 @@ class LogicHandler {
 		getRocketLocations(gc);
 	}
 	
+
 	public static void getRocketLocations(GameController gc) {
 		rockets.clear();
 		for(int i = 0; i < Player.UAHUnits.size(); i++) {
@@ -53,6 +57,7 @@ class LogicHandler {
 					rocket.getUnit().location().isOnMap())
 			{
 				rockets.add(rocket);
+
 
 			}
 		}

@@ -19,11 +19,11 @@ public class Worker extends MobileUnit {
 		}
 		
         // factory logic
+
 		int nearestBlueprintId = Utilities.getNearbyBlueprint(unit, gc);
         if ((nearestBlueprintId != Integer.MAX_VALUE) &&
 			(gc.canBuild(unit.id(), nearestBlueprintId))) // build
         {
-
             gc.build(unit.id(),Utilities.getNearbyBlueprint(unit, gc));
             isBuilding = true;
 			return;

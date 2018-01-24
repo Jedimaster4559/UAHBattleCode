@@ -5,6 +5,7 @@ import java.util.Random;
 
 public class Player {
 	
+
 	//create all variable that might be used throughout run
 	static Random rand;
 	static Direction[] directions;
@@ -24,7 +25,6 @@ public class Player {
 	static ArrayList<UAHUnit> newUnits = new ArrayList<UAHUnit>();
 	static ArrayList<UAHUnit> deadUnits = new ArrayList<UAHUnit>();
 
-
 		
 	public static void main(String[] args) {
 	
@@ -37,6 +37,7 @@ public class Player {
 
 		//Grab the enemy team locations
 		Utilities.findEnemyTeam(gc);
+
 
 		
 		//Create and Array of all Directions a bot can travel
@@ -116,6 +117,7 @@ public class Player {
 			}
 			
 			//proceed to next turn
+
 
 			gc.nextTurn();
         }

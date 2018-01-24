@@ -1,5 +1,6 @@
 import bc.*;
 
+
 class Rocket extends Structure {
 
 	public Rocket(Unit unit, GameController gc) {
@@ -61,14 +62,15 @@ class Rocket extends Structure {
 					if(unit.structureGarrison().size() == 0){
 						break;
 
+
 					}
 				}
 			}
 		}
 	}
 	
-	public void findLandableSpot(Unit unit, GameController gc) {
 
+	public void findLandableSpot(Unit unit, GameController gc) {
 		MapLocation randomLocation;
 		int randx;
 		int randy;
@@ -83,4 +85,5 @@ class Rocket extends Structure {
 			}
 		}
 	}
+
 }
