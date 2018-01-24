@@ -13,6 +13,7 @@ public class Worker extends MobileUnit {
 	}
 	
 	public void process() {
+
 		if (!unit.location().isOnMap()) {
 			return;
 		}
@@ -22,6 +23,7 @@ public class Worker extends MobileUnit {
         if ((nearestBlueprintId != Integer.MAX_VALUE) &&
 			(gc.canBuild(unit.id(), nearestBlueprintId))) // build
         {
+
             gc.build(unit.id(),Utilities.getNearbyBlueprint(unit, gc));
             isBuilding = true;
 			return;
@@ -51,11 +53,13 @@ public class Worker extends MobileUnit {
 					}
 				}
 			}
+
         }
 		
         // harvest logic
         if (gc.canHarvest(unit.id(), Direction.Center))
         {
+
         	gc.harvest(unit.id(), Direction.Center);             
         }
         else if (!isBuilding)
@@ -80,4 +84,5 @@ public class Worker extends MobileUnit {
 			}
 		}
 	}
+
 }	

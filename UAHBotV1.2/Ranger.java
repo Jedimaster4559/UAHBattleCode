@@ -28,4 +28,5 @@ class Ranger extends MobileUnit{
 			Utilities.moveRandomDirection(unit, gc);
 		}
 	}
+
 }

@@ -13,6 +13,7 @@ class Knight extends MobileUnit {
 		}
 		
 		if (LogicHandler.escaping && unit.movementHeat() < 10) {
+
 			Utilities.moveTowardNearestRocket(unit, gc);
 		}
 		
@@ -27,5 +28,7 @@ class Knight extends MobileUnit {
 		if (unit.movementHeat() < 10) {
 			Utilities.moveRandomDirection(unit, gc);
 		}
-	}	
+		
+	}
+	
 }

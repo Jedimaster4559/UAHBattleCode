@@ -7,6 +7,7 @@ class LogicHandler {
 	static int factoryGoal = 10;
 	
 	public static void initialize(GameController gc) {
+
 		//initialize Pathing
 		Path.initializePathing(gc);
 		
@@ -36,6 +37,7 @@ class LogicHandler {
 	}
 	
 	public static void startEscaping(GameController gc) {
+
 		//set escaping to true
 		escaping = true;
 		
@@ -51,6 +53,7 @@ class LogicHandler {
 					rocket.getUnit().location().isOnMap())
 			{
 				rockets.add(rocket);
+
 			}
 		}
 	}

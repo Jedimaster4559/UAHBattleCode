@@ -60,6 +60,7 @@ class Rocket extends Structure {
 					gc.unload(unit.id(), direction);
 					if(unit.structureGarrison().size() == 0){
 						break;
+
 					}
 				}
 			}
@@ -67,6 +68,7 @@ class Rocket extends Structure {
 	}
 	
 	public void findLandableSpot(Unit unit, GameController gc) {
+
 		MapLocation randomLocation;
 		int randx;
 		int randy;
