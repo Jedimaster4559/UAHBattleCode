@@ -28,19 +28,9 @@ public abstract class UAHUnit {
 			
 		}
 		catch(Exception e) {
-			//System.out.println("Unit No Longer Exists");
-			//System.out.println("Unit Type: " + UAHUnitType);
-			//System.out.println("Unit ID: " + unitId);
 			Player.deadUnits.add(this);
-			//System.out.println("Removing Unit from Array of Units");
 			return false;
 		}
-		/*catch(Exception e) {
-			System.out.println("isAlive() error occurred");
-			System.out.println("Unit ID: " + unit.id());
-			e.printStackTrace();
-			return true;
-		}*/
 		
 		return true;
 	}

@@ -22,8 +22,6 @@ public class Worker extends MobileUnit {
         if ((nearestBlueprintId != Integer.MAX_VALUE) &&
 			(gc.canBuild(unit.id(), nearestBlueprintId))) // build
         {
-			
-            //System.out.println("Building" + unitId);
             gc.build(unit.id(),Utilities.getNearbyBlueprint(unit, gc));
             isBuilding = true;
 			return;
@@ -37,16 +35,12 @@ public class Worker extends MobileUnit {
 				{
 					if(gc.canBlueprint(unitId, productionType, direction))
 					{
-						//System.out.println("Blueprinting: " + productionType);
 						try {
 							gc.blueprint(unitId, productionType, direction);
-							//System.out.println(currentLocation + ":" + unit.location().mapLocation());
 							Unit blueprintUnit = gc.senseUnitAtLocation(currentLocation.add(direction));
 							if (blueprintUnit.unitType() == UnitType.Factory) {
-								//System.out.println("Adding new factory");
 								Player.newUnits.add(new Factory(blueprintUnit, gc));
 							} else {
-								//System.out.println("Adding new rocket");
 								Player.newUnits.add(new Rocket(blueprintUnit, gc));
 							}
 							isBuilding = true;
@@ -62,23 +56,18 @@ public class Worker extends MobileUnit {
         // harvest logic
         if (gc.canHarvest(unit.id(), Direction.Center))
         {
-        	//System.out.println("Harvesting");
         	gc.harvest(unit.id(), Direction.Center);             
         }
         else if (!isBuilding)
         {
-			//System.out.println("Worker " + unit.id());
-			//System.out.println("Before move " + currentLocation + ":" + unit.location().mapLocation());
             Utilities.moveRandomDirection(unit, gc);
 			unit = gc.unit(unitId);
 			currentLocation = unit.location().mapLocation();
-			//System.out.println("After move " + currentLocation + ":" + unit.location().mapLocation());
         }  
         isBuilding = false;
 	}  
 
 	public void decideProductionType() {
-		//System.out.println("Deciding production type");
 		if (gc.round() > 600) {
 			productionType = UnitType.Rocket;
 		}
@@ -90,6 +79,5 @@ public class Worker extends MobileUnit {
 				productionType = UnitType.Factory;
 			}
 		}
-		//System.out.println("production type = " + productionType);
 	}
 }	
