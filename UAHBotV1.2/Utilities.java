@@ -66,13 +66,8 @@ class Utilities {
   
 	public static void moveRandomDirection(Unit unit, GameController gc){
 		try{
-			/*Direction availible[8] = {};
-			for (int i = 0; i < 8; i++) {
-				if (gc.isOccupiable(unit.MapLocation.add(Path.directions[i])) {
-					availible*/
 			Direction randomDirection = Path.directions[Player.rand.nextInt(Path.directions.length)];
 			if(gc.isMoveReady(unit.id()) && gc.canMove(unit.id(), randomDirection)){
-				//System.out.println("Moving robot");
 				gc.moveRobot(unit.id(), randomDirection);
 			}
 		}
@@ -88,10 +83,8 @@ class Utilities {
 		try{
 			VecUnit units = gc.senseNearbyUnitsByTeam(unit.location().mapLocation(), unit.attackRange(), enemyTeam);
 			if(units.size() > 0){
-				//System.out.println("Targeting");
 				int enemyID = units.get(0).id();
 				if(gc.canAttack(unit.id(), enemyID)){
-					//System.out.println("Attacking");
 					gc.attack(unit.id(), enemyID);
 				}
 			}
@@ -113,7 +106,6 @@ class Utilities {
 			MapLocation currentLocation = unit.location().mapLocation();
 			VecUnit enemyUnits = gc.senseNearbyUnitsByTeam(currentLocation, unit.visionRange(), enemyTeam);
 			if(enemyUnits.size() > 0){
-				//System.out.println("Finding");
 				long lowest = Long.MAX_VALUE;
 				int index = 0;
 				for(int i = 0; i < (int)enemyUnits.size(); i++){
@@ -123,7 +115,6 @@ class Utilities {
 					}
 				}
 				MapLocation enemyLocation = enemyUnits.get(index).location().mapLocation();
-				//System.out.println("Moving");
 				Path.determinePathing(unit, enemyLocation, gc);
 			}
 		}
@@ -137,7 +128,7 @@ class Utilities {
 	
 	//Method to move toward the closest rocket
 	public static void moveTowardNearestRocket(Unit unit, GameController gc){
-		//try{
+		try{
 			MapLocation currentLocation = unit.location().mapLocation();
 			long distances[] = new long[LogicHandler.rockets.size()];
 			long lowest = Long.MAX_VALUE;
@@ -160,12 +151,12 @@ class Utilities {
 				}
 				Path.determinePathing(unit, dest.getUnit().location().mapLocation(), gc);
 			}
-		/*}
+		}
 		catch(Exception e){
 			System.out.println("An error occurred in MoveTowardNearestRocket(Unit unit, GameController gc)");
 			System.out.println("Unit ID: " + unit.id());
 			e.printStackTrace();
-		}*/
+		}
 		
 	}
 	

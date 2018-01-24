@@ -13,11 +13,6 @@ class Rocket extends Structure {
 			return;
 		}
 		
-		System.out.println("Rocket exists " + unitId + ":" + gc.round());
-		if (unit.location().isOnMap() && unit.location().mapLocation().getPlanet() == Planet.Mars) {
-			System.out.println("On mars");
-		}
-		
 		if(!(unit.location().mapLocation().getPlanet() == Planet.Mars)){
 			if (unit.structureIsBuilt() == 0) return;
 		}
@@ -29,7 +24,6 @@ class Rocket extends Structure {
 				findLandableSpot(unit, gc);
 			}
 		
-		//Attempts to unload all bots
 		}
 		
 		if(currentLocation.getPlanet() == Planet.Mars && unit.structureGarrison().size() > 0)
@@ -37,7 +31,6 @@ class Rocket extends Structure {
 			Direction[] directions = Direction.values();
 			for (Direction direction : directions) {
 				if (gc.canUnload(unit.id(), direction)) {
-					//System.out.println("Unloading unit" + unitId);
 					int unloadId = unit.structureGarrison().get(0);
 					Unit unloadUnit = gc.unit(unloadId);
 					UnitType unloadType = unloadUnit.unitType();
@@ -83,7 +76,6 @@ class Rocket extends Structure {
 			randomLocation = new MapLocation(Planet.Mars, randx,randy);
 			if(gc.canLaunchRocket(unit.id(), randomLocation) && 
 					(Path.mars.isPassableTerrainAt(randomLocation) == 1)){
-				System.out.println("Launching rocket!");
 				gc.launchRocket(unit.id(), randomLocation);
 				break;
 			}
