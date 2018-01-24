@@ -34,7 +34,8 @@ public class Player {
 		rand = new Random();
 		//rand.setSeed(1337);
 		
-		//Grab the enemy team locations
+
+		//System.out.println("find enemy team from earth");
 		Utilities.findEnemyTeam(gc);
 		
 		//Create and Array of all Directions a bot can travel
@@ -51,9 +52,16 @@ public class Player {
 			UAHUnits.add(new Worker(units.get(i), gc));
 		}
 		
+		if (gc.planet() == Planet.Mars) {
+			peaceful = false;
+		} else {
+			peaceful = true;
+		}
+		
 		//loop through all units and process their turn
 		while (true){
 			if(gc.planet() == Planet.Mars && gc.round() > 700){
+
 				//find rockets when they land and at them to units list
 				Utilities.verifyList(gc);
 				UAHUnits.addAll(newUnits);

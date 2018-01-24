@@ -47,6 +47,9 @@ class Utilities {
 	public static void verifyList(GameController gc){
 		VecUnit units = gc.myUnits();
 		boolean found = false;
+		if (Player.UAHUnits.size() == units.size()) {
+			return;
+		}
 		for(long i = 0; i < units.size(); i++){
 			for(UAHUnit target:Player.UAHUnits){
 				if(units.get(i) == target.getUnit()){
