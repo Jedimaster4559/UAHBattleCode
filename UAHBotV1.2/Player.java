@@ -33,7 +33,7 @@ public class Player {
 		//Seed Randomizer for debugging purposes
 		rand = new Random();
 		//rand.setSeed(1337);
-		
+
 		//Grab the enemy team locations
 		Utilities.findEnemyTeam(gc);
 		
@@ -50,6 +50,7 @@ public class Player {
 		for (int i = 0; i < units.size(); i++) {
 			UAHUnits.add(new Worker(units.get(i), gc));
 		}
+		
 		
 		//loop through all units and process their turn
 		while (true){
