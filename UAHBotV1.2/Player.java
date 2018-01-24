@@ -35,9 +35,7 @@ public class Player {
 		//rand.setSeed(1337);
 		
 		//Grab the enemy team locations
-		if (gc.planet() == Planet.Earth) {
-			Utilities.findEnemyTeam(gc);
-		}
+		Utilities.findEnemyTeam(gc);
 		
 		//Create and Array of all Directions a bot can travel
 		directions = Direction.values();
