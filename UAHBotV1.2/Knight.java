@@ -1,22 +1,19 @@
 import bc.*;
 
-class Knight {
-	public static boolean canProcess(Unit unit) {
-		if (unit.unitType() == UnitType.Knight) {
-			return true;
-		}
-		return false;
+class Knight extends MobileUnit {
+	
+	public Knight(Unit unit, GameController gc) {
+		super(unit, gc);
 	}
 	
-	public static void process(Unit unit, GameController gc) {
-
-		if (!unit.location().isOnMap() || unit.location().isInGarrison()) {
+	public void process() {
+		
+		if (!unit.location().isOnMap()) {
 			return;
 		}
 		
-		MapLocation currentLocation = unit.location().mapLocation();
-		
-		if (LogicHandler.escaping) {
+		if (LogicHandler.escaping && unit.movementHeat() < 10) {
+
 			Utilities.moveTowardNearestRocket(unit, gc);
 		}
 		
@@ -31,7 +28,6 @@ class Knight {
 		if (unit.movementHeat() < 10) {
 			Utilities.moveRandomDirection(unit, gc);
 		}
-		
 		
 	}
 	
