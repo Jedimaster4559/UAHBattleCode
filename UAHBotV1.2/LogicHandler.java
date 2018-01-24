@@ -28,7 +28,7 @@ class LogicHandler {
 		//initialize count of all units
 		Utilities.countUnits(gc.myUnits());
 		
-		if(!escaping && gc.round() >= 720) {
+		if(!escaping && gc.round() >= 700) {
 			startEscaping(gc);
 		} else if (escaping) {
 			getRocketLocations(gc);
