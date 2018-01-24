@@ -51,6 +51,12 @@ public class Player {
 			UAHUnits.add(new Worker(units.get(i), gc));
 		}
 		
+		if (gc.planet() == Planet.Mars) {
+			peaceful = false;
+		} else {
+			peaceful = true;
+		}
+		
 		//loop through all units and process their turn
 		while (true){
 			if(gc.planet() == Planet.Mars && gc.round() > 700){
