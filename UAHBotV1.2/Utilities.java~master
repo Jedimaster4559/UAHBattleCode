@@ -18,58 +18,29 @@ class Utilities {
 		Player.numRockets = 0;
 		for(int i = 0; i < units.size(); i++){
 			Unit unit = units.get(i);
-			switch (unit.unitType()) {
-				case Factory:
-					Player.numFactories++;
-					break;
-				case Worker:
-					Player.numWorkers++;
-					break;
-				case Knight:
-					Player.numKnights++;
-					break;
-				case Mage:
-					Player.numMages++;
-					break;
-				case Ranger:
-					Player.numRangers++;
-					break;
-				case Healer:
-					Player.numHealers++;
-					break;
-				case Rocket:
-					Player.numRockets++;
-					break;
-			}
-		}
-	}
-	
-	public static void verifyList(GameController gc){
-		VecUnit units = gc.myUnits();
-		boolean found = false;
-		if (Player.UAHUnits.size() == units.size()) {
-			return;
-		}
-		for(long i = 0; i < units.size(); i++){
-			for(UAHUnit target:Player.UAHUnits){
-				if(units.get(i) == target.getUnit()){
-					found = true;
-					break;
-				}
-			}
-			if(!found){
-				Unit unit = units.get(i);
-				if(unit.unitType() == UnitType.Rocket){
-					Player.newUnits.add(new Rocket(unit,gc));
-					
-				}
-			}
-
+			if(unit.unitType() == UnitType.Factory)
+				Player.numFactories++;
+			if(unit.unitType() == UnitType.Worker)
+				Player.numWorkers++;
+			if(unit.unitType() == UnitType.Knight)
+				Player.numKnights++;
+			if(unit.unitType() == UnitType.Mage)
+				Player.numMages++;
+			if(unit.unitType() == UnitType.Ranger)
+				Player.numRangers++;
+			if(unit.unitType() == UnitType.Healer)
+				Player.numHealers++;
+			if(unit.unitType() == UnitType.Rocket)
+				Player.numRockets++;
 		}
 	}
   
 	public static void moveRandomDirection(Unit unit, GameController gc){
 		try{
+			/*Direction availible[8] = {};
+			for (int i = 0; i < 8; i++) {
+				if (gc.isOccupiable(unit.MapLocation.add(Path.directions[i])) {
+					availible*/
 			Direction randomDirection = Path.directions[Player.rand.nextInt(Path.directions.length)];
 			if(gc.isMoveReady(unit.id()) && gc.canMove(unit.id(), randomDirection)){
 				gc.moveRobot(unit.id(), randomDirection);
@@ -87,8 +58,10 @@ class Utilities {
 		try{
 			VecUnit units = gc.senseNearbyUnitsByTeam(unit.location().mapLocation(), unit.attackRange(), enemyTeam);
 			if(units.size() > 0){
+				System.out.println("Targeting");
 				int enemyID = units.get(0).id();
 				if(gc.canAttack(unit.id(), enemyID)){
+					//System.out.println("Attacking");
 					gc.attack(unit.id(), enemyID);
 				}
 			}
@@ -104,12 +77,11 @@ class Utilities {
 	
 	//Method to move toward the closest enemy
 	public static void moveToNearestEnemy(Unit unit, GameController gc){
-		if (unit.movementHeat() > 0) return;
-
 		try{
 			MapLocation currentLocation = unit.location().mapLocation();
 			VecUnit enemyUnits = gc.senseNearbyUnitsByTeam(currentLocation, unit.visionRange(), enemyTeam);
 			if(enemyUnits.size() > 0){
+				//System.out.println("Finding");
 				long lowest = Long.MAX_VALUE;
 				int index = 0;
 				for(int i = 0; i < (int)enemyUnits.size(); i++){
@@ -119,6 +91,7 @@ class Utilities {
 					}
 				}
 				MapLocation enemyLocation = enemyUnits.get(index).location().mapLocation();
+				//System.out.println("Moving");
 				Path.determinePathing(unit, enemyLocation, gc);
 			}
 		}
@@ -134,28 +107,22 @@ class Utilities {
 	public static void moveTowardNearestRocket(Unit unit, GameController gc){
 		try{
 			MapLocation currentLocation = unit.location().mapLocation();
-			long distances[] = new long[LogicHandler.rockets.size()];
+			long distances[] = new long[LogicHandler.rockets.length];
 			long lowest = Long.MAX_VALUE;
-			int closestRocketIndex = Integer.MAX_VALUE;
-			for(int i = 0; i < LogicHandler.rockets.size(); i++) {
-				UAHUnit rocket = LogicHandler.rockets.get(i);
-				if (rocket.getUnit().location().isOnMap()) {
-					MapLocation rocketLocation = rocket.getUnit().location().mapLocation();
-					long currentDistance = rocketLocation.distanceSquaredTo(currentLocation);
-					if(currentDistance < lowest){
-						lowest = currentDistance;
-						closestRocketIndex = i;
-					}
+			int closestRocketIndex = 0;
+			for(int i = 0; i < LogicHandler.rockets.length; i++) {
+				Unit rocket = LogicHandler.rockets[i];
+				if(rocket.location().mapLocation().distanceSquaredTo(currentLocation) < lowest){
+					lowest = rocket.location().mapLocation().distanceSquaredTo(currentLocation);
+					closestRocketIndex = i;
 				}
 			}
-			if (closestRocketIndex < LogicHandler.rockets.size()) {
-				UAHUnit dest = LogicHandler.rockets.get(closestRocketIndex);
-				if(gc.canLoad(dest.getUnitId(), unit.id())){
-					gc.load(dest.getUnitId(), unit.id());
-				}
-				Path.determinePathing(unit, dest.getUnit().location().mapLocation(), gc);
+			
+			Unit dest = LogicHandler.rockets[closestRocketIndex];
+			if(gc.canLoad(dest.id(), unit.id())){
+				gc.load(dest.id(), unit.id());
 			}
-
+			Path.determinePathing(unit, dest.location().mapLocation(), gc);
 		}
 		catch(Exception e){
 			System.out.println("An error occurred in MoveTowardNearestRocket(Unit unit, GameController gc)");

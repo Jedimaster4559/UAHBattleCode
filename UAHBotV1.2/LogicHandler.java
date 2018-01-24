@@ -3,10 +3,12 @@ import java.util.*;
 
 class LogicHandler {
 	static boolean escaping;
-	static Unit[] rockets;
+	static ArrayList<UAHUnit> rockets = new ArrayList<UAHUnit>();
 	static int factoryGoal = 10;
 	
-	public static void initialize(GameController gc){
+	public static void initialize(GameController gc) {
+
+
 		//initialize Pathing
 		Path.initializePathing(gc);
 		
@@ -22,29 +24,23 @@ class LogicHandler {
 		gc.queueResearch(UnitType.Knight);
 		gc.queueResearch(UnitType.Worker);
 		
-		//initialize production type
-		Worker.productionType = UnitType.Factory;
+
 	}
 	
-	public static void process(GameController gc){
+	public static void process(GameController gc) {
 		//initialize count of all units
-		Utilities.countUnits(Player.units);
+		Utilities.countUnits(gc.myUnits());
 		
-		if(!escaping && gc.round() >= 720){
+		if(!escaping && gc.round() >= 700) {
 			startEscaping(gc);
-		}
-		if (gc.round() > 500) {
-			Worker.productionType = UnitType.Rocket;
-		} else {
-			if (Player.numFactories >= factoryGoal) {
-				Worker.productionType = null;
-			} else {
-				Worker.productionType = UnitType.Factory;
-			}
+		} else if (escaping) {
+			getRocketLocations(gc);
 		}
 	}
 	
-	public static void startEscaping(GameController gc){
+	public static void startEscaping(GameController gc) {
+
+
 		//set escaping to true
 		escaping = true;
 		
@@ -52,13 +48,17 @@ class LogicHandler {
 		getRocketLocations(gc);
 	}
 	
-	public static void getRocketLocations(GameController gc){
-		rockets = new Unit[Player.numRockets];
-		int i = 0;
-		for(long j = 0; j < Player.units.size(); j++){
-			if(Player.units.get(j).unitType() == UnitType.Rocket){
-				rockets[i] = Player.units.get(j);
-				i++;
+
+	public static void getRocketLocations(GameController gc) {
+		rockets.clear();
+		for(int i = 0; i < Player.UAHUnits.size(); i++) {
+			UAHUnit rocket = Player.UAHUnits.get(i);
+			if(rocket.getUnit().unitType() == UnitType.Rocket &&
+					rocket.getUnit().location().isOnMap())
+			{
+				rockets.add(rocket);
+
+
 			}
 		}
 	}
