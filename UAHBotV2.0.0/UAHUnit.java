@@ -23,10 +23,10 @@ public abstract class UAHUnit {
 	}
 	
 	public boolean isAlive() {
-		try{
-			gc.unit(unitId);
-			
-		}
+		try{					//somewhat inefficient and maybe
+			gc.unit(unitId);		//buggy way to detect a dead unit
+							//but is perhaps the only way to
+		}					//do so due to BC API problems
 		catch(Exception e) {
 			Player.deadUnits.add(this);
 			return false;
