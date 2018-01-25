@@ -2,46 +2,39 @@ import bc.*;
 
 class Factory extends Structure {
 	
+	//By default when a factory is created it is still under construction
 	private boolean built = false;
+	
 	
 	public Factory(Unit unit, GameController gc) {
 		super(unit, gc);
 		built = false;
 	}
 
+	
 	public void process() {
 		
-		/*
-		VecUnitID unitIDs = unit.structureGarrison();
-		for(long i = 0; i < unitIDs.size(); i++){
-			Unit garrisonedUnit = gc.unit(unitIDs.get(i));
-			gc.unload();
-			Player.runUnitLogic(garrinedUnit);
-		}
-		*/
-		
+		//check to determing if the factory has been built
 		if (!built) {
 			if (unit.structureIsBuilt() == 1) {
-				built = true;
-				//System.out.println("Structure built! " + unitId);
+				built = true;	//true if it does
 			} else {
-				return;
+				return;		//returns and does not process if the factor has not been built yet (prevents errors)
 			}
 		}
 		
 		//Attempts to unload all bots
 		if(unit.structureGarrison().size() > 0)
 		{
-			Direction[] directions = Direction.values();
-			for (Direction direction : directions) {
-				if (gc.canUnload(unit.id(), direction)) {
-					//System.out.println("Unloading unit" + unitId);
-					int unloadId = unit.structureGarrison().get(0);
-					Unit unloadUnit = gc.unit(unloadId);
+			Direction[] directions = Direction.values();					//get all directions (improve this later)
+			for (Direction direction : directions) {					//Loop through all of the directions
+				if (gc.canUnload(unit.id(), direction)) {				//Check if the bot can unload in a given dir direction
+					int unloadId = unit.structureGarrison().get(0);			
+					Unit unloadUnit = gc.unit(unloadId);				//set important variables for unload
 					UnitType unloadType = unloadUnit.unitType();
-					switch (unloadType) {
-						case Worker:
-							Worker newWorker = new Worker(unloadUnit, gc);
+					switch (unloadType) {						//Go through all unit types and create a new object
+						case Worker:						//of the type of unit we plan to unload
+							Worker newWorker = new Worker(unloadUnit, gc);	
 							Player.newUnits.add(newWorker);
 							break;
 						case Knight:
@@ -62,30 +55,28 @@ class Factory extends Structure {
 							break;
 					}
 						
-					gc.unload(unit.id(), direction);
+					gc.unload(unit.id(), direction);				//unload unit in the given direction
 					if(unit.structureGarrison().size() == 0){
-						break;
-					}
+						break;							//if the factory happens to be empty now, stop unloading
+					}								//if not, keep trying different directions
 				}
 			}
 		}
-		//System.out.println("Trying production " + unitId);
-		//Creates a new unit if the factory isn't producing
-		if(unit.isFactoryProducing() == 0) {
-			UnitType unitCreateType = decideUnitType();
-			//System.out.println("Creating new unit: " + unitCreateType);
-			if(gc.canProduceRobot(unit.id(), unitCreateType)){
-				gc.produceRobot(unit.id(), unitCreateType);
+		
+		if(unit.isFactoryProducing() == 0) {				//create new unit if the factory is not already working on one
+			UnitType unitCreateType = decideUnitType();		//decide the unit type of said unit
+			if(gc.canProduceRobot(unit.id(), unitCreateType)){	
+				gc.produceRobot(unit.id(), unitCreateType);	//create the unit if it is possible to do so
 			}
 		}
 
 	}
 	
 	public UnitType decideUnitType() {
-		if (Player.numWorkers < 10) {
+		if (Player.numWorkers < 10) {				
 			return UnitType.Worker;
-		} else if (Player.numKnights <= Player.numRangers) {
-			return UnitType.Knight;
+		} else if (Player.numKnights <= Player.numRangers) {	//Currently returns 10 workers and then
+			return UnitType.Knight;				//splits between Knights and Rangers
 		} else {
 			return UnitType.Ranger;
 		}
