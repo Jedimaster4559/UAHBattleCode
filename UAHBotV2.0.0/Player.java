@@ -71,7 +71,8 @@ public class Player {
 				//find rockets when they land and at them to units list
 				
 				UAHUnits.addAll(newUnits);
-				deadUnits.clear();	//should this be newUnits.clear? Could be causing us some process time issues
+				deadUnits.clear();
+				newUnits.clear();
 				
 				//try to run all units this turn
 				try {
@@ -101,7 +102,7 @@ public class Player {
 				try {
 					for (UAHUnit unit : UAHUnits) {		//Loop through all of our units
 						if (unit.isAlive()) {
-							unit.preProcess();	//Preprocess the unit (deterimnes if it is alive)
+							unit.preProcess();	//Preprocess the unit (determines if it is alive)
 							unit.process();		//process the unit's actions
 						}
 					}
@@ -126,7 +127,7 @@ public class Player {
 			
 			//proceed to next turn
 			gc.nextTurn();
-        	}
+        }
 		
 	}
 
