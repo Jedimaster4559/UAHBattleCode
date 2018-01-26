@@ -22,19 +22,20 @@ class Rocket extends Structure {
 			if (unit.structureIsBuilt() == 0) return;			//Check to see if the structure is actually built
 		}
 		
-		if (unit.location().mapLocation().getPlanet() == Planet.Earth && unit.rocketIsUsed() == 0) {	//If we are on earth, and the rocket is not used (the rocket should never be used on earth? Why is it this way)?
-			if(unit.structureGarrison().size() == 8 ||
-					((unit.structureGarrison().size() * 2 + gc.round()) > 745))	//leave conditions for leaving to go to mars
+		if (unit.location().mapLocation().getPlanet() == Planet.Earth) {	//If we are on earth
+			//check if we should launch
+			if(		(unit.structureGarrison().size() == 8) ||
+					((unit.structureGarrison().size() * 2 + gc.round()) > 745) ||
+					(gc.round() >= 748))	
 			{
-				findLandableSpot(unit, gc);		//attempt to leave earth and escape to mars
+				findLandableSpot(unit, gc);		//try to launch
 			}
 		
-		}
+		} else if (unit.structureGarrison().size() > 0) {//if we are on Mars, attempt to unload
 		
-		if(currentLocation.getPlanet() == Planet.Mars && unit.structureGarrison().size() > 0)	//if we are on Mars, attempt to unload
-		{
 			Direction[] directions = Direction.values();					//get an array of all directions
 			for (Direction direction : directions) {					//loop through all possible directions
+			
 				if (gc.canUnload(unit.id(), direction)) {				//if we can unload a unit in this direction, do it
 					int unloadId = unit.structureGarrison().get(0);			
 					Unit unloadUnit = gc.unit(unloadId);				//helpful unload variables
