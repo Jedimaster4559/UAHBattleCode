@@ -1,12 +1,5 @@
 import bc.*;
 
-/**
- * Please note that this class is very old and
- * is currently being updated with numerous upgrades.
- * These include an A* Algorithm that will be the 
- * main pathing method.
-**/
-
 class Path {
 	static PlanetMap earth;
 	static PlanetMap mars;
@@ -136,10 +129,13 @@ class Path {
 	//Method designed to be used to determine and run the best pathing algorithm
 	//Should be used in the case where you
 	static void determinePathing(Unit unit, MapLocation dest, GameController gc){
-		//UnitType type = unit.unitType();
-		if (unit.movementHeat() < 10) {
-			bugPath(unit, dest, gc);
-		}
+		UnitType type = unit.unitType();
+		bugPath(unit, dest, gc);
+		
 	}
-
+	
+	
+	
+	
+	
 }

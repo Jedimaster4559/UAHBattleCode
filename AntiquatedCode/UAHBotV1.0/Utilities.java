@@ -4,9 +4,6 @@ import java.lang.Long;
 
 class Utilities {
 	
-	static Team enemyTeam;
-	static MapLocation[] enemyStartLocations;
-    
 	//Method to count all units Should be run at the beginning of each turn.
 	public static void countUnits(VecUnit units){
 		Player.numFactories = 0;
@@ -18,61 +15,26 @@ class Utilities {
 		Player.numRockets = 0;
 		for(int i = 0; i < units.size(); i++){
 			Unit unit = units.get(i);
-			switch (unit.unitType()) {
-				case Factory:
-					Player.numFactories++;
-					break;
-				case Worker:
-					Player.numWorkers++;
-					break;
-				case Knight:
-					Player.numKnights++;
-					break;
-				case Mage:
-					Player.numMages++;
-					break;
-				case Ranger:
-					Player.numRangers++;
-					break;
-				case Healer:
-					Player.numHealers++;
-					break;
-				case Rocket:
-					Player.numRockets++;
-					break;
-			}
-		}
-	}
-	
-	//for mars, add rockets if they didn't exist in the
-	//UAHUnits array before
-	public static void verifyList(GameController gc){
-		VecUnit units = gc.myUnits();
-		boolean found = false;
-		if (Player.UAHUnits.size() == units.size()) {
-			return;
-		}
-		for(long i = 0; i < units.size(); i++){
-			found = false;
-			for(UAHUnit target:Player.UAHUnits){
-				if(units.get(i) == target.getUnit()){
-					found = true;
-					break;
-				}
-			}
-			if(!found){
-				Unit unit = units.get(i);
-				if(unit.unitType() == UnitType.Rocket){
-					Player.newUnits.add(new Rocket(unit,gc));
-					
-				}
-			}
+			if(unit.unitType() == UnitType.Factory)
+				Player.numFactories++;
+			if(unit.unitType() == UnitType.Worker)
+				Player.numWorkers++;
+			if(unit.unitType() == UnitType.Knight)
+				Player.numKnights++;
+			if(unit.unitType() == UnitType.Mage)
+				Player.numMages++;
+			if(unit.unitType() == UnitType.Ranger)
+				Player.numRangers++;
+			if(unit.unitType() == UnitType.Healer)
+				Player.numHealers++;
+			if(unit.unitType() == UnitType.Rocket)
+				Player.numRockets++;
 		}
 	}
   
 	public static void moveRandomDirection(Unit unit, GameController gc){
 		try{
-			Direction randomDirection = Path.directions[Player.rand.nextInt(Path.directions.length)];
+			Direction randomDirection = Player.directions[Player.rand.nextInt(Player.directions.length)];
 			if(gc.isMoveReady(unit.id()) && gc.canMove(unit.id(), randomDirection)){
 				gc.moveRobot(unit.id(), randomDirection);
 			}
@@ -87,10 +49,12 @@ class Utilities {
 	//Method to attack one enemy within range if possible
 	public static void senseAndAttackInRange(Unit unit, GameController gc){
 		try{
-			VecUnit units = gc.senseNearbyUnitsByTeam(unit.location().mapLocation(), unit.attackRange(), enemyTeam);
+			VecUnit units = gc.senseNearbyUnitsByTeam(unit.location().mapLocation(), unit.attackRange(), enemyTeam(gc));
 			if(units.size() > 0){
+				System.out.println("Targeting");
 				int enemyID = units.get(0).id();
 				if(gc.canAttack(unit.id(), enemyID)){
+					System.out.println("Attacking");
 					gc.attack(unit.id(), enemyID);
 				}
 			}
@@ -105,13 +69,12 @@ class Utilities {
 	}
 	
 	//Method to move toward the closest enemy
-	public static void moveToNearestEnemy(Unit unit, GameController gc) {
-		if (unit.movementHeat() > 0) return;
-
+	public static void moveToNearestEnemy(Unit unit, GameController gc){
 		try{
 			MapLocation currentLocation = unit.location().mapLocation();
-			VecUnit enemyUnits = gc.senseNearbyUnitsByTeam(currentLocation, unit.visionRange(), enemyTeam);
+			VecUnit enemyUnits = gc.senseNearbyUnitsByTeam(currentLocation, unit.visionRange(), enemyTeam(gc));
 			if(enemyUnits.size() > 0){
+				System.out.println("Finding");
 				long lowest = Long.MAX_VALUE;
 				int index = 0;
 				for(int i = 0; i < (int)enemyUnits.size(); i++){
@@ -121,6 +84,7 @@ class Utilities {
 					}
 				}
 				MapLocation enemyLocation = enemyUnits.get(index).location().mapLocation();
+				System.out.println("Moving");
 				Path.determinePathing(unit, enemyLocation, gc);
 			}
 		}
@@ -134,29 +98,23 @@ class Utilities {
 	
 	//Method to move toward the closest rocket
 	public static void moveTowardNearestRocket(Unit unit, GameController gc){
-		try {
+		try{
 			MapLocation currentLocation = unit.location().mapLocation();
-			long distances[] = new long[LogicHandler.rockets.size()];
+			long distances[] = new long[LogicHandler.rockets.length];
 			long lowest = Long.MAX_VALUE;
-			int closestRocketIndex = Integer.MAX_VALUE;
-			for(int i = 0; i < LogicHandler.rockets.size(); i++) {
-				UAHUnit rocket = LogicHandler.rockets.get(i);
-				if (rocket.getUnit().location().isOnMap()) {
-					MapLocation rocketLocation = rocket.getUnit().location().mapLocation();
-					long currentDistance = rocketLocation.distanceSquaredTo(currentLocation);
-					if(currentDistance < lowest){
-						lowest = currentDistance;
-						closestRocketIndex = i;
+			int index = 0;
+			for(Unit rocket:LogicHandler.rockets){
+					if(rocket.location().mapLocation().distanceSquaredTo(currentLocation) < lowest){
+						lowest = rocket.location().mapLocation().distanceSquaredTo(currentLocation);
+						index = 0;
 					}
-				}
 			}
-			if (closestRocketIndex < LogicHandler.rockets.size()) {
-				UAHUnit dest = LogicHandler.rockets.get(closestRocketIndex);
-				if(gc.canLoad(dest.getUnitId(), unit.id())){
-					gc.load(dest.getUnitId(), unit.id());
-				}
-				Path.determinePathing(unit, dest.getUnit().location().mapLocation(), gc);
+			
+			Unit dest = LogicHandler.rockets[index];
+			if(gc.canLoad(dest.id(), unit.id())){
+				gc.load(dest.id(), unit.id());
 			}
+			Path.determinePathing(unit, dest.location().mapLocation(), gc);
 		}
 		catch(Exception e){
 			System.out.println("An error occurred in MoveTowardNearestRocket(Unit unit, GameController gc)");
@@ -177,12 +135,18 @@ class Utilities {
 		return Integer.MAX_VALUE;
 	}
 	
+	
+	
 	//Method that returns enemy team
-	public static void findEnemyTeam(GameController gc){
+	public static Team enemyTeam(GameController gc){
+		gc.team();
 		if(gc.team().equals(Team.Blue)){
-			enemyTeam = Team.Red;
-		} else {
-			enemyTeam = Team.Blue;
+			gc.team();
+			return Team.Red;
+		}
+		else {
+			gc.team();
+			return Team.Blue;
 		}
 	}
 	
@@ -195,23 +159,6 @@ class Utilities {
 			}
 			counter++;
 		}
-		return -1; //Not quite sure what the best thing would be to put here so we don't throw an error
+		return 0; //Not quite sure what the best thing would be to put here so we don't throw an error
 	}
-	
-	public static void invertPositions(Unit unit, GameController gc){
-		if (gc.planet() != Planet.Earth) return;
-        VecUnit allUnits = Path.earth.getInitial_units();
-        int counter = 0;
-        enemyStartLocations = new MapLocation[(int)(allUnits.size()/2)];
-        for(long i = 0; i < allUnits.size(); i++){
-            if(allUnits.get(i).team() == enemyTeam){
-                enemyStartLocations[counter] = allUnits.get(i).location().mapLocation();
-                counter++;
-            }
-        }
-    }
-    
-    public static void moveTowardEnemyStart(Unit unit, GameController gc){
-        Path.bugPath(unit, enemyStartLocations[0], gc);
-    }
 }

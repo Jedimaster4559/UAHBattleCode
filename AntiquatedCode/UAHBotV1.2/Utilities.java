@@ -6,7 +6,7 @@ class Utilities {
 	
 	static Team enemyTeam;
 	static MapLocation[] enemyStartLocations;
-    
+	
 	//Method to count all units Should be run at the beginning of each turn.
 	public static void countUnits(VecUnit units){
 		Player.numFactories = 0;
@@ -44,8 +44,6 @@ class Utilities {
 		}
 	}
 	
-	//for mars, add rockets if they didn't exist in the
-	//UAHUnits array before
 	public static void verifyList(GameController gc){
 		VecUnit units = gc.myUnits();
 		boolean found = false;
@@ -53,7 +51,6 @@ class Utilities {
 			return;
 		}
 		for(long i = 0; i < units.size(); i++){
-			found = false;
 			for(UAHUnit target:Player.UAHUnits){
 				if(units.get(i) == target.getUnit()){
 					found = true;
@@ -67,6 +64,7 @@ class Utilities {
 					
 				}
 			}
+
 		}
 	}
   
@@ -105,7 +103,7 @@ class Utilities {
 	}
 	
 	//Method to move toward the closest enemy
-	public static void moveToNearestEnemy(Unit unit, GameController gc) {
+	public static void moveToNearestEnemy(Unit unit, GameController gc){
 		if (unit.movementHeat() > 0) return;
 
 		try{
@@ -134,7 +132,7 @@ class Utilities {
 	
 	//Method to move toward the closest rocket
 	public static void moveTowardNearestRocket(Unit unit, GameController gc){
-		try {
+		try{
 			MapLocation currentLocation = unit.location().mapLocation();
 			long distances[] = new long[LogicHandler.rockets.size()];
 			long lowest = Long.MAX_VALUE;
@@ -157,6 +155,7 @@ class Utilities {
 				}
 				Path.determinePathing(unit, dest.getUnit().location().mapLocation(), gc);
 			}
+
 		}
 		catch(Exception e){
 			System.out.println("An error occurred in MoveTowardNearestRocket(Unit unit, GameController gc)");
@@ -195,7 +194,7 @@ class Utilities {
 			}
 			counter++;
 		}
-		return -1; //Not quite sure what the best thing would be to put here so we don't throw an error
+		return 0; //Not quite sure what the best thing would be to put here so we don't throw an error
 	}
 	
 	public static void invertPositions(Unit unit, GameController gc){

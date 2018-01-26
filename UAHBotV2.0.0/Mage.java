@@ -1,27 +1,33 @@
 import bc.*;
 
-class Mage {
-	public static boolean canProcess(Unit unit) {
-		if(unit.unitType() == UnitType.Mage) {
-			return true;
-		}
-		return false;
+
+class Mage extends MobileUnit{
+	
+	public Mage(Unit unit, GameController gc) {
+		super(unit, gc);
 	}
 	
-	public static void process(Unit unit, GameController gc) {
-                if(!unit.location().isOnMap()){
+	public void process() {
+        	//Do not process if we are not on Earth or Mars
+		if (!unit.location().isOnMap()) {
 			return;
 		}
 		
-		MapLocation currentLocation = unit.location().mapLocation();
-		if(unit.attackHeat() < 10){
-			Utilities.senseAndAttackInRange(unit, gc);
+		//Attempt to escape/move to the nearest rocket if that is something currently important
+		if (LogicHandler.escaping && unit.movementHeat() < 10) {
+			Utilities.moveTowardNearestRocket(unit, gc);
 		}
-		if(unit.movementHeat() < 10){
-			Utilities.moveToNearestEnemy(unit, gc);
+		
+		if (!Player.peaceful) {						//Peaceful catch for debugging purposes
+			if(unit.attackHeat() < 10){
+				Utilities.senseAndAttackInRange(unit, gc);	//attack an enemy if possible
+			}
+			if(unit.movementHeat() < 10){
+				Utilities.moveToNearestEnemy(unit, gc);		//move toward an enemy if possible
+			}
 		}
-		if(unit.movementHeat() < 10){
-			Utilities.moveRandomDirection(unit, gc);
+		if(unit.movementHeat() < 10){				
+			Utilities.moveRandomDirection(unit, gc);		//move a random direction if possible
 		}
 	}	
 }

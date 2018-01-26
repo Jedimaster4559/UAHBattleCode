@@ -7,11 +7,9 @@ public class Player {
 	
 
 	//create all variable that might be used throughout run
-	static Random rand;			//Random to be used when needed
-	static Direction[] directions;		//Array of all directions (this can be improved with an array without Direction.Center)
-	static GameController gc;		//the game controller so it is more available to us
-	
-	//counters for all units
+	static Random rand;
+	static Direction[] directions;
+	static GameController gc;
 	static int numFactories;
 	static int numWorkers;
 	static int numKnights;
@@ -19,16 +17,13 @@ public class Player {
 	static int numRangers;
 	static int numHealers;
 	static int numRockets;
-
-	//Set some strategy goals
 	static int factoryGoal = 5;
 	static int rocketGoal = 2;
-	
-	static VecUnit units;						//a VecUnit of all of our units (this may no longer be necessary)
-	static boolean peaceful = false;				//Peaceful toggle for bot
-	static ArrayList<UAHUnit> UAHUnits = new ArrayList<UAHUnit>();	//List of all of our units
-	static ArrayList<UAHUnit> newUnits = new ArrayList<UAHUnit>();	//list of all units created this turn
-	static ArrayList<UAHUnit> deadUnits = new ArrayList<UAHUnit>();	//list of all units that died this turn
+	static VecUnit units;
+	static boolean peaceful = false;
+	static ArrayList<UAHUnit> UAHUnits = new ArrayList<UAHUnit>();
+	static ArrayList<UAHUnit> newUnits = new ArrayList<UAHUnit>();
+	static ArrayList<UAHUnit> deadUnits = new ArrayList<UAHUnit>();
 
 		
 	public static void main(String[] args) {
@@ -43,7 +38,9 @@ public class Player {
 		//Grab the enemy team locations
 		Utilities.findEnemyTeam(gc);
 
-		//Create and Array of all Directions a bot can travel (Maybe change to array without Direction.Center?)
+
+		
+		//Create and Array of all Directions a bot can travel
 		directions = Direction.values();
 		
 		//initialize logic handler
@@ -60,27 +57,19 @@ public class Player {
 		
 		//loop through all units and process their turn
 		while (true){
-
-			//check for dead units and new mars rockets
-			Utilities.verifyList(gc);
-			
-			//Process Logic
-			LogicHandler.process(gc);
-			
-			//Mars logic
-			if(gc.planet() == Planet.Mars){
+			if(gc.planet() == Planet.Mars && gc.round() > 700){
 				//find rockets when they land and at them to units list
-				
+				Utilities.verifyList(gc);
 				UAHUnits.addAll(newUnits);
 				deadUnits.clear();
-				newUnits.clear();
 				
 				//try to run all units this turn
 				try {
-					for (UAHUnit unit : UAHUnits) {		//Loop through all of our units
+					for (UAHUnit unit : UAHUnits) {
 						if (unit.isAlive()) {
-							unit.preProcess();	//Preprocess the unit (determines if the bot still exists)
-							unit.process();		//Allow the unit to process its turn
+							System.out.println("Running: " + unit.getUnit().unitType());
+							unit.preProcess();
+							unit.process();
 						}
 						
 					}
@@ -97,13 +86,15 @@ public class Player {
 				}
 			}
 			else{
+				//Process Logic
+				LogicHandler.process(gc);
 				
 				//try to run all units this turn
 				try {
-					for (UAHUnit unit : UAHUnits) {		//Loop through all of our units
+					for (UAHUnit unit : UAHUnits) {
 						if (unit.isAlive()) {
-							unit.preProcess();	//Preprocess the unit (determines if it is alive)
-							unit.process();		//process the unit's actions
+							unit.preProcess();
+							unit.process();
 						}
 					}
 				} catch (Exception e) {
@@ -126,6 +117,8 @@ public class Player {
 			}
 			
 			//proceed to next turn
+
+
 			gc.nextTurn();
         }
 		

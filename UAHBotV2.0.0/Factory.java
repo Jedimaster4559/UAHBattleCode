@@ -2,6 +2,7 @@ import bc.*;
 
 class Factory extends Structure {
 	
+
 	//By default when a factory is created it is still under construction.
 	private boolean built = false;
 	private int workerGoal = 10; // abstraction of the number of workers we want for flexibility.
@@ -9,7 +10,6 @@ class Factory extends Structure {
 	private final int knightRatio = 4;	// ratios of each combat unit to keep overall balance
 	private final int rangerRatio = 2;	// between the number of each in play.
 	private final int mageRatio = 1;
-	
 	
 	
 	public Factory(Unit unit, GameController gc) {
@@ -20,6 +20,7 @@ class Factory extends Structure {
 	
 	public void process() {
 		
+
 		//check to determine if the factory has been built
 		if (!built) {
 			if (unit.structureIsBuilt() == 1) {
@@ -32,14 +33,16 @@ class Factory extends Structure {
 		//Attempts to unload all bots
 		if(unit.structureGarrison().size() > 0)
 		{
+
 			Direction[] directions = Direction.values();				//get all directions (improve this later)
+
 			for (Direction direction : directions) {					//Loop through all of the directions
 				if (gc.canUnload(unit.id(), direction)) {				//Check if the bot can unload in a given dir direction
 					int unloadId = unit.structureGarrison().get(0);			
 					Unit unloadUnit = gc.unit(unloadId);				//set important variables for unload
 					UnitType unloadType = unloadUnit.unitType();
 					switch (unloadType) {						//Go through all unit types and create a new object
-						case Worker:							//of the type of unit we plan to unload
+						case Worker:						//of the type of unit we plan to unload
 							Worker newWorker = new Worker(unloadUnit, gc);	
 							Player.newUnits.add(newWorker);
 							break;
@@ -64,7 +67,7 @@ class Factory extends Structure {
 					gc.unload(unit.id(), direction);				//unload unit in the given direction
 					if(unit.structureGarrison().size() == 0){
 						break;							//if the factory happens to be empty now, stop unloading
-					}									//if not, keep trying different directions
+					}								//if not, keep trying different directions
 				}
 			}
 		}
@@ -79,7 +82,7 @@ class Factory extends Structure {
 	}
 	
 	public UnitType decideUnitType() {
-		
+
 		private int knightMultiplier = Player.numKnights / knightRatio; // multipliers help determine
 		private int rangerMultiplier = Player.numRangers / rangerRatio; // what unit needs to be produced.
 		private int mageMultiplier = Player.numMages / mageRatio;

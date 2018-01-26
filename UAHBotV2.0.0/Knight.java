@@ -1,29 +1,32 @@
 import bc.*;
 
-class Knight {
-	public static boolean canProcess(Unit unit) {
-		if(unit.unitType() == UnitType.Knight) {
-			return true;
-		}
-		return false;
+class Knight extends MobileUnit {
+	
+	public Knight(Unit unit, GameController gc) {
+		super(unit, gc);
 	}
 	
-	public static void process(Unit unit, GameController gc) {
-		if(!unit.location().isOnMap()){
+	public void process() {
+		//check to see if the given unit is on the map and therefore controllable
+		if (!unit.location().isOnMap()) {
 			return;
 		}
 		
-		MapLocation currentLocation = unit.location().mapLocation();
-		if(unit.attackHeat() < 10){
-			Utilities.senseAndAttackInRange(unit, gc);
-		}
-		if(unit.movementHeat() < 10){
-			Utilities.moveToNearestEnemy(unit, gc);
-		}
-		if(unit.movementHeat() < 10){
-			Utilities.moveRandomDirection(unit, gc);
+		if (LogicHandler.escaping && unit.movementHeat() < 10) {	//determine if we need to be attempting
+			Utilities.moveTowardNearestRocket(unit, gc);		//to get on a rocket
 		}
 		
+		if (!Player.peaceful) {						//Peaceful catch (for debugging purposes)
+			if (unit.attackHeat() < 10) {				
+				Utilities.senseAndAttackInRange(unit, gc);	//If we are capable of attacking, attack
+			}
+			if (unit.movementHeat() < 10) {
+				Utilities.moveToNearestEnemy(unit, gc);		//If we could not attack and are capable of
+			}							//moving, move
+		}
+		if (unit.movementHeat() < 10) {
+			Utilities.moveRandomDirection(unit, gc);		//If we still can move, attempt to move a random direction
+		}
 		
 	}
 	

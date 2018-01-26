@@ -1,6 +1,5 @@
 import bc.*;
 
-
 class Healer extends MobileUnit {
 	
 	public Healer(Unit unit, GameController gc) {
@@ -8,6 +7,8 @@ class Healer extends MobileUnit {
 	}
 	
 	public void process() {
+
+
 		
 	}
 	
