@@ -22,7 +22,16 @@ public class Player {
   
 	//Set some strategy goals
 	static int factoryGoal = 5;
-	static int rocketGoal = 2;
+	
+	// set variables to be used for karboniteGoal
+	static final double kgMultiplier = 1.2;			// this multiplier helps ensure there is additional karbonite to use for unit production in the late game
+	static final int rocketCost = 150;				// the literal production cost of karbonite, taken from the battlecode game specs
+	static int stage1 = 300;
+    static int stage2 = 600;
+        
+	//Set some strategy goals
+	static int rocketGoal;// = (int)(Math.ceil(gc.myUnits().size() / 8)- numRockets);
+    static double karboniteGoal; 
 	
 	static VecUnit units;						//a VecUnit of all of our units (this may no longer be necessary)
 	static boolean peaceful = false;				//Peaceful toggle for bot
@@ -51,7 +60,6 @@ public class Player {
 
 		//get a list of all our units at game start
 		units = gc.myUnits();
-		
 
 		//add all initial units to units ArrayList
 		for (int i = 0; i < units.size(); i++) {
