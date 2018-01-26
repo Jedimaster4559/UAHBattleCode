@@ -44,6 +44,8 @@ class Utilities {
 		}
 	}
 	
+	//for mars, add rockets if they didn't exist in the
+	//UAHUnits array before
 	public static void verifyList(GameController gc){
 		VecUnit units = gc.myUnits();
 		boolean found = false;
@@ -51,6 +53,7 @@ class Utilities {
 			return;
 		}
 		for(long i = 0; i < units.size(); i++){
+			found = false;
 			for(UAHUnit target:Player.UAHUnits){
 				if(units.get(i) == target.getUnit()){
 					found = true;
@@ -194,7 +197,7 @@ class Utilities {
 			}
 			counter++;
 		}
-		return 0; //Not quite sure what the best thing would be to put here so we don't throw an error
+		return -1; //Not quite sure what the best thing would be to put here so we don't throw an error
 	}
 	
 	public static void invertPositions(Unit unit, GameController gc){
