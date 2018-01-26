@@ -2,14 +2,12 @@ import bc.*;
 import java.util.*;
 
 class LogicHandler {
-
 	
 	static boolean escaping;					//Are we trying to escape earth to mars?
 	static ArrayList<UAHUnit> rockets = new ArrayList<UAHUnit>();	//List of all rockets so this info is publicly available
 	static int factoryGoal = 10;					//Total numbers of factories we are willing to build
 	
 	public static void initialize(GameController gc) {		
-
 		//initialize Pathing
 		Path.initializePathing(gc);
 		
@@ -49,6 +47,7 @@ class LogicHandler {
 		//set variable with all rocket locations
 		getRocketLocations(gc);
 	}
+
 
 	public static void getRocketLocations(GameController gc) {
 		rockets.clear();						//clears the rocket array (not sure why we need to do this since it should be empty)
