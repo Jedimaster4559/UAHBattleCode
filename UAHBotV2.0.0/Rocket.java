@@ -8,13 +8,17 @@ class Rocket extends Structure {
 	}
 	
 	public void process() {
-		MapLocation currentLocation = unit.location().mapLocation();						//get the current location of the rocket
 		
-		if(!(currentLocation.getPlanet() == Planet.Earth || currentLocation.getPlanet() ==Planet.Mars)){	//return and do not process if we are in space
+		//abort processing for the turn if we are in space
+		//update currentLocation otherwise
+		if (unit.location().isOnMap() == 0) {
 			return;
+		} else {
+			currentLocation = unit.location().mapLocation();
 		}
 		
-		if(!(unit.location().mapLocation().getPlanet() == Planet.Mars)){	//this looks slightly suspicious, why is this necessary?
+		//abort processing if on earth and not built yet
+		if(!(unit.location().mapLocation().getPlanet() == Planet.Mars)) {
 			if (unit.structureIsBuilt() == 0) return;			//Check to see if the structure is actually built
 		}
 		
