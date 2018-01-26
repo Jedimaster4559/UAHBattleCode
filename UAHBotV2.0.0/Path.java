@@ -1,5 +1,10 @@
 import bc.*;
-
+/**
+ * Please note that this class is very old and
+ * is currently being updated with numerous upgrades.
+ * These include an A* Algorithm that will be the 
+ * main pathing method.
+**/
 class Path {
 	static PlanetMap earth;
 	static PlanetMap mars;
