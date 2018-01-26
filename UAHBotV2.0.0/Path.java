@@ -141,5 +141,4 @@ class Path {
 			bugPath(unit, dest, gc);
 		}
 	}
-
 }

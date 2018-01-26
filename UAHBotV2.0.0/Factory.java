@@ -2,7 +2,6 @@ import bc.*;
 
 class Factory extends Structure {
 	
-
 	//By default when a factory is created it is still under construction.
 	private boolean built = false;
 	private int workerGoal = 10; // abstraction of the number of workers we want for flexibility.
@@ -20,7 +19,6 @@ class Factory extends Structure {
 	
 	public void process() {
 		
-
 		//check to determine if the factory has been built
 		if (!built) {
 			if (unit.structureIsBuilt() == 1) {
@@ -33,7 +31,6 @@ class Factory extends Structure {
 		//Attempts to unload all bots
 		if(unit.structureGarrison().size() > 0)
 		{
-
 			Direction[] directions = Direction.values();				//get all directions (improve this later)
 
 			for (Direction direction : directions) {					//Loop through all of the directions

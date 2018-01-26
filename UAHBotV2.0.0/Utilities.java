@@ -6,7 +6,7 @@ class Utilities {
 	
 	static Team enemyTeam;
 	static MapLocation[] enemyStartLocations;
-    
+
 	//Method to count all units Should be run at the beginning of each turn.
 	public static void countUnits(VecUnit units){
 		Player.numFactories = 0;
@@ -67,6 +67,7 @@ class Utilities {
 					
 				}
 			}
+
 		}
 	}
   
