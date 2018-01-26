@@ -19,7 +19,7 @@ public class Player {
 	static int numRangers;
 	static int numHealers;
 	static int numRockets;
-	
+  
 	//Set some strategy goals
 	static int factoryGoal = 5;
 	static int rocketGoal = 2;
@@ -52,6 +52,7 @@ public class Player {
 		//get a list of all our units at game start
 		units = gc.myUnits();
 		
+
 		//add all initial units to units ArrayList
 		for (int i = 0; i < units.size(); i++) {
 			UAHUnits.add(new Worker(units.get(i), gc));
@@ -96,7 +97,6 @@ public class Player {
 				}
 			}
 			else{
-				
 				
 				//try to run all units this turn
 				try {

@@ -6,7 +6,7 @@ class Utilities {
 	
 	static Team enemyTeam;
 	static MapLocation[] enemyStartLocations;
-	
+
 	//Method to count all units Should be run at the beginning of each turn.
 	public static void countUnits(VecUnit units){
 		Player.numFactories = 0;
@@ -106,7 +106,7 @@ class Utilities {
 	}
 	
 	//Method to move toward the closest enemy
-	public static void moveToNearestEnemy(Unit unit, GameController gc){
+	public static void moveToNearestEnemy(Unit unit, GameController gc) {
 		if (unit.movementHeat() > 0) return;
 
 		try{
@@ -135,7 +135,7 @@ class Utilities {
 	
 	//Method to move toward the closest rocket
 	public static void moveTowardNearestRocket(Unit unit, GameController gc){
-		try{
+		try {
 			MapLocation currentLocation = unit.location().mapLocation();
 			long distances[] = new long[LogicHandler.rockets.size()];
 			long lowest = Long.MAX_VALUE;
@@ -158,7 +158,6 @@ class Utilities {
 				}
 				Path.determinePathing(unit, dest.getUnit().location().mapLocation(), gc);
 			}
-
 		}
 		catch(Exception e){
 			System.out.println("An error occurred in MoveTowardNearestRocket(Unit unit, GameController gc)");

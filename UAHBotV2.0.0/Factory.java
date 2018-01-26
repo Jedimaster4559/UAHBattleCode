@@ -2,8 +2,13 @@ import bc.*;
 
 class Factory extends Structure {
 	
-	//By default when a factory is created it is still under construction
+	//By default when a factory is created it is still under construction.
 	private boolean built = false;
+	private int workerGoal = 10; // abstraction of the number of workers we want for flexibility.
+	
+	private final int knightRatio = 4;	// ratios of each combat unit to keep overall balance
+	private final int rangerRatio = 2;	// between the number of each in play.
+	private final int mageRatio = 1;
 	
 	
 	public Factory(Unit unit, GameController gc) {
@@ -14,7 +19,7 @@ class Factory extends Structure {
 	
 	public void process() {
 		
-		//check to determing if the factory has been built
+		//check to determine if the factory has been built
 		if (!built) {
 			if (unit.structureIsBuilt() == 1) {
 				built = true;	//true if it does
@@ -26,7 +31,8 @@ class Factory extends Structure {
 		//Attempts to unload all bots
 		if(unit.structureGarrison().size() > 0)
 		{
-			Direction[] directions = Direction.values();					//get all directions (improve this later)
+			Direction[] directions = Direction.values();				//get all directions (improve this later)
+
 			for (Direction direction : directions) {					//Loop through all of the directions
 				if (gc.canUnload(unit.id(), direction)) {				//Check if the bot can unload in a given dir direction
 					int unloadId = unit.structureGarrison().get(0);			
@@ -73,14 +79,29 @@ class Factory extends Structure {
 	}
 	
 	public UnitType decideUnitType() {
-		if (Player.numWorkers < 10) {				
-			return UnitType.Worker;
-		} else if (Player.numKnights <= Player.numRangers) {	//Currently returns 10 workers and then
-			return UnitType.Knight;				//splits between Knights and Rangers
+
+		private int knightMultiplier = Player.numKnights / knightRatio; // multipliers help determine
+		private int rangerMultiplier = Player.numRangers / rangerRatio; // what unit needs to be produced.
+		private int mageMultiplier = Player.numMages / mageRatio;
+	
+		private int[] cmpArray = {knightMultiplier, rangerMultiplier, mageMultiplier}; // array of multipliers.
+		private int lowest = knightMultiplier;
+		for(int i = 0; i < cmpArray.size; i++) {
+			if(cmpArray[i] < lowest){
+				lowest = cmpArray[i];	// iterates through the array to find the lowest multiplier.
+			}
+		}
+			
+		if ((Player.numWorkers < workerGoal)&&(Player.numWorkers <= (2*Player.numKnights))) {	// initial expression to determine whether		
+			return UnitType.Worker;																// to produce more workers.
+		} else if (knightMultiplier == lowest) {	// decides unit based on lowest multiplier.
+			return UnitType.Knight;					// ideally, all multipliers will be equal.
+		} else if (rangerMultiplier == lowest) {
+			return UnitType.Knight;
+		} else if (mageMultiplier == lowest) {
+			return UnitType.Mage;
 		} else {
-			return UnitType.Ranger;
+			return UnitType.Knight;		// default unit
 		}
 	}
-
-
 }

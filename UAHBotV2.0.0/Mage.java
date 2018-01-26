@@ -1,5 +1,6 @@
 import bc.*;
 
+
 class Mage extends MobileUnit{
 	
 	public Mage(Unit unit, GameController gc) {
