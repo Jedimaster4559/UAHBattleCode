@@ -1,5 +1,6 @@
 import bc.*;
 
+
 class Ranger extends MobileUnit{
 
 	public Ranger(Unit unit, GameController gc) {

@@ -19,7 +19,7 @@ public class Player {
 	static int numRangers;
 	static int numHealers;
 	static int numRockets;
-	
+
 	//Set some strategy goals
 	static int factoryGoal = 5;
 	static int rocketGoal = 2;
@@ -60,6 +60,7 @@ public class Player {
 		
 		//loop through all units and process their turn
 		while (true){
+
 			//check for dead units and new mars rockets
 			Utilities.verifyList(gc);
 			
@@ -96,7 +97,6 @@ public class Player {
 				}
 			}
 			else{
-				
 				
 				//try to run all units this turn
 				try {

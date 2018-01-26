@@ -1,6 +1,7 @@
 import bc.*;
 
 
+
 class Rocket extends Structure {
 
 	public Rocket(Unit unit, GameController gc) {
