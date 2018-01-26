@@ -60,10 +60,16 @@ public class Player {
 		
 		//loop through all units and process their turn
 		while (true){
-			//Determine if we are on earth or on mars to improve the processing of the bot
-			if(gc.planet() == Planet.Mars && gc.round() > 700){
+			//check for dead units and new mars rockets
+			Utilities.verifyList(gc);
+			
+			//Process Logic
+			LogicHandler.process(gc);
+			
+			//Mars logic
+			if(gc.planet() == Planet.Mars){
 				//find rockets when they land and at them to units list
-				Utilities.verifyList(gc);
+				
 				UAHUnits.addAll(newUnits);
 				deadUnits.clear();	//should this be newUnits.clear? Could be causing us some process time issues
 				
@@ -89,8 +95,7 @@ public class Player {
 				}
 			}
 			else{
-				//Process Logic
-				LogicHandler.process(gc);
+				
 				
 				//try to run all units this turn
 				try {
