@@ -19,14 +19,14 @@ public class Worker extends MobileUnit {
 		}
 		
 		int nearestBlueprintId = Utilities.getNearbyBlueprint(unit, gc); //determines what the ID number of the nearest blueprint is
-        	if ((nearestBlueprintId != Integer.MAX_VALUE) &&
+        if ((nearestBlueprintId != Integer.MAX_VALUE) &&
 			(gc.canBuild(unit.id(), nearestBlueprintId))) // Can we build the nearest blueprint
         	{
-            		gc.build(unit.id(),Utilities.getNearbyBlueprint(unit, gc));	//build
+            	gc.build(unit.id(),Utilities.getNearbyBlueprint(unit, gc));	//build
            		isBuilding = true;						//ensure we don't move this turn
-			return;
+				return;
         	}
-        	else if((((gc.karbonite() + (950 - gc.round())) > 1000) 
+        else if((((gc.karbonite() + (950 - gc.round())) > 1000) 
 				|| gc.round() > 500))
 		{   
 			// blueprint logic
@@ -62,11 +62,11 @@ public class Worker extends MobileUnit {
 		}
 		else if (!isBuilding)
 		{
-		    	Utilities.moveRandomDirection(unit, gc);		//if we are not moving, then blueprint right here
+		    Utilities.moveRandomDirection(unit, gc);		//if we are not moving, then blueprint right here
 			unit = gc.unit(unitId);					//make sure we update our current position
 			currentLocation = unit.location().mapLocation();	
 		}  
-			isBuilding = false;	//reset this variable at the end of processing
+		isBuilding = false;	//reset this variable at the end of processing
 	}  
 
 	public void decideProductionType() {
