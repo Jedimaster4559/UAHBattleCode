@@ -52,7 +52,7 @@ public class Player {
 		//get a list of all our units at game start
 		units = gc.myUnits();
 		
-		//add all inital units to units ArrayList
+		//add all initial units to units ArrayList
 		for (int i = 0; i < units.size(); i++) {
 			UAHUnits.add(new Worker(units.get(i), gc));
 		}
