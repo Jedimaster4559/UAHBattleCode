@@ -32,13 +32,10 @@ public class Player {
 	// this multiplier helps ensure there is additional karbonite to use for unit production in the late game
 	static final double kgMultiplier = 1.2;			
 	// the literal production cost of karbonite, taken from the battlecode game specs
-	static final int rocketCost = bc.bcUnitTypeBlueprintCost(UnitType.Rocket);				
-	static int stage1 = 300;
-    static int stage2 = 600;
+	static final int rocketCost = (int) bc.bcUnitTypeBlueprintCost(UnitType.Rocket);
         
 	//Set some strategy goals
 	static int rocketGoal;// = (int)(Math.ceil(gc.myUnits().size() / 8)- numRockets);
-    static double karboniteGoal; 
 	
 	static VecUnit units;						//a VecUnit of all of our units (this may no longer be necessary)
 	static boolean peaceful = false;				//Peaceful toggle for bot
