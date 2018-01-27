@@ -67,6 +67,21 @@ public class Worker extends MobileUnit {
 		if (gc.canHarvest(unitId, Direction.Center))
 		{
 			gc.harvest(unitId, Direction.Center);      //if the location we are standing on is harvestable, then harvest it       
+			System.out.println("Harvesting");
+			KarboniteLocation thisDeposit = getKarboniteLocation();
+			System.out.println(thisDeposit);
+			if(thisDeposit != null){
+				System.out.println("This Deposit was found");
+				thisDeposit.setKarbonite(thisDeposit.getKarbonite()-unit.workerHarvestAmount());
+				if(thisDeposit.getKarbonite() <= 0){
+					if(thisDeposit.getMapLocation() == currentLocation){
+						isHarvesting = false;
+						dest = null;
+					}
+					Player.karboniteLocations.remove(thisDeposit);
+					System.out.println("Removing this Deposit");
+				}
+			}
 		}
 		else if (!isBuilding && !isHarvesting)
 		{
@@ -81,7 +96,28 @@ public class Worker extends MobileUnit {
 			}
 			
 		}
+		
+		if (!isBuilding){
+			if(unit.movementHeat() < 10){
+				if(dest != null){
+					Path.determinePathing(unit, dest, gc);
+				} else {
+					Utilities.moveRandomDirection(unit, gc);
+				}
+				unit = gc.unit(unitId);
+				currentLocation = unit.location().mapLocation();
+			}
+		}
 	}  
+	
+	public KarboniteLocation getKarboniteLocation(){
+		for(KarboniteLocation location:Player.karboniteLocations){
+			if(unit.location().mapLocation() == location.getMapLocation()){
+				return location;
+			}
+		}
+		return null;
+	}
 	
 	public void setBestKarbonite() {
 		int index = 0;
@@ -96,6 +132,7 @@ public class Worker extends MobileUnit {
 		KarboniteLocation bestLocation = Player.karboniteLocations.get(index);
 		dest = bestLocation.mapLocation;
 		isHarvesting = true;
+		System.out.println("Setting Best Karbonite Location");
 	}
 
 	public void decideProductionType() {

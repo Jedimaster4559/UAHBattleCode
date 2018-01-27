@@ -70,6 +70,7 @@ class LogicHandler {
 			VecMapLocation allLocations = gc.allLocationsWithin(new MapLocation(Planet.Earth,0,0), 5001);
 			for(long i = 0; i < allLocations.size(); i++) {
 				if(Path.earth.initialKarboniteAt(allLocations.get(i)) > 0) {
+					System.out.println("Found a KarboniteLocation");
 					Player.karboniteLocations.add(new KarboniteLocation(allLocations.get(i), gc));
 				}
 			}
