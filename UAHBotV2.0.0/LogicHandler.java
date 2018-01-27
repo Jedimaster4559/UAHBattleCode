@@ -41,6 +41,9 @@ class LogicHandler {
 		} else if (escaping) {
 			getRockets(gc);
 		}
+		
+		calculateKarboniteGoals(gc);
+		calculateRocketGoal(gc, (int)gc.myUnits().size());
 	}
 	
 	public static void startEscaping(GameController gc) {
