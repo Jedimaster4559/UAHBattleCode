@@ -39,7 +39,7 @@ class LogicHandler {
 		if(!escaping && gc.round() >= 700) {
 			startEscaping(gc);
 		} else if (escaping) {
-			getRocketLocations(gc);
+			getRockets(gc);
 		}
 	}
 	
@@ -48,7 +48,7 @@ class LogicHandler {
 		escaping = true;
 		
 		//set variable with all rocket locations
-		getRocketLocations(gc);
+		getRockets(gc);
 	}
 
 
@@ -81,7 +81,7 @@ class LogicHandler {
 	}
 	
 	public static void calculateRocketGoal(GameController gc, int numUnits) {
-		getRockets();
-		Player.rocketGoal = Math.ceil((double)numUnits/8) - rockets.size();
+		getRockets(gc);
+		Player.rocketGoal = (int) Math.ceil((double)numUnits/8) - rockets.size();
 	}
 }

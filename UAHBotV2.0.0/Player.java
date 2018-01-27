@@ -25,7 +25,7 @@ public class Player {
 	static int highKarboniteGoal = 300;
 	static int lowKarboniteGoal = 50;
 	
-	static int final stage = 300;
+	static final int stage = 300;
 	
 	// set variables to be used for karboniteGoal
 	
