@@ -22,10 +22,17 @@ public class Player {
   
 	//Set some strategy goals
 	static int factoryGoal = 5;
+	static int highKarboniteGoal = 300;
+	static int lowKarboniteGoal = 50;
+	
+	static int final stage = 300;
 	
 	// set variables to be used for karboniteGoal
-	static final double kgMultiplier = 1.2;			// this multiplier helps ensure there is additional karbonite to use for unit production in the late game
-	static final int rocketCost = 150;				// the literal production cost of karbonite, taken from the battlecode game specs
+	
+	// this multiplier helps ensure there is additional karbonite to use for unit production in the late game
+	static final double kgMultiplier = 1.2;			
+	// the literal production cost of karbonite, taken from the battlecode game specs
+	static final int rocketCost = bc.bcUnitTypeBlueprintCost(UnitType.Rocket);				
 	static int stage1 = 300;
     static int stage2 = 600;
         

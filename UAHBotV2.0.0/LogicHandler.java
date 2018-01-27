@@ -3,9 +3,14 @@ import java.util.*;
 
 class LogicHandler {
 	
-	static boolean escaping;					//Are we trying to escape earth to mars?
-	static ArrayList<UAHUnit> rockets = new ArrayList<UAHUnit>();	//List of all rockets so this info is publicly available
-	static int factoryGoal = 10;					//Total numbers of factories we are willing to build
+	//Are we trying to escape earth to mars?
+	static boolean escaping;	
+	
+	//List of all rockets so this info is publicly available
+	static ArrayList<UAHUnit> rockets = new ArrayList<UAHUnit>();	
+	
+	//Total numbers of factories we are willing to build
+	static int factoryGoal = 10;	
 	
 	public static void initialize(GameController gc) {		
 		//initialize Pathing
@@ -24,8 +29,6 @@ class LogicHandler {
 		gc.queueResearch(UnitType.Knight);
 		gc.queueResearch(UnitType.Worker);
 		
-
-
 	}
 	
 	public static void process(GameController gc) {
@@ -50,8 +53,11 @@ class LogicHandler {
 
 
 	public static void getRocketLocations(GameController gc) {
-		rockets.clear();						//clears the rocket array (not sure why we need to do this since it should be empty)
-		for(int i = 0; i < Player.UAHUnits.size(); i++) {		//loop through all units and add all rockets to the arraylist of Rockets
+		//clears the rocket array
+		rockets.clear();						
+		
+		//loop through all units and add all rockets to the arraylist of Rockets
+		for(int i = 0; i < Player.UAHUnits.size(); i++) {		
 			UAHUnit rocket = Player.UAHUnits.get(i);
 			if(rocket.getUnit().unitType() == UnitType.Rocket &&
 					rocket.getUnit().location().isOnMap())
@@ -62,4 +68,7 @@ class LogicHandler {
 			}
 		}
 	}
+	
+	public static void calculateKarboniteGoals() {
+		
 }
