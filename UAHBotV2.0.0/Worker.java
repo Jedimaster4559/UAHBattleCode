@@ -39,16 +39,16 @@ public class Worker extends MobileUnit {
 				mine();
 			} 
 			if (Player.numFactories < Player.highFactoryGoal) {
-				boolean worked = blueprintSomething(UnitType.Factory);
+				boolean worked = blueprintType(UnitType.Factory);
 			} 
 			if (!Player.initRocketBuilt) {
-				boolean worked = blueprintSomething(UnitType.Rocket);
+				boolean worked = blueprintType(UnitType.Rocket);
 			}
 			if (gc.karbonite() < Player.lowKarboniteGoal) {
 				mine();
 			}
 			if (Player.numFactories < Player.lowFactoryGoal) {
-				boolean worked = blueprintSomething(UnitType.Factory);
+				boolean worked = blueprintType(UnitType.Factory);
 			}
 			mine();
 			/*
@@ -81,13 +81,13 @@ public class Worker extends MobileUnit {
 
 		} else {
 			if (Player.numRockets < Player.rocketGoal) {
-				boolean worked = blueprintSomething(UnitType.Rocket);
+				boolean worked = blueprintType(UnitType.Rocket);
 			}
 			if (gc.karbonite() < Player.lowKarboniteGoal) {
 				mine();
 			}
 			if (Player.numFactories < Player.highFactoryGoal && !LogicHandler.escaping) {
-				boolean worked = blueprintSomething(UnitType.Factory);
+				boolean worked = blueprintType(UnitType.Factory);
 			}
 			mine();
 		}
@@ -108,27 +108,28 @@ public class Worker extends MobileUnit {
 	}
 	
 	public boolean blueprintType(UnitType type) {
-		if(gc.canBlueprint(unitId, type, direction))	
+		for(Direction direction:Path.directions) //loop through all directions
 		{
-			try {
-				gc.blueprint(unitId, type, direction);
-				//gets the blueprint we just created as a unit
-				Unit blueprintUnit = gc.senseUnitAtLocation(currentLocation.add(direction));
-				if (type == UnitType.Factory) {				
-					Player.newUnits.add(new Factory(blueprintUnit, gc));
-				} else {	//creates an object of the proper structure type
-					Player.newUnits.add(new Rocket(blueprintUnit, gc));
+			if(gc.canBlueprint(unitId, type, direction))	
+			{
+				try {
+					gc.blueprint(unitId, type, direction);
+					//gets the blueprint we just created as a unit
+					Unit blueprintUnit = gc.senseUnitAtLocation(currentLocation.add(direction));
+					if (type == UnitType.Factory) {				
+						Player.newUnits.add(new Factory(blueprintUnit, gc));
+					} else {	//creates an object of the proper structure type
+						Player.newUnits.add(new Rocket(blueprintUnit, gc));
+					}
+					isBuilding = true;	//ensure we don't move this turn
+					return true;
+				} catch (Exception e) {
+					System.out.println("error blueprinting or making factory object");
+					e.printStackTrace();
 				}
-				isBuilding = true;	//ensure we don't move this turn
-				return true;
-			} catch (Exception e) {
-				System.out.println("error blueprinting or making factory object");
-				e.printStackTrace();
-				return false;
 			}
-		} else {
-			return false;
 		}
+		return false;
 	}
 	
 	public void mine() {
@@ -139,6 +140,7 @@ public class Worker extends MobileUnit {
 		}
 	}
 
+	/*
 	public void decideProductionType() {
 		if (gc.round() > 600) {		//basically, make sure we aren't planning to escape
 			productionType = UnitType.Rocket;
@@ -153,5 +155,5 @@ public class Worker extends MobileUnit {
 			}
 		}
 	}
-
+	*/
 }	
