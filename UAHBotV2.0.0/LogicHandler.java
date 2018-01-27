@@ -11,6 +11,8 @@ class LogicHandler {
 		//initialize Pathing
 		Path.initializePathing(gc);
 		
+		initializeKarboniteLocations(gc);
+		
 		//initialize escape mode (starts as no since we can't anyways)
 		escaping = false;
 		
@@ -60,6 +62,20 @@ class LogicHandler {
 
 
 			}
+		}
+	}
+	
+	public static void initializeKarboniteLocations(GameController gc) {
+		if(gc.planet() == Planet.Earth){
+			VecMapLocation allLocations = gc.allLocationsWithin(new MapLocation(Planet.Earth,0,0), 5001);
+			PlanetMap map = new PlanetMap();
+			for(long i = 0; i < allLocations.size(); i++) {
+				if(map.initialKarboniteAt(allLocations.get(i)) > 0) {
+					Player.karboniteLocations.add(new KarboniteLocation(allLocations.get(i), gc));
+				}
+			}
+		} else {
+			
 		}
 	}
 }

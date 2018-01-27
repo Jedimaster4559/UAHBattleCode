@@ -87,7 +87,7 @@ class Factory extends Structure {
 		// array of multipliers.
 		int[] cmpArray = {knightMultiplier, rangerMultiplier, mageMultiplier}; 
 		int lowest = knightMultiplier;
-		for(int i = 0; i < cmpArray.size; i++) {
+		for(int i = 0; i < cmpArray.length; i++) {
 			if(cmpArray[i] < lowest){
 				lowest = cmpArray[i];	// iterates through the array to find the lowest multiplier.
 			}

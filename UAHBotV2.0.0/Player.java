@@ -38,6 +38,7 @@ public class Player {
 	static ArrayList<UAHUnit> UAHUnits = new ArrayList<UAHUnit>();	//List of all of our units
 	static ArrayList<UAHUnit> newUnits = new ArrayList<UAHUnit>();	//list of all units created this turn
 	static ArrayList<UAHUnit> deadUnits = new ArrayList<UAHUnit>();	//list of all units that died this turn
+	static ArrayList<KarboniteLocation> karboniteLocations = new ArrayList<KarboniteLocation>();	//List of all KarboniteLocations
 
 		
 	public static void main(String[] args) {
