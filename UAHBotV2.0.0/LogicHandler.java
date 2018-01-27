@@ -71,4 +71,6 @@ class LogicHandler {
 	
 	public static void calculateKarboniteGoals() {
 		
+	}
+		
 }
