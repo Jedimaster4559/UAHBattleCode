@@ -37,8 +37,20 @@ public class Worker extends MobileUnit {
 			
 			if (gc.karbonite() < Player.highKarboniteGoal) {
 				mine();
-			} else if (Player.numFactories < Player.highFactoryGoal) {
-				
+			} 
+			if (Player.numFactories < Player.highFactoryGoal) {
+				boolean worked = blueprintSomething(UnitType.Factory);
+			} 
+			if (!Player.initRocketBuilt) {
+				boolean worked = blueprintSomething(UnitType.Rocket);
+			}
+			if (gc.karbonite() < Player.lowKarboniteGoal) {
+				mine();
+			}
+			if (Player.numFactories < Player.lowFactoryGoal) {
+				boolean worked = blueprintSomething(UnitType.Factory);
+			}
+			mine();
 			/*
 			// blueprint logic
 			decideProductionType();	//decide the current production type
@@ -67,6 +79,17 @@ public class Worker extends MobileUnit {
 			}
 			*/
 
+		} else {
+			if (Player.numRockets < Player.rocketGoal) {
+				boolean worked = blueprintSomething(UnitType.Rocket);
+			}
+			if (gc.karbonite() < Player.lowKarboniteGoal) {
+				mine();
+			}
+			if (Player.numFactories < Player.highFactoryGoal && !LogicHandler.escaping) {
+				boolean worked = blueprintSomething(UnitType.Factory);
+			}
+			mine();
 		}
 
 		// harvest logic
@@ -84,14 +107,14 @@ public class Worker extends MobileUnit {
 		isBuilding = false;	//reset this variable at the end of processing
 	}
 	
-	public boolean blueprintSomething() {
-		if(gc.canBlueprint(unitId, productionType, direction))	
+	public boolean blueprintType(UnitType type) {
+		if(gc.canBlueprint(unitId, type, direction))	
 		{
 			try {
-				gc.blueprint(unitId, productionType, direction);
+				gc.blueprint(unitId, type, direction);
 				//gets the blueprint we just created as a unit
 				Unit blueprintUnit = gc.senseUnitAtLocation(currentLocation.add(direction));
-				if (blueprintUnit.unitType() == UnitType.Factory) {				
+				if (type == UnitType.Factory) {				
 					Player.newUnits.add(new Factory(blueprintUnit, gc));
 				} else {	//creates an object of the proper structure type
 					Player.newUnits.add(new Rocket(blueprintUnit, gc));

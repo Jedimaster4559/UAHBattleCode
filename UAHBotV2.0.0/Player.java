@@ -21,9 +21,11 @@ public class Player {
 	static int numRockets;
   
 	//Set some strategy goals
-	static int factoryGoal = 5;
+	static final int highfactoryGoal = 3;
+	static final int lowFactoryGoal = 8
 	static int highKarboniteGoal = 300;
 	static int lowKarboniteGoal = 50;
+	static boolean initRocketBuilt = false;
 	
 	static final int stage = 300;
 	
