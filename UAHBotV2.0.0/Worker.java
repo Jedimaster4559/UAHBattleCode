@@ -88,7 +88,7 @@ public class Worker extends MobileUnit {
 		int counter = 0;
 		int highest = Integer.MIN_VALUE;
 		for(KarboniteLocation location:Player.karboniteLocations){
-			if(location.getDistance(currentLocation) != 0 && location.karboniteAmount/location.getDistance(currentLocation) > highest){
+			if(currentLocation != null && location.getDistance(currentLocation) != 0 && location.karboniteAmount/location.getDistance(currentLocation) > highest){
 				index = counter;
 			}
 			counter++;

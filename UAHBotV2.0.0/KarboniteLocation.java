@@ -8,7 +8,11 @@ public class KarboniteLocation {
 	public KarboniteLocation(MapLocation mapLocation, GameController gc) {
 		this.mapLocation = mapLocation;
 		this.gc = gc;
-		karboniteAmount = new PlanetMap().initialKarboniteAt(mapLocation);
+		if(gc.planet() == Planet.Earth){
+			karboniteAmount = Path.earth.initialKarboniteAt(mapLocation);
+		} else {
+			karboniteAmount = Path.mars.initialKarboniteAt(mapLocation);
+		}
 		lastVisited = gc.round();
 	}
 	

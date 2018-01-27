@@ -68,9 +68,8 @@ class LogicHandler {
 	public static void initializeKarboniteLocations(GameController gc) {
 		if(gc.planet() == Planet.Earth){
 			VecMapLocation allLocations = gc.allLocationsWithin(new MapLocation(Planet.Earth,0,0), 5001);
-			PlanetMap map = new PlanetMap();
 			for(long i = 0; i < allLocations.size(); i++) {
-				if(map.initialKarboniteAt(allLocations.get(i)) > 0) {
+				if(Path.earth.initialKarboniteAt(allLocations.get(i)) > 0) {
 					Player.karboniteLocations.add(new KarboniteLocation(allLocations.get(i), gc));
 				}
 			}
