@@ -87,12 +87,13 @@ class Factory extends Structure {
 		// array of multipliers.
 		int[] cmpArray = {knightMultiplier, rangerMultiplier, mageMultiplier}; 
 		int lowest = knightMultiplier;
+		// iterates through the array to find the lowest multiplier.
 		for(int i = 0; i < cmpArray.length; i++) {
 			if(cmpArray[i] < lowest){
-				lowest = cmpArray[i];	// iterates through the array to find the lowest multiplier.
+				lowest = cmpArray[i];	
 			}
 		}
-		// initial expression to determine whether
+		// Produce workers if below goal and fewer than 2*knights
 		if ((Player.numWorkers < workerGoal) && (Player.numWorkers <= (2*Player.numKnights))) {	
 			return UnitType.Worker;				// to produce more workers.
 		} else if (knightMultiplier == lowest) {	// decides unit based on lowest multiplier.

@@ -2,7 +2,8 @@ import bc.*;
 
 class Rocket extends Structure {
 
-	MapLocation currentLocation;
+	private MapLocation currentLocation;
+	
 	public Rocket(Unit unit, GameController gc) {
 		super(unit, gc);
 	}
@@ -81,12 +82,12 @@ class Rocket extends Structure {
 		int randx;
 		int randy;
 		
-		for (int i = 0; i < 100; i++) {							//for loop so we don't spend too much time per turn in this step
+		for (int i = 0; i < 100; i++) {	//for loop so we don't spend too much time per turn in this step
 			randx = Player.rand.nextInt((int)Path.mars.getWidth()-1);
 			randy = Player.rand.nextInt((int)Path.mars.getHeight()-1);		//set the random location
 			randomLocation = new MapLocation(Planet.Mars, randx,randy);
-			if(gc.canLaunchRocket(unit.id(), randomLocation) && 			
-					(Path.mars.isPassableTerrainAt(randomLocation) == 1)){	//if this is a safe location to launch to, then launch
+			//if this is a safe location to launch to, then launch
+			if(gc.canLaunchRocket(unit.id(), randomLocation)){	
 				gc.launchRocket(unit.id(), randomLocation);
 				break;
 			}
