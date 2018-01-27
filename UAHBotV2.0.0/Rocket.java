@@ -2,6 +2,7 @@ import bc.*;
 
 class Rocket extends Structure {
 
+	MapLocation currentLocation;
 	public Rocket(Unit unit, GameController gc) {
 		super(unit, gc);
 	}
@@ -10,7 +11,7 @@ class Rocket extends Structure {
 		
 		//abort processing for the turn if we are in space
 		//update currentLocation otherwise
-		if (unit.location().isOnMap() == 0) {
+		if (unit.location().isOnMap()) {
 			return;
 		} else {
 			currentLocation = unit.location().mapLocation();
