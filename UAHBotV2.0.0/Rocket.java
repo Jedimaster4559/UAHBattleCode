@@ -12,19 +12,19 @@ class Rocket extends Structure {
 		
 		//abort processing for the turn if we are in space
 		//update currentLocation otherwise
-		if (unit.location().isOnMap()) {
+		if (!unit.location().isOnMap()) {
 			return;
 		} else {
 			currentLocation = unit.location().mapLocation();
 		}
 		
-		//abort processing if on earth and not built yet
-		if(!(unit.location().mapLocation().getPlanet() == Planet.Mars)) {
-			if (unit.structureIsBuilt() == 0) return;			//Check to see if the structure is actually built
-		}
-		
 		if (unit.location().mapLocation().getPlanet() == Planet.Earth) {	//If we are on earth
 			//check if we should launch
+			
+			//Check to see if the structure is actually built
+			if (unit.structureIsBuilt() == 0) return;
+			
+			
 			if(		(unit.structureGarrison().size() == 8) ||
 					((unit.structureGarrison().size() * 2 + gc.round()) > 745) ||
 					(gc.round() >= 748))	
@@ -82,12 +82,14 @@ class Rocket extends Structure {
 		int randx;
 		int randy;
 		
+		System.out.println("launch attempt");
 		for (int i = 0; i < 100; i++) {	//for loop so we don't spend too much time per turn in this step
 			randx = Player.rand.nextInt((int)Path.mars.getWidth()-1);
 			randy = Player.rand.nextInt((int)Path.mars.getHeight()-1);		//set the random location
 			randomLocation = new MapLocation(Planet.Mars, randx,randy);
 			//if this is a safe location to launch to, then launch
 			if(gc.canLaunchRocket(unit.id(), randomLocation)){	
+				System.out.println("launching");
 				gc.launchRocket(unit.id(), randomLocation);
 				break;
 			}

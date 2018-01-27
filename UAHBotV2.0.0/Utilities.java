@@ -52,22 +52,23 @@ class Utilities {
 		if (Player.UAHUnits.size() == units.size()) {
 			return;
 		}
+		long foundUnit = 0;
 		for(long i = 0; i < units.size(); i++){
 			found = false;
 			for(UAHUnit target:Player.UAHUnits){
 				if(units.get(i) == target.getUnit()){
 					found = true;
+					foundUnit = i;
 					break;
 				}
 			}
-			if(!found){
-				Unit unit = units.get(i);
-				if(unit.unitType() == UnitType.Rocket){
-					Player.newUnits.add(new Rocket(unit,gc));
-					
-				}
+		}
+		if(!found){
+			Unit unit = units.get(foundUnit);
+			if(unit.unitType() == UnitType.Rocket){
+				Player.newUnits.add(new Rocket(unit,gc));
+				
 			}
-
 		}
 	}
   

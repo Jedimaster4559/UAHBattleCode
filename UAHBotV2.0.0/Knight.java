@@ -13,6 +13,7 @@ class Knight extends MobileUnit {
 		}
 		
 		if (LogicHandler.escaping && unit.movementHeat() < 10) {	//determine if we need to be attempting
+			System.out.println("escape attempt");
 			Utilities.moveTowardNearestRocket(unit, gc);		//to get on a rocket
 		}
 		

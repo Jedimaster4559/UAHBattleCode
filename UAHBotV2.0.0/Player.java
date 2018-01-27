@@ -54,7 +54,7 @@ public class Player {
 		
 		//Seed Randomizer for debugging purposes
 		rand = new Random();
-		//rand.setSeed(1337);
+		rand.setSeed(1337);
 
 		//Grab the enemy team locations
 		Utilities.findEnemyTeam(gc);
@@ -111,12 +111,15 @@ public class Player {
 					e.printStackTrace();
 				}
 			}
+			//earth logic
 			else{
 				
 				//try to run all units this turn
 				try {
+					
 					for (UAHUnit unit : UAHUnits) {		//Loop through all of our units
 						if (unit.isAlive()) {
+							//System.out.println("Running: " + unit.getUnit().unitType());
 							unit.preProcess();	//Preprocess the unit (determines if it is alive)
 							unit.process();		//process the unit's actions
 						}
@@ -125,6 +128,8 @@ public class Player {
 					e.printStackTrace();
 				}
 				
+				//System.out.println(UAHUnits.size());
+				//System.out.println(newUnits.size());
 				//add all unit changes to main list
 				UAHUnits.addAll(newUnits);
 				UAHUnits.removeAll(deadUnits);
@@ -141,6 +146,7 @@ public class Player {
 			}
 			
 			//proceed to next turn
+			System.out.println(gc.round() + ":" + gc.getTimeLeftMs());
 			gc.nextTurn();
         }
 		
