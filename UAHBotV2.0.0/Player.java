@@ -37,10 +37,11 @@ public class Player {
 	static final int rocketCost = (int) bc.bcUnitTypeBlueprintCost(UnitType.Rocket);
         
 	//Set some strategy goals
-	static int rocketGoal;// = (int)(Math.ceil(gc.myUnits().size() / 8)- numRockets);
+	static int rocketGoal = 1;
 	
-	static VecUnit units;						//a VecUnit of all of our units (this may no longer be necessary)
-	static boolean peaceful = false;				//Peaceful toggle for bot
+	//a VecUnit of all of our units (this may no longer be necessary)
+	static VecUnit units;						
+	static boolean peaceful = false;	//Peaceful toggle for bot (TESTING ONLY)
 	static ArrayList<UAHUnit> UAHUnits = new ArrayList<UAHUnit>();	//List of all of our units
 	static ArrayList<UAHUnit> newUnits = new ArrayList<UAHUnit>();	//list of all units created this turn
 	static ArrayList<UAHUnit> deadUnits = new ArrayList<UAHUnit>();	//list of all units that died this turn
