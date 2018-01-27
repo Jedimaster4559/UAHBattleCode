@@ -52,7 +52,7 @@ class LogicHandler {
 	}
 
 
-	public static void getRocketLocations(GameController gc) {
+	public static void getRockets(GameController gc) {
 		//clears the rocket array
 		rockets.clear();						
 		
@@ -69,8 +69,19 @@ class LogicHandler {
 		}
 	}
 	
-	public static void calculateKarboniteGoals() {
-		
+	public static void calculateKarboniteGoals(GameController gc) {
+		if (gc.round() < Player.stage) {
+			Player.highKarboniteGoal = 50;
+			Player.lowKarboniteGoal = 300;
+			
+		} else {
+			Player.highKarboniteGoal = 200;
+			Player.lowKarboniteGoal = (int)(Player.rocketGoal * Player.rocketCost * Player.kgMultiplier);
+		}
 	}
-		
+	
+	public static void calculateRocketGoal(GameController gc, int numUnits) {
+		getRockets();
+		Player.rocketGoal = Math.ceil((double)numUnits/8) - rockets.size();
+	}
 }
