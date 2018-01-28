@@ -37,13 +37,7 @@ class Rocket extends Structure {
 		} else {
 			//System.out.println("on mars");
 			if (unit.structureGarrison().size() > 0) {//if we are on Mars, attempt to unload
-		
-			//get an array of all directions
-				Direction[] directions = Direction.values();
-				
-				//System.out.println("Unit(s) in garrison");
-				//loop through all possible directions
-				for (Direction direction : directions) {					
+				for (Direction direction : Path.directions) {					
 				
 					//System.out.println("unload attempt");
 					//if we can unload a unit in this direction, do it
