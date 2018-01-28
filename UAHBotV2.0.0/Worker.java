@@ -137,6 +137,9 @@ public class Worker extends MobileUnit {
 					}
 					Player.karboniteLocations.remove(thisDeposit);
 				}
+			} else {
+				isHarvesting = false;
+				dest = null;
 			}
 		}
 		
