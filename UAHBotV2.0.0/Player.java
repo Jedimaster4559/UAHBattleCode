@@ -106,7 +106,6 @@ public class Player {
 				}
 			}
 			else{
-				System.out.println(karboniteLocations.size());
 				//try to run all units this turn
 				try {
 					for (UAHUnit unit : UAHUnits) {		//Loop through all of our units
