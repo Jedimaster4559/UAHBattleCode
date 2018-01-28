@@ -194,10 +194,10 @@ public class Player {
 				UAHUnits.removeAll(deadUnits);
 				
 				//run any new units
-				for (UAHUnit unit : newUnits) {
+				/*for (UAHUnit unit : newUnits) {
 					unit.preProcess();
 					unit.process();
-				}
+				}*/
 				
 				//clear unit changes
 				newUnits.clear();

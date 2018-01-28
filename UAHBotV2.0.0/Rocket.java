@@ -4,17 +4,19 @@ class Rocket extends Structure {
 
 
 	private MapLocation currentLocation;
+	private boolean finished = false;
 
 	
 	public Rocket(Unit unit, GameController gc) {
 		super(unit, gc);
+		System.out.println("creating new rocket:" + gc.round());
 	}
 	
 	public void process() {
 		//if (gc.round() % 20 == 0) System.out.println("processing rocket");
 		//abort processing for the turn if we are in space
 		//update currentLocation otherwise
-		if (!unit.location().isOnMap()) {
+		if (!unit.location().isOnMap() || finished) {
 			return;
 		} else {
 			currentLocation = unit.location().mapLocation();
@@ -34,6 +36,7 @@ class Rocket extends Structure {
 				findLandableSpot(unit, gc);		//try to launch
 			}
 		
+		//mars
 		} else {
 			//System.out.println("on mars");
 			if (unit.structureGarrison().size() > 0) {//if we are on Mars, attempt to unload
@@ -46,6 +49,7 @@ class Rocket extends Structure {
 						int unloadId = unit.structureGarrison().get(0);			
 						Unit unloadUnit = gc.unit(unloadId);			//helpful unload variables
 						UnitType unloadType = unloadUnit.unitType();
+						System.out.println("unloading new " + unloadType);
 						switch (unloadType) {		//determine unit type and then add to the new
 							case Worker:			//units array list
 								Worker newWorker = new Worker(unloadUnit, gc);
@@ -79,7 +83,8 @@ class Rocket extends Structure {
 					}
 				}
 			} else {
-				Player.deadUnits.add(this);
+				finished = true;
+				//Player.deadUnits.add(this);
 			}
 		}
 	}

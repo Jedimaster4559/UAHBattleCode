@@ -56,19 +56,20 @@ class Utilities {
 			return;
 		}
 		
-		/*if (gc.planet() == Planet.Mars) {
-			//System.out.println("verifying list on mars");
-			//System.out.println(units.size() + ":" + Player.UAHUnits.size());
-		}*/
+		if (gc.planet() == Planet.Mars && gc.round() > 800) {
+			System.out.println("verifying list on mars");
+			System.out.println(units.size() + ":" + Player.UAHUnits.size());
+		}
 		
 		long foundUnit = 0;
 		for(long i = 0; i < units.size(); i++)
 		{
+			Unit unit = units.get(i);
 			found = false;
 			for(UAHUnit target:Player.UAHUnits)
 			{
-				if(units.get(i).unitType() == UnitType.Rocket &&
-						units.get(i) == target.getUnit())
+				if(unit.unitType() == UnitType.Rocket &&
+						unit == target.getUnit())
 				{
 					
 					found = true;
@@ -78,11 +79,12 @@ class Utilities {
 			}
 			if(!found && gc.planet() == Planet.Mars)
 			{
-				Unit unit = units.get(i);
-				//System.out.println("found " + unit.unitType());
 				
-				if(unit.unitType() == UnitType.Rocket && (unit.structureGarrison().size() > 0)){
-					Player.UAHUnits.add(new Rocket(unit, gc));
+				System.out.println("found " + unit.unitType());
+				
+				if(unit.unitType() == UnitType.Rocket){
+					System.out.println("Added new rocket landed");
+					Player.newUnits.add(new Rocket(unit, gc));
 					
 				}
 			}
