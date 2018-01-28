@@ -114,13 +114,21 @@ public class Player {
 			//earth logic
 			else{
 				
+				if (gc.round() >= 749) {
+					UAHUnits.clear();
+					deadUnits.clear();
+					newUnits.clear();
+					gc.nextTurn();
+					continue;
+				}
+				
 				//try to run all units this turn
 				try {
 					
 					for (UAHUnit unit : UAHUnits) {		//Loop through all of our units
 						if (unit.isAlive()) {
 							//System.out.println("Running: " + unit.getUnit().unitType());
-							unit.preProcess();	//Preprocess the unit (determines if it is alive)
+							unit.preProcess();	//Preprocess the unit
 							unit.process();		//process the unit's actions
 						}
 					}

@@ -66,7 +66,7 @@ class Utilities {
 		if(!found){
 			Unit unit = units.get(foundUnit);
 			if(unit.unitType() == UnitType.Rocket){
-				Player.newUnits.add(new Rocket(unit,gc));
+				Player.UAHUnits.add(new Rocket(unit,gc));
 				
 			}
 		}
@@ -108,6 +108,7 @@ class Utilities {
 	
 	//Method to move toward the closest enemy
 	public static void moveToNearestEnemy(Unit unit, GameController gc) {
+		//System.out.println(unit.movementHeat());
 		if (unit.movementHeat() > 0) return;
 
 		try{

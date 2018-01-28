@@ -57,12 +57,15 @@ class Path {
 	public static void bugPath(Unit unit, MapLocation dest, GameController gc){
 		MapLocation start = unit.location().mapLocation();		//create starting location
 		Direction toward = start.directionTo(dest);				//set a direction towards the destination
-		if(gc.canMove(unit.id(), toward)){						//determine if we can move in that direction
+		
+		//determine if we can move in that direction
+		if(gc.canMove(unit.id(), toward) && gc.isMoveReady(unit.id())){	
 			gc.moveRobot(unit.id(), toward);					//move that direction
 		} else {												//if we cant
 			for(int i = 0; i<8; i++){							//loop through all of the directions in clockwise order
 				toward = rotate(toward, 1, gc);					//set each rotation direction
-				if(gc.canMove(unit.id(), toward)){				//determine if we can move there
+				//determine if we can move there
+				if(gc.canMove(unit.id(), toward) && gc.isMoveReady(unit.id())){				
 					gc.moveRobot(unit.id(), toward);			//move the robot to that location
 					break;										//end function
 				}

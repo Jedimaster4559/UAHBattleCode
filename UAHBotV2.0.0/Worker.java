@@ -3,16 +3,11 @@ import java.lang.Integer;
 
 public class Worker extends MobileUnit {
 	
-	//The current production type (depending on how we are running this, is this still necessary)
-	private UnitType productionType;
-	
-	
 	//a statement to prevent the bot from moving away from its current construction project
 	boolean isBuilding = false;
 	
 	public Worker(Unit unit, GameController gc) {
 		super(unit, gc);
-		productionType = UnitType.Factory;
 		isBuilding = false;
 	}
 	
@@ -40,13 +35,13 @@ public class Worker extends MobileUnit {
 			} 
 			if (Player.numFactories < Player.highFactoryGoal) {
 				boolean worked = blueprintType(UnitType.Factory);
-				if (worked) System.out.println("Built HPfactory");
+				//if (worked) System.out.println("Built HPfactory");
 			} 
 			if (!Player.initRocketBuilt) {
 				boolean worked = blueprintType(UnitType.Rocket);
 				if (worked) {
 					Player.initRocketBuilt = true;
-					System.out.println("Built initRocket");
+					//System.out.println("Built initRocket");
 				}
 			}
 			if (gc.karbonite() < Player.lowKarboniteGoal) {
@@ -54,21 +49,22 @@ public class Worker extends MobileUnit {
 			}
 			if (Player.numFactories < Player.lowFactoryGoal) {
 				boolean worked = blueprintType(UnitType.Factory);
-				if (worked) System.out.println("Built LPfactory");
+				//if (worked) System.out.println("Built LPfactory");
 			}
 			mine();
 
+		//post-prep logic
 		} else {
 			if (Player.numRockets < Player.rocketGoal) {
 				boolean worked = blueprintType(UnitType.Rocket);
-				if (worked) System.out.println("Built escape rocket");
+				//if (worked) System.out.println("Built escape rocket");
 			}
 			if (gc.karbonite() < Player.lowKarboniteGoal) {
 				mine();
 			}
 			if (Player.numFactories < Player.highFactoryGoal && !LogicHandler.escaping) {
 				boolean worked = blueprintType(UnitType.Factory);
-				if (worked) System.out.println("Built HPfactory escaping");
+				//if (worked) System.out.println("Built HPfactory escaping");
 			}
 			mine();
 		}
