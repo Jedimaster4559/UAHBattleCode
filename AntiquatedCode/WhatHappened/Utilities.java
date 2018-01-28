@@ -47,30 +47,25 @@ class Utilities {
 	//for mars, add rockets if they didn't exist in the
 	//UAHUnits array before
 	public static void verifyList(GameController gc){
-		if (gc.planet() == Planet.Earth) return;
-		
 		VecUnit units = gc.myUnits();
 		boolean found = false;
 		if (Player.UAHUnits.size() == units.size()) {
-			/*if (gc.planet() == Planet.Mars && gc.round() > 950) {
-				System.out.println("UAHUnits and units sizes matched, yay!");
-			}*/
 			return;
 		}
 		
-		if (gc.planet() == Planet.Mars && gc.round() > 800) {
+		/*if (gc.planet() == Planet.Mars) {
 			//System.out.println("verifying list on mars");
-			System.out.println(units.size() + ":" + Player.UAHUnits.size());
-		}
+			//System.out.println(units.size() + ":" + Player.UAHUnits.size());
+		}*/
 		
 		long foundUnit = 0;
 		for(long i = 0; i < units.size(); i++)
 		{
-			Unit unit = units.get(i);
 			found = false;
 			for(UAHUnit target:Player.UAHUnits)
 			{
-				if(unit.id() == target.getUnitId())
+				if(units.get(i).unitType() == UnitType.Rocket &&
+						units.get(i) == target.getUnit())
 				{
 					
 					found = true;
@@ -78,36 +73,14 @@ class Utilities {
 					break;
 				}
 			}
-			if(!found && gc.planet() == Planet.Mars && !(unit.location().isInGarrison()))
+			if(!found && gc.planet() == Planet.Mars)
 			{
+				Unit unit = units.get(i);
+				//System.out.println("found " + unit.unitType());
 				
-				//System.out.println("found " + unit.unitType() + unit.location());
-				
-				switch (unit.unitType()) {	//Go through all unit types and create a new object
-					case Worker:		//of the type of unit we plan to unload
-						Worker newWorker = new Worker(unit, gc);	
-						Player.newUnits.add(newWorker);
-						break;
-					case Knight:
-						Knight newKnight = new Knight(unit, gc);
-						Player.newUnits.add(newKnight);
-						break;
-					case Ranger:
-						Ranger newRanger = new Ranger(unit, gc);
-						Player.newUnits.add(newRanger);
-						break;
-					case Mage:
-						Mage newMage = new Mage(unit, gc);
-						Player.newUnits.add(newMage);
-						break;
-					case Healer:
-						Healer newHealer = new Healer(unit, gc);
-						Player.newUnits.add(newHealer);
-						break;
-					case Rocket:
-						Rocket newRocket = new Rocket(unit, gc);
-						Player.newUnits.add(newRocket);
-						break;
+				if(unit.unitType() == UnitType.Rocket){
+					Player.UAHUnits.add(new Rocket(unit, gc));
+					
 				}
 			}
 		}
@@ -216,13 +189,27 @@ class Utilities {
 	
 	//Returns int id of nearby blueprint
 	public static int getNearbyBlueprint(Unit unit, GameController gc){
-		VecUnit units = gc.senseNearbyUnits(unit.location().mapLocation(), 4);
+		int closest = Integer.MAX_VALUE;
+		VecUnit units = gc.senseNearbyUnits(unit.location().mapLocation(), unit.visionRange());
 		for(long i = 0; i < units.size(); i++){
-			if((units.get(i).unitType() == UnitType.Factory || units.get(i).unitType() == UnitType.Rocket) && units.get(i).structureIsBuilt() == 0){
-				return (int)units.get(i).id();
+			Unit otherUnit = units.get(i);
+			if((otherUnit.unitType() == UnitType.Factory ||
+					otherUnit.unitType() == UnitType.Rocket) &&
+					otherUnit.structureIsBuilt() == 0 &&
+					otherUnit.location().mapLocation().distanceSquaredTo(
+						unit.location().mapLocation()) < 4)
+			{
+				return (int)otherUnit.id();
+			} else if ((otherUnit.unitType() == UnitType.Factory || 
+					otherUnit.unitType() == UnitType.Rocket) &&
+					otherUnit.structureIsBuilt() == 0)
+			{
+				if(otherUnit.location().mapLocation().distanceSquaredTo(unit.location().mapLocation()) < closest) {
+					closest = (int)otherUnit.id();
+				}
 			}
 		}
-		return Integer.MAX_VALUE;
+		return closest;
 	}
 	
 	//Method that returns enemy team

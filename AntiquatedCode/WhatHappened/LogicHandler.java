@@ -7,7 +7,6 @@ class LogicHandler {
 	static ArrayList<UAHUnit> rockets = new ArrayList<UAHUnit>();	//List of all rockets so this info is publicly available
 	static int factoryGoal = 10;					//Total numbers of factories we are willing to build
 	static ArrayList<KarboniteLocation> usedDeposit = new ArrayList<KarboniteLocation>();
-	static int marsLanding = 0;
 	
 	public static void initialize(GameController gc) {		
 		//initialize Pathing
@@ -22,13 +21,11 @@ class LogicHandler {
 		gc.queueResearch(UnitType.Worker);
 		gc.queueResearch(UnitType.Knight);
 		gc.queueResearch(UnitType.Rocket);
+		gc.queueResearch(UnitType.Worker);
 		gc.queueResearch(UnitType.Knight);
-		gc.queueResearch(UnitType.Ranger);
-		gc.queueResearch(UnitType.Mage);
-		gc.queueResearch(UnitType.Ranger);
+		gc.queueResearch(UnitType.Worker);
 		gc.queueResearch(UnitType.Knight);
-		gc.queueResearch(UnitType.Mage);
-		gc.queueResearch(UnitType.Rocket);
+		gc.queueResearch(UnitType.Worker);
 		
 	}
 	
@@ -46,44 +43,6 @@ class LogicHandler {
 			
 			calculateKarboniteGoals(gc);
 			calculateRocketGoal(gc, (int)gc.myUnits().size());
-		} else {
-			if(gc.round() == 750){
-				marsLanding = (int)gc.currentDurationOfFlight() + 750;
-			}
-			
-			/*if (gc.round() == marsLanding + 5) {
-				Player.UAHUnits.clear();
-				VecUnit units = gc.myUnits();
-				for (long i = 0; i < units.size(); i++) {
-					Unit unit = units.get(i);
-					switch (unit.unitType()) {	//Go through all unit types and create a new object
-						case Worker:		//of the type of unit we plan to unload
-							Worker newWorker = new Worker(unit, gc);	
-							Player.newUnits.add(newWorker);
-							break;
-						case Knight:
-							Knight newKnight = new Knight(unit, gc);
-							Player.newUnits.add(newKnight);
-							break;
-						case Ranger:
-							Ranger newRanger = new Ranger(unit, gc);
-							Player.newUnits.add(newRanger);
-							break;
-						case Mage:
-							Mage newMage = new Mage(unit, gc);
-							Player.newUnits.add(newMage);
-							break;
-						case Healer:
-							Healer newHealer = new Healer(unit, gc);
-							Player.newUnits.add(newHealer);
-							break;
-						case Rocket:
-							Rocket newRocket = new Rocket(unit, gc);
-							Player.newUnits.add(newRocket);
-							break;
-					}
-				}
-			}*/
 		}
 		
 		if(gc.round() % 50 == 0){

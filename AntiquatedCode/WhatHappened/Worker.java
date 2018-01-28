@@ -34,7 +34,12 @@ public class Worker extends MobileUnit {
 			gc.build(unit.id(),Utilities.getNearbyBlueprint(unit, gc));	//build
 			isBuilding = true;	//ensure we don't move this turn
 			return;
-
+		} else if (nearestBlueprintId != Integer.MAX_VALUE) {
+			if(gc.isMoveReady(unitId)){
+				dest = gc.unit(nearestBlueprintId).location().mapLocation();
+				Path.determinePathing(unit, dest, gc);
+				isBuilding = true;
+			}
         } else {
 			isBuilding = false;
 			dest = null;
@@ -183,7 +188,7 @@ public class Worker extends MobileUnit {
 		KarboniteLocation bestLocation = Player.karboniteLocations.get(index);
 		dest = bestLocation.mapLocation;
 		isHarvesting = true;
-		//System.out.println("Setting Best Karbonite Location");
+		System.out.println("Setting Best Karbonite Location");
 
 	}
 }	
