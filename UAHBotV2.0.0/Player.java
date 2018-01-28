@@ -62,7 +62,7 @@ public class Player {
 		
 		//Seed Randomizer for debugging purposes
 		rand = new Random();
-		rand.setSeed(1337);
+		//rand.setSeed(1337);
 
 		//Grab the enemy team locations
 		Utilities.findEnemyTeam(gc);
