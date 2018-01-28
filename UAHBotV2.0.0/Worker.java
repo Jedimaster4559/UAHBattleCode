@@ -183,7 +183,7 @@ public class Worker extends MobileUnit {
 		KarboniteLocation bestLocation = Player.karboniteLocations.get(index);
 		dest = bestLocation.mapLocation;
 		isHarvesting = true;
-		System.out.println("Setting Best Karbonite Location");
+		//System.out.println("Setting Best Karbonite Location");
 
 	}
 }	

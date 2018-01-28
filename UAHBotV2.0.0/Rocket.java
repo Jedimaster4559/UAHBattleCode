@@ -9,7 +9,7 @@ class Rocket extends Structure {
 	
 	public Rocket(Unit unit, GameController gc) {
 		super(unit, gc);
-		System.out.println("creating new rocket:" + gc.round());
+		//System.out.println("creating new rocket:" + gc.round());
 	}
 	
 	public void process() {
@@ -41,15 +41,17 @@ class Rocket extends Structure {
 			//System.out.println("on mars");
 			if (unit.structureGarrison().size() > 0) {//if we are on Mars, attempt to unload
 				for (Direction direction : Path.directions) {					
-				
-					//System.out.println("unload attempt");
+					unit = gc.unit(unitId);
+					//System.out.println("unload attempt:" + unit.structureGarrison().size());
 					//if we can unload a unit in this direction, do it
 					if (gc.canUnload(unit.id(), direction)) {	
-						//System.out.println("can unload");
-						int unloadId = unit.structureGarrison().get(0);			
-						Unit unloadUnit = gc.unit(unloadId);			//helpful unload variables
+						gc.unload(unit.id(), direction);
+						//System.out.println("can unload");	
+						
+						//helpful unload variables
+						Unit unloadUnit = gc.senseUnitAtLocation(currentLocation.add(direction));			
 						UnitType unloadType = unloadUnit.unitType();
-						System.out.println("unloading new " + unloadType);
+						//System.out.println("unloading new " + unloadType);
 						switch (unloadType) {		//determine unit type and then add to the new
 							case Worker:			//units array list
 								Worker newWorker = new Worker(unloadUnit, gc);
@@ -74,12 +76,11 @@ class Rocket extends Structure {
 						}
 						
 						//unload the given unit in given direction
-						gc.unload(unit.id(), direction);		
-						if(unit.structureGarrison().size() == 0){	//if the Rocket is now empty, stop trying to unload
-							break;
-
-
-						}
+								
+						
+					}
+					if(unit.structureGarrison().size() == 0){	//if the Rocket is now empty, stop trying to unload
+						break;
 					}
 				}
 			} else {

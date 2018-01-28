@@ -47,17 +47,19 @@ class Utilities {
 	//for mars, add rockets if they didn't exist in the
 	//UAHUnits array before
 	public static void verifyList(GameController gc){
+		if (gc.planet() == Planet.Earth) return;
+		
 		VecUnit units = gc.myUnits();
 		boolean found = false;
 		if (Player.UAHUnits.size() == units.size()) {
-			if (gc.planet() == Planet.Mars && gc.round() > 950) {
+			/*if (gc.planet() == Planet.Mars && gc.round() > 950) {
 				System.out.println("UAHUnits and units sizes matched, yay!");
-			}
+			}*/
 			return;
 		}
 		
 		if (gc.planet() == Planet.Mars && gc.round() > 800) {
-			System.out.println("verifying list on mars");
+			//System.out.println("verifying list on mars");
 			System.out.println(units.size() + ":" + Player.UAHUnits.size());
 		}
 		
@@ -68,8 +70,7 @@ class Utilities {
 			found = false;
 			for(UAHUnit target:Player.UAHUnits)
 			{
-				if(unit.unitType() == UnitType.Rocket &&
-						unit == target.getUnit())
+				if(unit.id() == target.getUnitId())
 				{
 					
 					found = true;
@@ -77,15 +78,36 @@ class Utilities {
 					break;
 				}
 			}
-			if(!found && gc.planet() == Planet.Mars)
+			if(!found && gc.planet() == Planet.Mars && !(unit.location().isInGarrison()))
 			{
 				
-				System.out.println("found " + unit.unitType());
+				//System.out.println("found " + unit.unitType() + unit.location());
 				
-				if(unit.unitType() == UnitType.Rocket){
-					System.out.println("Added new rocket landed");
-					Player.newUnits.add(new Rocket(unit, gc));
-					
+				switch (unit.unitType()) {	//Go through all unit types and create a new object
+					case Worker:		//of the type of unit we plan to unload
+						Worker newWorker = new Worker(unit, gc);	
+						Player.newUnits.add(newWorker);
+						break;
+					case Knight:
+						Knight newKnight = new Knight(unit, gc);
+						Player.newUnits.add(newKnight);
+						break;
+					case Ranger:
+						Ranger newRanger = new Ranger(unit, gc);
+						Player.newUnits.add(newRanger);
+						break;
+					case Mage:
+						Mage newMage = new Mage(unit, gc);
+						Player.newUnits.add(newMage);
+						break;
+					case Healer:
+						Healer newHealer = new Healer(unit, gc);
+						Player.newUnits.add(newHealer);
+						break;
+					case Rocket:
+						Rocket newRocket = new Rocket(unit, gc);
+						Player.newUnits.add(newRocket);
+						break;
 				}
 			}
 		}
