@@ -35,15 +35,17 @@ class LogicHandler {
 		//initialize count of all units
 		Utilities.countUnits(gc.myUnits());
 		
-		//determine whether we are needing to escape or not
-		if(!escaping && gc.round() >= 700) {
-			startEscaping(gc);
-		} else if (escaping) {
-			getRockets(gc);
+		if (gc.planet() == Planet.Earth) {
+			//determine whether we are needing to escape or not
+			if(!escaping && gc.round() >= 700) {
+				startEscaping(gc);
+			} else if (escaping) {
+				getRockets(gc);
+			}
+			
+			calculateKarboniteGoals(gc);
+			calculateRocketGoal(gc, (int)gc.myUnits().size());
 		}
-		
-		calculateKarboniteGoals(gc);
-		calculateRocketGoal(gc, (int)gc.myUnits().size());
 	}
 	
 	public static void startEscaping(GameController gc) {
