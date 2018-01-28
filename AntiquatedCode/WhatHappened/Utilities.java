@@ -193,9 +193,17 @@ class Utilities {
 		VecUnit units = gc.senseNearbyUnits(unit.location().mapLocation(), unit.visionRange());
 		for(long i = 0; i < units.size(); i++){
 			Unit otherUnit = units.get(i);
-			if((otherUnit.unitType() == UnitType.Factory || otherUnit.unitType() == UnitType.Rocket) && otherUnit.structureIsBuilt() == 0 && otherUnit.location().mapLocation().distanceSquaredTo(unit.location().mapLocation()) < 4){
+			if((otherUnit.unitType() == UnitType.Factory ||
+					otherUnit.unitType() == UnitType.Rocket) &&
+					otherUnit.structureIsBuilt() == 0 &&
+					otherUnit.location().mapLocation().distanceSquaredTo(
+						unit.location().mapLocation()) < 4)
+			{
 				return (int)otherUnit.id();
-			} else if ((otherUnit.unitType() == UnitType.Factory || otherUnit.unitType() == UnitType.Rocket) && otherUnit.structureIsBuilt() == 0) {
+			} else if ((otherUnit.unitType() == UnitType.Factory || 
+					otherUnit.unitType() == UnitType.Rocket) &&
+					otherUnit.structureIsBuilt() == 0)
+			{
 				if(otherUnit.location().mapLocation().distanceSquaredTo(unit.location().mapLocation()) < closest) {
 					closest = (int)otherUnit.id();
 				}
