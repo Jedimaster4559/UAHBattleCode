@@ -22,8 +22,9 @@ public class Worker extends MobileUnit {
 		if (!unit.location().isOnMap()) {	//If the worker is not on the map, then do not process
 			return;
 		}
-		
-		
+
+		currentLocation = unit.location().mapLocation();
+
 		//determines what the ID number of the nearest blueprint is
 		int nearestBlueprintId = Utilities.getNearbyBlueprint(unit, gc);
 		// Can we build the nearest blueprint
