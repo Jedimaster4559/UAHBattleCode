@@ -21,24 +21,38 @@ public class Player {
 	static int numRockets;
   
 	//Set some strategy goals
-	static int factoryGoal = 5;
+	static final int highFactoryGoal = 3;
+	static final int lowFactoryGoal = 8;
+	static int highKarboniteGoal = 300;
+	static int lowKarboniteGoal = 50;
+	static boolean initRocketBuilt = false;
+	
+	static final int stage = 300;
 	
 	// set variables to be used for karboniteGoal
-	static final double kgMultiplier = 1.2;			// this multiplier helps ensure there is additional karbonite to use for unit production in the late game
-	static final int rocketCost = 150;				// the literal production cost of karbonite, taken from the battlecode game specs
-	static int stage1 = 300;
-    static int stage2 = 600;
+	
+	// this multiplier helps ensure there is additional karbonite to use for unit production in the late game
+	static final double kgMultiplier = 1.2;			
+	// the literal production cost of karbonite, taken from the battlecode game specs
+	static final int rocketCost = (int) bc.bcUnitTypeBlueprintCost(UnitType.Rocket);
         
 	//Set some strategy goals
-	static int rocketGoal;// = (int)(Math.ceil(gc.myUnits().size() / 8)- numRockets);
-    static double karboniteGoal; 
+	static int rocketGoal = 1;
 	
-	static VecUnit units;						//a VecUnit of all of our units (this may no longer be necessary)
-	static boolean peaceful = false;				//Peaceful toggle for bot
-	static ArrayList<UAHUnit> UAHUnits = new ArrayList<UAHUnit>();	//List of all of our units
-	static ArrayList<UAHUnit> newUnits = new ArrayList<UAHUnit>();	//list of all units created this turn
-	static ArrayList<UAHUnit> deadUnits = new ArrayList<UAHUnit>();	//list of all units that died this turn
-	static ArrayList<KarboniteLocation> karboniteLocations = new ArrayList<KarboniteLocation>();	//List of all KarboniteLocations
+
+	//a VecUnit of all of our units (this may no longer be necessary)
+	static VecUnit units;						
+	static boolean peaceful = false;	//Peaceful toggle for bot (TESTING ONLY)
+	
+	//List of all of our units
+	public static ArrayList<UAHUnit> UAHUnits = new ArrayList<UAHUnit>();	
+	//list of all units created this turn
+	public static ArrayList<UAHUnit> newUnits = new ArrayList<UAHUnit>();	
+	//list of all units that died this turn
+	public static ArrayList<UAHUnit> deadUnits = new ArrayList<UAHUnit>();	
+
+	public static ArrayList<KarboniteLocation> karboniteLocations = new ArrayList<KarboniteLocation>();	//List of all KarboniteLocations
+
 
 		
 	public static void main(String[] args) {
@@ -48,7 +62,7 @@ public class Player {
 		
 		//Seed Randomizer for debugging purposes
 		rand = new Random();
-		//rand.setSeed(1337);
+		rand.setSeed(1337);
 
 		//Grab the enemy team locations
 		Utilities.findEnemyTeam(gc);
@@ -105,12 +119,24 @@ public class Player {
 					e.printStackTrace();
 				}
 			}
+			//earth logic
 			else{
+				
+				if (gc.round() >= 749) {
+					UAHUnits.clear();
+					deadUnits.clear();
+					newUnits.clear();
+					gc.nextTurn();
+					continue;
+				}
+
 				//try to run all units this turn
 				try {
+					
 					for (UAHUnit unit : UAHUnits) {		//Loop through all of our units
 						if (unit.isAlive()) {
-							unit.preProcess();	//Preprocess the unit (determines if it is alive)
+							//System.out.println("Running: " + unit.getUnit().unitType());
+							unit.preProcess();	//Preprocess the unit
 							unit.process();		//process the unit's actions
 						}
 					}
@@ -118,6 +144,8 @@ public class Player {
 					e.printStackTrace();
 				}
 				
+				//System.out.println(UAHUnits.size());
+				//System.out.println(newUnits.size());
 				//add all unit changes to main list
 				UAHUnits.addAll(newUnits);
 				UAHUnits.removeAll(deadUnits);
@@ -134,6 +162,7 @@ public class Player {
 			}
 			
 			//proceed to next turn
+			System.out.println(gc.round() + ":" + gc.getTimeLeftMs());
 			gc.nextTurn();
         }
 		

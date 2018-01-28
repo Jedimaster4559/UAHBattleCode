@@ -10,22 +10,29 @@ class Knight extends MobileUnit {
 		//check to see if the given unit is on the map and therefore controllable
 		if (!unit.location().isOnMap()) {
 			return;
+		} else {
+			currentLocation = unit.location().mapLocation();
 		}
 		
-		if (LogicHandler.escaping && unit.movementHeat() < 10) {	//determine if we need to be attempting
+		//determine if we need to be attempting
+		if (currentLocation.getPlanet() == Planet.Earth && LogicHandler.escaping && unit.movementHeat() < 10) {	
+			//System.out.println("escape attempt");
 			Utilities.moveTowardNearestRocket(unit, gc);		//to get on a rocket
 		}
 		
-		if (!Player.peaceful) {						//Peaceful catch (for debugging purposes)
+		if (!Player.peaceful) {		//Peaceful catch (for debugging purposes)
+			//attack if possible
 			if (unit.attackHeat() < 10) {				
-				Utilities.senseAndAttackInRange(unit, gc);	//If we are capable of attacking, attack
+				Utilities.senseAndAttackInRange(unit, gc);
 			}
-			if (unit.movementHeat() < 10) {
-				Utilities.moveToNearestEnemy(unit, gc);		//If we could not attack and are capable of
-			}							//moving, move
+			//move if possible
+			if (unit.movementHeat() <= 0) {
+				Utilities.moveToNearestEnemy(unit, gc);
+			}
 		}
-		if (unit.movementHeat() < 10) {
-			Utilities.moveRandomDirection(unit, gc);		//If we still can move, attempt to move a random direction
+		if (unit.movementHeat() <= 0) {
+			//If we still can move, attempt to move a random direction
+			Utilities.moveRandomDirection(unit, gc);		
 		}
 		
 	}

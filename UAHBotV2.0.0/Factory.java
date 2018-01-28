@@ -69,7 +69,8 @@ class Factory extends Structure {
 			}
 		}
 		
-		if(unit.isFactoryProducing() == 0) {	//create new unit if the factory is not already working on one
+		//create new unit if the factory is not already working on one
+		if(unit.isFactoryProducing() == 0 && gc.karbonite() > (2 * Player.highKarboniteGoal)) {	
 			UnitType unitCreateType = decideUnitType();		//decide the unit type of said unit
 			if(gc.canProduceRobot(unit.id(), unitCreateType)){	
 				gc.produceRobot(unit.id(), unitCreateType);	//create the unit if it is possible to do so
@@ -87,12 +88,14 @@ class Factory extends Structure {
 		// array of multipliers.
 		int[] cmpArray = {knightMultiplier, rangerMultiplier, mageMultiplier}; 
 		int lowest = knightMultiplier;
+
+		// iterates through the array to find the lowest multiplier.
 		for(int i = 0; i < cmpArray.length; i++) {
 			if(cmpArray[i] < lowest){
-				lowest = cmpArray[i];	// iterates through the array to find the lowest multiplier.
+				lowest = cmpArray[i];	
 			}
 		}
-		// initial expression to determine whether
+		// Produce workers if below goal and fewer than 2*knights
 		if ((Player.numWorkers < workerGoal) && (Player.numWorkers <= (2*Player.numKnights))) {	
 			return UnitType.Worker;				// to produce more workers.
 		} else if (knightMultiplier == lowest) {	// decides unit based on lowest multiplier.

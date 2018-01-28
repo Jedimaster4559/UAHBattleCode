@@ -3,13 +3,16 @@ import java.lang.Integer;
 
 public class Worker extends MobileUnit {
 	
-	UnitType productionType;	//The current production type (depending on how we are running this, is this still necessary)
-	boolean isBuilding = false;	//a statement to prevent the bot from moving away from its current contruction project
-	boolean isHarvesting = false;
+	//The current production type (depending on how we are running this, is this still necessary)
+	private UnitType productionType;
+	
+	//a statement to prevent the bot from moving away from its current contruction project
+	private boolean isBuilding = false;	
+	private boolean isHarvesting = false;
+
 	
 	public Worker(Unit unit, GameController gc) {
 		super(unit, gc);
-		productionType = UnitType.Factory;
 		isBuilding = false;
 		isHarvesting = false;
 	}
@@ -20,52 +23,109 @@ public class Worker extends MobileUnit {
 			return;
 		}
 		
-		int nearestBlueprintId = Utilities.getNearbyBlueprint(unit, gc); //determines what the ID number of the nearest blueprint is
+		//determines what the ID number of the nearest blueprint is
+		int nearestBlueprintId = Utilities.getNearbyBlueprint(unit, gc);
+		// Can we build the nearest blueprint
         if ((nearestBlueprintId != Integer.MAX_VALUE) &&
-			(gc.canBuild(unit.id(), nearestBlueprintId))) // Can we build the nearest blueprint
-        	{
-            	gc.build(unit.id(),Utilities.getNearbyBlueprint(unit, gc));	//build
-           		isBuilding = true;						//ensure we don't move this turn
-				return;
-        	}
-        else if((((gc.karbonite() + (950 - gc.round())) > 1000) 
-				|| gc.round() > 500))
-		{   
-			// blueprint logic
-			decideProductionType();					//decide the current production type
-			if (productionType != null) {
-				for(Direction direction:Path.directions)	//loop through all directions
-				{
-					if(gc.canBlueprint(unitId, productionType, direction))			//if we can blueprint, then try to blueprint
-					{
-						try {
-							gc.blueprint(unitId, productionType, direction);
-							Unit blueprintUnit = gc.senseUnitAtLocation(currentLocation.add(direction));	//gets the blueprint we just created as a unit
-							if (blueprintUnit.unitType() == UnitType.Factory) {				
-								Player.newUnits.add(new Factory(blueprintUnit, gc));
-							} else {									//creates an object of the proper structure type
-								Player.newUnits.add(new Rocket(blueprintUnit, gc));
-							}
-							isBuilding = true;								//ensure we don't move this turn
-							dest = blueprintUnit.location().mapLocation();
-							isHarvesting = false;
-						} catch (Exception e) {
-							System.out.println("error blueprinting or making factory object");
-							e.printStackTrace();
-						}
-					}
+			(gc.canBuild(unit.id(), nearestBlueprintId))) 
+        {
+			gc.build(unit.id(),Utilities.getNearbyBlueprint(unit, gc));	//build
+			isBuilding = true;	//ensure we don't move this turn
+			return;
+
+        } else {
+			isBuilding = false;
+			dest = null;
+		}
+			
+		if(gc.round() < 600) //pre-prep
+		{
+			
+			if (gc.karbonite() < Player.highKarboniteGoal) {
+				mine();
+			} 
+			if (Player.numFactories < Player.highFactoryGoal) {
+				boolean worked = blueprintType(UnitType.Factory);
+				//if (worked) System.out.println("Built HPfactory");
+			} 
+			if (!Player.initRocketBuilt) {
+				boolean worked = blueprintType(UnitType.Rocket);
+				if (worked) {
+					Player.initRocketBuilt = true;
+					//System.out.println("Built initRocket");
+
 				}
 			}
+			if (gc.karbonite() < Player.lowKarboniteGoal) {
+				mine();
+			}
+			if (Player.numFactories < Player.lowFactoryGoal) {
+				boolean worked = blueprintType(UnitType.Factory);
+				//if (worked) System.out.println("Built LPfactory");
+			}
+			mine();
 
+		//post-prep logic
+		} else {
+			if (Player.numRockets < Player.rocketGoal) {
+				boolean worked = blueprintType(UnitType.Rocket);
+				//if (worked) System.out.println("Built escape rocket");
+			}
+			if (gc.karbonite() < Player.lowKarboniteGoal) {
+				mine();
+			}
+			if (Player.numFactories < Player.highFactoryGoal && !LogicHandler.escaping) {
+				boolean worked = blueprintType(UnitType.Factory);
+				//if (worked) System.out.println("Built HPfactory escaping");
+			}
+			mine();
 		}
-        else if(!isHarvesting){
-        	dest = null;
-        	isBuilding = false;
-        }
-
-		// harvest logic
+		
+		if (!isBuilding){
+			if(unit.movementHeat() < 10){
+				if(dest != null){
+					Path.determinePathing(unit, dest, gc);
+				} else {
+					Utilities.moveRandomDirection(unit, gc);
+				}
+				unit = gc.unit(unitId);
+				currentLocation = unit.location().mapLocation();
+			} 	
+		}
+	}
+	
+	public boolean blueprintType(UnitType type) {
+		for(Direction direction:Path.directions) //loop through all directions
+		{
+			if(gc.canBlueprint(unitId, type, direction) && 
+					gc.karboniteAt(currentLocation.add(direction)) <= 0)	
+			{
+				try {
+					gc.blueprint(unitId, type, direction);
+					//gets the blueprint we just created as a unit
+					Unit blueprintUnit = gc.senseUnitAtLocation(currentLocation.add(direction));
+					if (type == UnitType.Factory) {				
+						Player.newUnits.add(new Factory(blueprintUnit, gc));
+					} else {	//creates an object of the proper structure type
+						Player.newUnits.add(new Rocket(blueprintUnit, gc));
+					}
+					isBuilding = true;								//ensure we don't move this turn
+					dest = blueprintUnit.location().mapLocation();
+					isHarvesting = false;
+					return true;
+				} catch (Exception e) {
+					System.out.println("error blueprinting or making factory object");
+					e.printStackTrace();
+				}
+			}
+		}
+		return false;
+	}
+	
+	public void mine() {
 		if (gc.canHarvest(unitId, Direction.Center))
 		{
+
 			gc.harvest(unitId, Direction.Center);      //if the location we are standing on is harvestable, then harvest it
 			KarboniteLocation thisDeposit = getKarboniteLocation();
 			if(thisDeposit != null){
@@ -79,9 +139,10 @@ public class Worker extends MobileUnit {
 				}
 			}
 		}
+		
+		//Utilities.moveRandomDirection(unit, gc);		//if we are not moving, then blueprint right here
 		else if (!isBuilding && !isHarvesting)
 		{
-		    //Utilities.moveRandomDirection(unit, gc);		//if we are not moving, then blueprint right here
 			if(unit.movementHeat() < 10){
 				if(dest == null){
 					setBestKarbonite();
@@ -90,22 +151,10 @@ public class Worker extends MobileUnit {
 				unit = gc.unit(unitId);					//make sure we update our current position
 				currentLocation = unit.location().mapLocation();	
 			}
-			
+			isHarvesting = true;
 		}
+	}
 		
-		if (!isBuilding){
-			if(unit.movementHeat() < 10){
-				if(dest != null){
-					Path.determinePathing(unit, dest, gc);
-				} else {
-					Utilities.moveRandomDirection(unit, gc);
-				}
-				unit = gc.unit(unitId);
-				currentLocation = unit.location().mapLocation();
-			}
-		}
-	}  
-	
 	public KarboniteLocation getKarboniteLocation(){
 		for(KarboniteLocation location:Player.karboniteLocations){
 			if(currentLocation.toString().equals(location.getMapLocation().toString())){
@@ -130,14 +179,17 @@ public class Worker extends MobileUnit {
 		dest = bestLocation.mapLocation;
 		isHarvesting = true;
 		System.out.println("Setting Best Karbonite Location");
+
 	}
 
+	/*
 	public void decideProductionType() {
-		if (gc.round() > 600) {					//basically, make sure we aren't planning to escape
+		if (gc.round() > 600) {		//basically, make sure we aren't planning to escape
 			productionType = UnitType.Rocket;
 		}
 		else {
-			if (Player.numFactories >= Player.factoryGoal) {//check out team production goals to determine if/what we should build
+			//check out team production goals to determine if/what we should build
+			if (Player.numFactories >= Player.factoryGoal) {
 				productionType = null;
 			}
 			else {
@@ -145,5 +197,5 @@ public class Worker extends MobileUnit {
 			}
 		}
 	}
-
+	*/
 }	

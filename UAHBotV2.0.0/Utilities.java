@@ -52,23 +52,39 @@ class Utilities {
 		if (Player.UAHUnits.size() == units.size()) {
 			return;
 		}
-		for(long i = 0; i < units.size(); i++){
+		
+		/*if (gc.planet() == Planet.Mars) {
+			//System.out.println("verifying list on mars");
+			//System.out.println(units.size() + ":" + Player.UAHUnits.size());
+		}*/
+		
+		long foundUnit = 0;
+		for(long i = 0; i < units.size(); i++)
+		{
 			found = false;
-			for(UAHUnit target:Player.UAHUnits){
-				if(units.get(i) == target.getUnit()){
+			for(UAHUnit target:Player.UAHUnits)
+			{
+				if(units.get(i).unitType() == UnitType.Rocket &&
+						units.get(i) == target.getUnit())
+				{
+					
 					found = true;
+					foundUnit = i;
 					break;
 				}
 			}
-			if(!found){
+			if(!found && gc.planet() == Planet.Mars)
+			{
 				Unit unit = units.get(i);
+				//System.out.println("found " + unit.unitType());
+				
 				if(unit.unitType() == UnitType.Rocket){
-					Player.newUnits.add(new Rocket(unit,gc));
+					Player.UAHUnits.add(new Rocket(unit, gc));
 					
 				}
 			}
-
 		}
+		
 	}
   
 	public static void moveRandomDirection(Unit unit, GameController gc){
@@ -88,7 +104,9 @@ class Utilities {
 	//Method to attack one enemy within range if possible
 	public static void senseAndAttackInRange(Unit unit, GameController gc){
 		try{
-			VecUnit units = gc.senseNearbyUnitsByTeam(unit.location().mapLocation(), unit.attackRange(), enemyTeam);
+			VecUnit units = gc.senseNearbyUnitsByTeam(
+					unit.location().mapLocation(), unit.attackRange(),
+					enemyTeam);
 			if(units.size() > 0){
 				int enemyID = units.get(0).id();
 				if(gc.canAttack(unit.id(), enemyID)){
@@ -107,6 +125,7 @@ class Utilities {
 	
 	//Method to move toward the closest enemy
 	public static void moveToNearestEnemy(Unit unit, GameController gc) {
+		//System.out.println(unit.movementHeat());
 		if (unit.movementHeat() > 0) return;
 
 		try{
