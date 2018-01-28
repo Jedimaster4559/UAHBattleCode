@@ -31,10 +31,10 @@ class Factory extends Structure {
 		//Attempts to unload all bots
 		if(unit.structureGarrison().size() > 0)
 		{
-			Direction[] directions = Direction.values(); //get all directions (improve this later)
+			Direction[] directions = Direction.values();				//get all directions (improve this later)
 
-			for (Direction direction : directions) {	//Loop through all of the directions
-				if (gc.canUnload(unit.id(), direction)) {	//Check if the bot can unload in a given dir direction
+			for (Direction direction : directions) {					//Loop through all of the directions
+				if (gc.canUnload(unit.id(), direction)) {				//Check if the bot can unload in a given dir direction
 					int unloadId = unit.structureGarrison().get(0);			
 					Unit unloadUnit = gc.unit(unloadId);	//set important variables for unload
 					UnitType unloadType = unloadUnit.unitType();
@@ -88,6 +88,7 @@ class Factory extends Structure {
 		// array of multipliers.
 		int[] cmpArray = {knightMultiplier, rangerMultiplier, mageMultiplier}; 
 		int lowest = knightMultiplier;
+
 		// iterates through the array to find the lowest multiplier.
 		for(int i = 0; i < cmpArray.length; i++) {
 			if(cmpArray[i] < lowest){

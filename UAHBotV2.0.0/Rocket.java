@@ -2,7 +2,9 @@ import bc.*;
 
 class Rocket extends Structure {
 
+
 	private MapLocation currentLocation;
+
 	
 	public Rocket(Unit unit, GameController gc) {
 		super(unit, gc);

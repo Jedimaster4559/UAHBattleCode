@@ -3,12 +3,18 @@ import java.lang.Integer;
 
 public class Worker extends MobileUnit {
 	
-	//a statement to prevent the bot from moving away from its current construction project
-	boolean isBuilding = false;
+	//The current production type (depending on how we are running this, is this still necessary)
+	private UnitType productionType;
+	
+	//a statement to prevent the bot from moving away from its current contruction project
+	private boolean isBuilding = false;	
+	private boolean isHarvesting = false;
+
 	
 	public Worker(Unit unit, GameController gc) {
 		super(unit, gc);
 		isBuilding = false;
+		isHarvesting = false;
 	}
 	
 	public void process() {
@@ -23,11 +29,16 @@ public class Worker extends MobileUnit {
         if ((nearestBlueprintId != Integer.MAX_VALUE) &&
 			(gc.canBuild(unit.id(), nearestBlueprintId))) 
         {
-            	gc.build(unit.id(),Utilities.getNearbyBlueprint(unit, gc));	//build
-           		isBuilding = true;	//ensure we don't move this turn
-				return;
-        }
-        else if(gc.round() < 600) //pre-prep
+			gc.build(unit.id(),Utilities.getNearbyBlueprint(unit, gc));	//build
+			isBuilding = true;	//ensure we don't move this turn
+			return;
+
+        } else {
+			isBuilding = false;
+			dest = null;
+		}
+			
+		if(gc.round() < 600) //pre-prep
 		{
 			
 			if (gc.karbonite() < Player.highKarboniteGoal) {
@@ -42,6 +53,7 @@ public class Worker extends MobileUnit {
 				if (worked) {
 					Player.initRocketBuilt = true;
 					//System.out.println("Built initRocket");
+
 				}
 			}
 			if (gc.karbonite() < Player.lowKarboniteGoal) {
@@ -68,20 +80,18 @@ public class Worker extends MobileUnit {
 			}
 			mine();
 		}
-
-		// harvest logic
-		if (gc.canHarvest(unit.id(), Direction.Center))
-		{
-			//if the location we are standing on is harvestable, then harvest it       
-			gc.harvest(unit.id(), Direction.Center); 
+		
+		if (!isBuilding){
+			if(unit.movementHeat() < 10){
+				if(dest != null){
+					Path.determinePathing(unit, dest, gc);
+				} else {
+					Utilities.moveRandomDirection(unit, gc);
+				}
+				unit = gc.unit(unitId);
+				currentLocation = unit.location().mapLocation();
+			} 	
 		}
-		else if (!isBuilding)
-		{
-		    Utilities.moveRandomDirection(unit, gc);//if we are not moving, then blueprint right here
-			unit = gc.unit(unitId);	//make sure we update our current position
-			currentLocation = unit.location().mapLocation();	
-		}  
-		isBuilding = false;	//reset this variable at the end of processing
 	}
 	
 	public boolean blueprintType(UnitType type) {
@@ -99,7 +109,9 @@ public class Worker extends MobileUnit {
 					} else {	//creates an object of the proper structure type
 						Player.newUnits.add(new Rocket(blueprintUnit, gc));
 					}
-					isBuilding = true;	//ensure we don't move this turn
+					isBuilding = true;								//ensure we don't move this turn
+					dest = blueprintUnit.location().mapLocation();
+					isHarvesting = false;
 					return true;
 				} catch (Exception e) {
 					System.out.println("error blueprinting or making factory object");
@@ -111,11 +123,63 @@ public class Worker extends MobileUnit {
 	}
 	
 	public void mine() {
-		if (gc.canHarvest(unit.id(), Direction.Center))
+		if (gc.canHarvest(unitId, Direction.Center))
 		{
-			//if the location we are standing on is harvestable, then harvest it       
-			gc.harvest(unit.id(), Direction.Center); 
+
+			gc.harvest(unitId, Direction.Center);      //if the location we are standing on is harvestable, then harvest it
+			KarboniteLocation thisDeposit = getKarboniteLocation();
+			if(thisDeposit != null){
+				thisDeposit.setKarbonite(gc.karboniteAt(currentLocation));
+				if(thisDeposit.getKarbonite() <= 0){
+					if(thisDeposit.getMapLocation() == currentLocation){
+						isHarvesting = false;
+						dest = null;
+					}
+					Player.karboniteLocations.remove(thisDeposit);
+				}
+			}
 		}
+		
+		//Utilities.moveRandomDirection(unit, gc);		//if we are not moving, then blueprint right here
+		else if (!isBuilding && !isHarvesting)
+		{
+			if(unit.movementHeat() < 10){
+				if(dest == null){
+					setBestKarbonite();
+				}
+				Path.determinePathing(unit, dest, gc);
+				unit = gc.unit(unitId);					//make sure we update our current position
+				currentLocation = unit.location().mapLocation();	
+			}
+			isHarvesting = true;
+		}
+	}
+		
+	public KarboniteLocation getKarboniteLocation(){
+		for(KarboniteLocation location:Player.karboniteLocations){
+			if(currentLocation.toString().equals(location.getMapLocation().toString())){
+				return location;
+			}
+		}
+		return null;
+		
+	}
+	
+	public void setBestKarbonite() {
+		int index = 0;
+		int counter = 0;
+		int highest = Integer.MIN_VALUE;
+		for(KarboniteLocation location:Player.karboniteLocations){
+			if(currentLocation != null && location.getDistance(currentLocation) != 0 && location.karboniteAmount/location.getDistance(currentLocation) > highest){
+				index = counter;
+			}
+			counter++;
+		}
+		KarboniteLocation bestLocation = Player.karboniteLocations.get(index);
+		dest = bestLocation.mapLocation;
+		isHarvesting = true;
+		System.out.println("Setting Best Karbonite Location");
+
 	}
 
 	/*

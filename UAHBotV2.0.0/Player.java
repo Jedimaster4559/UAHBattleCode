@@ -39,6 +39,7 @@ public class Player {
 	//Set some strategy goals
 	static int rocketGoal = 1;
 	
+
 	//a VecUnit of all of our units (this may no longer be necessary)
 	static VecUnit units;						
 	static boolean peaceful = false;	//Peaceful toggle for bot (TESTING ONLY)
@@ -49,6 +50,9 @@ public class Player {
 	public static ArrayList<UAHUnit> newUnits = new ArrayList<UAHUnit>();	
 	//list of all units that died this turn
 	public static ArrayList<UAHUnit> deadUnits = new ArrayList<UAHUnit>();	
+
+	public static ArrayList<KarboniteLocation> karboniteLocations = new ArrayList<KarboniteLocation>();	//List of all KarboniteLocations
+
 
 		
 	public static void main(String[] args) {
@@ -125,7 +129,7 @@ public class Player {
 					gc.nextTurn();
 					continue;
 				}
-				
+
 				//try to run all units this turn
 				try {
 					
