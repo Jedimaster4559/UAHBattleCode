@@ -101,7 +101,7 @@ class Factory extends Structure {
 		} else if (knightMultiplier == lowest) {	// decides unit based on lowest multiplier.
 			return UnitType.Knight;					// ideally, all multipliers will be equal.
 		} else if (rangerMultiplier == lowest) {
-			return UnitType.Knight;
+			return UnitType.Ranger;
 		} else if (mageMultiplier == lowest) {
 			return UnitType.Mage;
 		} else {
