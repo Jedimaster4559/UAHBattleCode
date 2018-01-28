@@ -23,6 +23,7 @@ public class Worker extends MobileUnit {
 			return;
 		}
 		
+		
 		//determines what the ID number of the nearest blueprint is
 		int nearestBlueprintId = Utilities.getNearbyBlueprint(unit, gc);
 		// Can we build the nearest blueprint
@@ -83,9 +84,9 @@ public class Worker extends MobileUnit {
 		
 		if (!isBuilding){
 			if(unit.movementHeat() < 10){
-				if(dest != null){
+				if(dest != null && gc.karboniteAt(currentLocation) == 0){
 					Path.determinePathing(unit, dest, gc);
-				} else {
+				} else if (gc.karboniteAt(currentLocation) == 0){
 					Utilities.moveRandomDirection(unit, gc);
 				}
 				unit = gc.unit(unitId);
