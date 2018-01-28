@@ -126,7 +126,7 @@ class Utilities {
 	//Method to move toward the closest enemy
 	public static void moveToNearestEnemy(Unit unit, GameController gc) {
 		//System.out.println(unit.movementHeat());
-		if (unit.movementHeat() > 0) return;
+		if (!gc.isMoveReady(unit.id())) return;
 
 		try{
 			MapLocation currentLocation = unit.location().mapLocation();
@@ -154,6 +154,7 @@ class Utilities {
 	
 	//Method to move toward the closest rocket
 	public static void moveTowardNearestRocket(Unit unit, GameController gc){
+		if (!gc.isMoveReady(unit.id())) return;
 		try {
 			MapLocation currentLocation = unit.location().mapLocation();
 			long distances[] = new long[LogicHandler.rockets.size()];
