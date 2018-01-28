@@ -186,21 +186,4 @@ public class Worker extends MobileUnit {
 		System.out.println("Setting Best Karbonite Location");
 
 	}
-
-	/*
-	public void decideProductionType() {
-		if (gc.round() > 600) {		//basically, make sure we aren't planning to escape
-			productionType = UnitType.Rocket;
-		}
-		else {
-			//check out team production goals to determine if/what we should build
-			if (Player.numFactories >= Player.factoryGoal) {
-				productionType = null;
-			}
-			else {
-				productionType = UnitType.Factory;
-			}
-		}
-	}
-	*/
 }	
