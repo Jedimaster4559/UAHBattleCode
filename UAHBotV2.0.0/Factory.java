@@ -36,10 +36,10 @@ class Factory extends Structure {
 			for (Direction direction : directions) {					//Loop through all of the directions
 				if (gc.canUnload(unit.id(), direction)) {				//Check if the bot can unload in a given dir direction
 					int unloadId = unit.structureGarrison().get(0);			
-					Unit unloadUnit = gc.unit(unloadId);				//set important variables for unload
+					Unit unloadUnit = gc.unit(unloadId);	//set important variables for unload
 					UnitType unloadType = unloadUnit.unitType();
-					switch (unloadType) {						//Go through all unit types and create a new object
-						case Worker:						//of the type of unit we plan to unload
+					switch (unloadType) {	//Go through all unit types and create a new object
+						case Worker:		//of the type of unit we plan to unload
 							Worker newWorker = new Worker(unloadUnit, gc);	
 							Player.newUnits.add(newWorker);
 							break;
@@ -61,15 +61,15 @@ class Factory extends Structure {
 							break;
 					}
 						
-					gc.unload(unit.id(), direction);				//unload unit in the given direction
+					gc.unload(unit.id(), direction);	//unload unit in the given direction
 					if(unit.structureGarrison().size() == 0){
-						break;							//if the factory happens to be empty now, stop unloading
-					}								//if not, keep trying different directions
+						break;		//if the factory happens to be empty now, stop unloading
+					}		//if not, keep trying different directions
 				}
 			}
 		}
 		
-		if(unit.isFactoryProducing() == 0) {				//create new unit if the factory is not already working on one
+		if(unit.isFactoryProducing() == 0) {	//create new unit if the factory is not already working on one
 			UnitType unitCreateType = decideUnitType();		//decide the unit type of said unit
 			if(gc.canProduceRobot(unit.id(), unitCreateType)){	
 				gc.produceRobot(unit.id(), unitCreateType);	//create the unit if it is possible to do so
@@ -80,20 +80,21 @@ class Factory extends Structure {
 	
 	public UnitType decideUnitType() {
 
-		private int knightMultiplier = Player.numKnights / knightRatio; // multipliers help determine
-		private int rangerMultiplier = Player.numRangers / rangerRatio; // what unit needs to be produced.
-		private int mageMultiplier = Player.numMages / mageRatio;
+		int knightMultiplier = Player.numKnights / knightRatio; // multipliers help determine
+		int rangerMultiplier = Player.numRangers / rangerRatio; // what unit needs to be produced.
+		int mageMultiplier = Player.numMages / mageRatio;
 	
-		private int[] cmpArray = {knightMultiplier, rangerMultiplier, mageMultiplier}; // array of multipliers.
-		private int lowest = knightMultiplier;
-		for(int i = 0; i < cmpArray.size; i++) {
+		// array of multipliers.
+		int[] cmpArray = {knightMultiplier, rangerMultiplier, mageMultiplier}; 
+		int lowest = knightMultiplier;
+		for(int i = 0; i < cmpArray.length; i++) {
 			if(cmpArray[i] < lowest){
 				lowest = cmpArray[i];	// iterates through the array to find the lowest multiplier.
 			}
 		}
-			
-		if ((Player.numWorkers < workerGoal)&&(Player.numWorkers <= (2*Player.numKnights))) {	// initial expression to determine whether		
-			return UnitType.Worker;																// to produce more workers.
+		// initial expression to determine whether
+		if ((Player.numWorkers < workerGoal) && (Player.numWorkers <= (2*Player.numKnights))) {	
+			return UnitType.Worker;				// to produce more workers.
 		} else if (knightMultiplier == lowest) {	// decides unit based on lowest multiplier.
 			return UnitType.Knight;					// ideally, all multipliers will be equal.
 		} else if (rangerMultiplier == lowest) {

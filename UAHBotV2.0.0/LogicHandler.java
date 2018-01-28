@@ -6,10 +6,13 @@ class LogicHandler {
 	static boolean escaping;					//Are we trying to escape earth to mars?
 	static ArrayList<UAHUnit> rockets = new ArrayList<UAHUnit>();	//List of all rockets so this info is publicly available
 	static int factoryGoal = 10;					//Total numbers of factories we are willing to build
+	static ArrayList<KarboniteLocation> usedDeposit = new ArrayList<KarboniteLocation>();
 	
 	public static void initialize(GameController gc) {		
 		//initialize Pathing
 		Path.initializePathing(gc);
+		
+		initializeKarboniteLocations(gc);
 		
 		//initialize escape mode (starts as no since we can't anyways)
 		escaping = false;
@@ -38,6 +41,10 @@ class LogicHandler {
 		} else if (escaping) {
 			getRocketLocations(gc);
 		}
+		
+		if(gc.round() % 50 == 0){
+			checkKarbonite(gc);
+		}
 	}
 	
 	public static void startEscaping(GameController gc) {
@@ -61,5 +68,36 @@ class LogicHandler {
 
 			}
 		}
+	}
+	
+	public static void initializeKarboniteLocations(GameController gc) {
+		if(gc.planet() == Planet.Earth){
+			VecMapLocation allLocations = gc.allLocationsWithin(new MapLocation(Planet.Earth,0,0), 5001);
+			for(long i = 0; i < allLocations.size(); i++) {
+				if(Path.earth.initialKarboniteAt(allLocations.get(i)) > 0) {
+					Player.karboniteLocations.add(new KarboniteLocation(allLocations.get(i), gc));
+				}
+			}
+		} else {
+			
+		}
+	}
+	
+	public static void checkKarbonite(GameController gc){
+		for(KarboniteLocation location:Player.karboniteLocations){
+			try{
+				long karbonite = gc.karboniteAt(location.getMapLocation());
+				if(karbonite <= 0){
+					usedDeposit.add(location);
+				} else {
+					location.setKarbonite(karbonite);
+				}
+			}
+			catch(Exception e){
+				
+			}
+		}
+		Player.karboniteLocations.removeAll(usedDeposit);
+		usedDeposit.clear();
 	}
 }
