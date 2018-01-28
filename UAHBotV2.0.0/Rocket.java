@@ -84,6 +84,8 @@ class Rocket extends Structure {
 						}
 					}
 				}
+			} else {
+				Player.deadUnits.add(this);
 			}
 		}
 	}

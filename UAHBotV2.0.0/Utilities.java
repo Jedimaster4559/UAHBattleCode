@@ -50,6 +50,9 @@ class Utilities {
 		VecUnit units = gc.myUnits();
 		boolean found = false;
 		if (Player.UAHUnits.size() == units.size()) {
+			if (gc.planet() == Planet.Mars && gc.round() > 950) {
+				System.out.println("UAHUnits and units sizes matched, yay!");
+			}
 			return;
 		}
 		
