@@ -53,6 +53,8 @@ public class Player {
 
 	public static ArrayList<KarboniteLocation> karboniteLocations = new ArrayList<KarboniteLocation>();	//List of all KarboniteLocations
 
+	static long startTime = 0;
+	static long endTime = 0;
 
 		
 	public static void main(String[] args) {
@@ -85,14 +87,25 @@ public class Player {
 		//loop through all units and process their turn
 		while (true){
 			//check for dead units and new mars rockets
-			Utilities.verifyList(gc);
 			
-			//Process Logic
-			LogicHandler.process(gc);
 			
 			//Mars logic
 			if(gc.planet() == Planet.Mars){
 				//find rockets when they land and at them to units list
+				
+				if (gc.round() % 10 == 0) {
+					long startTime = System.nanoTime();
+				}
+				Utilities.verifyList(gc);
+				
+				//Process Logic
+				LogicHandler.process(gc);
+				
+				if (gc.round() % 10 == 0) {
+					long endTime = System.nanoTime();
+					
+					System.out.println("initial turn processing time:" + (endTime - startTime));
+				}
 				
 				UAHUnits.addAll(newUnits);
 				deadUnits.clear();
@@ -100,18 +113,33 @@ public class Player {
 				
 				//try to run all units this turn
 				try {
+					if (gc.round() % 10 == 0) {
+						startTime = System.nanoTime();
+					}
+					
 					for (UAHUnit unit : UAHUnits) {		//Loop through all of our units
 						if (unit.isAlive()) {
+							//System.out.println(unit.getUnit().unitType() + " start time left:" + gc.getTimeLeftMs());
 							unit.preProcess();	//Preprocess the unit (determines if the bot still exists)
 							unit.process();		//Allow the unit to process its turn
+							//System.out.println(unit.getUnit().unitType() + "   end time left:" + gc.getTimeLeftMs());
 						}
 						
+					}
+					
+					if (gc.round() % 10 == 0) {
+						endTime = System.nanoTime();
+						System.out.println("Unit loop processing time:" + (endTime - startTime));
 					}
 					
 					//process any unit changes from this turn
 					UAHUnits.removeAll(deadUnits);
 					UAHUnits.addAll(newUnits);
 					
+					for (UAHUnit unit : newUnits) {
+						unit.preProcess();
+						unit.process();
+					}
 					//clear changes to be used next turn
 					newUnits.clear();
 					deadUnits.clear();
@@ -128,6 +156,21 @@ public class Player {
 					newUnits.clear();
 					gc.nextTurn();
 					continue;
+				}
+				
+				if (gc.round() % 10 == 0) {
+					long startTime = System.nanoTime();
+				}
+				
+				Utilities.verifyList(gc);
+				
+				//Process Logic
+				LogicHandler.process(gc);
+				
+				if (gc.round() % 10 == 0) {
+					long endTime = System.nanoTime();
+					
+					System.out.println("initial turn processing time:" + (endTime - startTime));
 				}
 
 				//try to run all units this turn
@@ -152,6 +195,7 @@ public class Player {
 				
 				//run any new units
 				for (UAHUnit unit : newUnits) {
+					unit.preProcess();
 					unit.process();
 				}
 				
@@ -162,7 +206,9 @@ public class Player {
 			}
 			
 			//proceed to next turn
-			System.out.println(gc.round() + ":" + gc.getTimeLeftMs());
+			if (gc.round() % 10 == 0) {
+				System.out.println(gc.round() + ":" + gc.getTimeLeftMs());
+			}
 			gc.nextTurn();
         }
 		
