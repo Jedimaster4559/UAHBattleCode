@@ -81,7 +81,7 @@ class Utilities {
 				Unit unit = units.get(i);
 				//System.out.println("found " + unit.unitType());
 				
-				if(unit.unitType() == UnitType.Rocket){
+				if(unit.unitType() == UnitType.Rocket && (unit.structureGarrison().size() > 0)){
 					Player.UAHUnits.add(new Rocket(unit, gc));
 					
 				}
