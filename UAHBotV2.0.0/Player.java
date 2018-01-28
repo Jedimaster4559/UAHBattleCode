@@ -42,9 +42,13 @@ public class Player {
 	//a VecUnit of all of our units (this may no longer be necessary)
 	static VecUnit units;						
 	static boolean peaceful = false;	//Peaceful toggle for bot (TESTING ONLY)
-	static ArrayList<UAHUnit> UAHUnits = new ArrayList<UAHUnit>();	//List of all of our units
-	static ArrayList<UAHUnit> newUnits = new ArrayList<UAHUnit>();	//list of all units created this turn
-	static ArrayList<UAHUnit> deadUnits = new ArrayList<UAHUnit>();	//list of all units that died this turn
+	
+	//List of all of our units
+	public static ArrayList<UAHUnit> UAHUnits = new ArrayList<UAHUnit>();	
+	//list of all units created this turn
+	public static ArrayList<UAHUnit> newUnits = new ArrayList<UAHUnit>();	
+	//list of all units that died this turn
+	public static ArrayList<UAHUnit> deadUnits = new ArrayList<UAHUnit>();	
 
 		
 	public static void main(String[] args) {

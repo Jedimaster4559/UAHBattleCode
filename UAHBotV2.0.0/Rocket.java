@@ -9,7 +9,7 @@ class Rocket extends Structure {
 	}
 	
 	public void process() {
-		if (gc.round() % 20 == 0) System.out.println("processing rocket");
+		//if (gc.round() % 20 == 0) System.out.println("processing rocket");
 		//abort processing for the turn if we are in space
 		//update currentLocation otherwise
 		if (!unit.location().isOnMap()) {
@@ -33,20 +33,20 @@ class Rocket extends Structure {
 			}
 		
 		} else {
-			System.out.println("on mars");
+			//System.out.println("on mars");
 			if (unit.structureGarrison().size() > 0) {//if we are on Mars, attempt to unload
 		
 			//get an array of all directions
 				Direction[] directions = Direction.values();
 				
-				System.out.println("Unit(s) in garrison");
+				//System.out.println("Unit(s) in garrison");
 				//loop through all possible directions
 				for (Direction direction : directions) {					
 				
-					System.out.println("unload attempt");
+					//System.out.println("unload attempt");
 					//if we can unload a unit in this direction, do it
 					if (gc.canUnload(unit.id(), direction)) {	
-						System.out.println("can unload");
+						//System.out.println("can unload");
 						int unloadId = unit.structureGarrison().get(0);			
 						Unit unloadUnit = gc.unit(unloadId);			//helpful unload variables
 						UnitType unloadType = unloadUnit.unitType();

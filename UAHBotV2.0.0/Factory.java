@@ -70,7 +70,7 @@ class Factory extends Structure {
 		}
 		
 		//create new unit if the factory is not already working on one
-		if(unit.isFactoryProducing() == 0 && gc.karbonite() > (3 * Player.highKarboniteGoal)) {	
+		if(unit.isFactoryProducing() == 0 && gc.karbonite() > (2 * Player.highKarboniteGoal)) {	
 			UnitType unitCreateType = decideUnitType();		//decide the unit type of said unit
 			if(gc.canProduceRobot(unit.id(), unitCreateType)){	
 				gc.produceRobot(unit.id(), unitCreateType);	//create the unit if it is possible to do so
