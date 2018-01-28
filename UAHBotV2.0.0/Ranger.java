@@ -11,9 +11,13 @@ class Ranger extends MobileUnit{
 		//if bot is not on map, do not process
 		if (!unit.location().isOnMap()) {
 			return;
+		} else {
+			currentLocation = unit.location().mapLocation();
 		}
 		
-		if (LogicHandler.escaping && unit.movementHeat() < 10) {	//if we should be escaping to Mars, attempt to 
+		//if we should be escaping to Mars, attempt to 
+		if (currentLocation.getPlanet() == Planet.Earth &&
+				LogicHandler.escaping && gc.isMoveReady(unitId)) {	
 			Utilities.moveTowardNearestRocket(unit, gc);		//do so
 		}
 		
@@ -21,11 +25,11 @@ class Ranger extends MobileUnit{
 			if(unit.attackHeat() < 10){
 				Utilities.senseAndAttackInRange(unit, gc);	//attack enemy if possible
 			}
-			if(unit.movementHeat() < 10){
+			if(gc.isMoveReady(unitId)){
 				Utilities.moveToNearestEnemy(unit, gc);		//move toward an enemy if possible
 			}
 		}
-		if(unit.movementHeat() < 10){
+		if(gc.isMoveReady(unitId)){
 			Utilities.moveRandomDirection(unit, gc);		//move a random direction if possible
 		}
 	}

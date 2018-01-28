@@ -11,22 +11,25 @@ class Mage extends MobileUnit{
         	//Do not process if we are not on Earth or Mars
 		if (!unit.location().isOnMap()) {
 			return;
+		} else {
+			currentLocation = unit.location().mapLocation();
 		}
 		
-		//Attempt to escape/move to the nearest rocket if that is something currently important
-		if (LogicHandler.escaping && unit.movementHeat() < 10) {
-			Utilities.moveTowardNearestRocket(unit, gc);
+		//if we should be escaping to Mars, attempt to 
+		if (currentLocation.getPlanet() == Planet.Earth &&
+				LogicHandler.escaping && gc.isMoveReady(unitId)) {	
+			Utilities.moveTowardNearestRocket(unit, gc);		//do so
 		}
 		
 		if (!Player.peaceful) {						//Peaceful catch for debugging purposes
-			if(unit.attackHeat() < 10){
+			if(gc.isAttackReady(unitId)){
 				Utilities.senseAndAttackInRange(unit, gc);	//attack an enemy if possible
 			}
-			if(unit.movementHeat() < 10){
+			if(gc.isMoveReady(unitId)){
 				Utilities.moveToNearestEnemy(unit, gc);		//move toward an enemy if possible
 			}
 		}
-		if(unit.movementHeat() < 10){				
+		if(gc.isMoveReady(unitId)){				
 			Utilities.moveRandomDirection(unit, gc);		//move a random direction if possible
 		}
 	}	
