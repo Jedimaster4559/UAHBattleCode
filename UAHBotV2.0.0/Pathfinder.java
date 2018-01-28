@@ -58,7 +58,7 @@ class Path
 	public static void aStar(Unit unit, MapLocation dest, GameController gc, bool dropPheromones)
 	{
 		MapLocation Start = unit.location().mapLocation();
-		Open.add(Start);
+		Open.add(unit.mapLocation());
 		
 		/*
 		loop
