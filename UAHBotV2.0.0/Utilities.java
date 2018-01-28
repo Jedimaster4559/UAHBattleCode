@@ -63,11 +63,15 @@ class Utilities {
 				}
 			}
 		}
-		if(!found){
-			Unit unit = units.get(foundUnit);
-			if(unit.unitType() == UnitType.Rocket){
-				Player.UAHUnits.add(new Rocket(unit,gc));
-				
+		if (gc.planet() == Planet.Mars) {
+			System.out.println("verifying list on mars");
+			System.out.println(units.size() + ":" + Player.UAHUnits.size());
+			if(!found){
+				Unit unit = units.get(foundUnit);
+				if(unit.unitType() == UnitType.Rocket){
+					Player.UAHUnits.add(new Rocket(unit,gc));
+					
+				}
 			}
 		}
 	}

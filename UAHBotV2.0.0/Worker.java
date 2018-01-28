@@ -87,7 +87,7 @@ public class Worker extends MobileUnit {
 	public boolean blueprintType(UnitType type) {
 		for(Direction direction:Path.directions) //loop through all directions
 		{
-			if(gc.canBlueprint(unitId, type, direction))	
+			if(gc.canBlueprint(unitId, type, direction) && gc.karboniteAt(currentLocation.add(direction)))	
 			{
 				try {
 					gc.blueprint(unitId, type, direction);
