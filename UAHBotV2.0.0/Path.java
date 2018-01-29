@@ -147,7 +147,7 @@ class Path {
 		if(dest == null || gc.planet() == Planet.Mars){
 			Utilities.moveRandomDirection(unit, gc);
 		}
-		if (unit.isMoveReady()) {
+		if (gc.isMoveReady(unit.id())) {
 			fuzzyPath(unit, dest, gc);
 		}
 	}
