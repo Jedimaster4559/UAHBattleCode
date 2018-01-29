@@ -51,7 +51,7 @@ class Path {
 	//Positive amounts rotate clockwise and negative rotate counter clockwise
 	public static Direction rotate(Direction dir, int amount, GameController gc){
 		int index = Utilities.getIndex(directions, dir);		//set the amount we want to rotate
-		return directions[(index+amount)%8];					//return that as a direction
+		return directions[(index+amount+8)%8];					//return that as a direction
 	}
 	
 	//Bug path is a much more accurate method of going to a destination
@@ -147,7 +147,7 @@ class Path {
 		if(dest == null || gc.planet() == Planet.Mars){
 			Utilities.moveRandomDirection(unit, gc);
 		}
-		if (unit.movementHeat() < 10) {
+		if (unit.isMoveReady()) {
 			fuzzyPath(unit, dest, gc);
 		}
 	}
