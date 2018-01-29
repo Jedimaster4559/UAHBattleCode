@@ -1,5 +1,6 @@
 import bc.*;
 import java.util.*;
+import java.lang.Math;
 
 class LogicHandler {
 
@@ -8,6 +9,8 @@ class LogicHandler {
 	static int factoryGoal = 10;					//Total numbers of factories we are willing to build
 	static ArrayList<KarboniteLocation> usedDeposit = new ArrayList<KarboniteLocation>();
 	static int marsLanding = 0;
+	static int combatGoal;
+	static int lastTurn = 100;
 	
 	public static void initialize(GameController gc) {		
 		//initialize Pathing
@@ -30,6 +33,8 @@ class LogicHandler {
 		gc.queueResearch(UnitType.Mage);
 		gc.queueResearch(UnitType.Rocket);
 		
+		combatGoal = (int)Math.sqrt((double)Path.earthMapHeight * Path.earthMapWidth);
+		
 	}
 	
 	public static void process(GameController gc) {
@@ -42,6 +47,19 @@ class LogicHandler {
 				startEscaping(gc);
 			} else if (escaping) {
 				getRockets(gc);
+			}
+			
+			int combatUnits = Player.numKnights + Player.numRangers + Player.numMages;
+			
+			if(gc.round() - lastTurn >= 100 && combatUnits >= combatGoal){
+				for(UAHUnit unit:Player.UAHUnits){
+					UnitType type = unit.getUnit().unitType();
+					if(type == UnitType.Knight || type == UnitType.Mage || type == UnitType.Ranger){
+						MobileUnit thisUnit = (MobileUnit)unit;
+						thisUnit.setEnemy(true);
+					}
+				}
+				lastTurn = (int)gc.round();
 			}
 			
 			calculateKarboniteGoals(gc);

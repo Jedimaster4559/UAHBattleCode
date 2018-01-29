@@ -34,7 +34,8 @@ class Knight extends MobileUnit {
 		}
 		if (gc.isMoveReady(unitId)) {
 			//If we still can move, attempt to move a random direction
-			Utilities.moveRandomDirection(unit, gc);		
+			dest = Path.setDest(unit, enemy, gc);
+			Path.determinePathing(unit, dest, gc);		
 		}
 		
 	}

@@ -246,7 +246,7 @@ class Utilities {
 		return -1; //Not quite sure what the best thing would be to put here so we don't throw an error
 	}
 	
-	public static void invertPositions(Unit unit, GameController gc){
+	public static void invertPositions(GameController gc){
 		if (gc.planet() != Planet.Earth) return;
         VecUnit allUnits = Path.earth.getInitial_units();
         int counter = 0;
@@ -254,6 +254,7 @@ class Utilities {
         for(long i = 0; i < allUnits.size(); i++){
             if(allUnits.get(i).team() == enemyTeam){
                 enemyStartLocations[counter] = allUnits.get(i).location().mapLocation();
+				System.out.println(allUnits.get(i).location().mapLocation());
                 counter++;
             }
         }
