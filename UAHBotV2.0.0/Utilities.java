@@ -168,6 +168,7 @@ class Utilities {
 					}
 				}
 				MapLocation enemyLocation = enemyUnits.get(index).location().mapLocation();
+				if (!gc.isMoveReady(unit.id())) return;
 				Path.determinePathing(unit, enemyLocation, gc);
 			}
 		}
