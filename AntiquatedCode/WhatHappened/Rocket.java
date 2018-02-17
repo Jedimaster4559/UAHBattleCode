@@ -4,19 +4,22 @@ class Rocket extends Structure {
 
 
 	private MapLocation currentLocation;
-	private boolean finished = false;
 
 	
 	public Rocket(Unit unit, GameController gc) {
 		super(unit, gc);
-		//System.out.println("creating new rocket:" + gc.round());
 	}
 	
 	public void process() {
+		if(unit.unitType() != UnitType.Factory){
+			System.out.println("I'm a " + unit.unitType() + " and I'm trying to be a Factory!");
+			Player.deadUnits.add(this);
+			return;
+		}
 		//if (gc.round() % 20 == 0) System.out.println("processing rocket");
 		//abort processing for the turn if we are in space
 		//update currentLocation otherwise
-		if (!unit.location().isOnMap() || finished) {
+		if (!unit.location().isOnMap()) {
 			return;
 		} else {
 			currentLocation = unit.location().mapLocation();
@@ -36,22 +39,18 @@ class Rocket extends Structure {
 				findLandableSpot(unit, gc);		//try to launch
 			}
 		
-		//mars
 		} else {
 			//System.out.println("on mars");
 			if (unit.structureGarrison().size() > 0) {//if we are on Mars, attempt to unload
 				for (Direction direction : Path.directions) {					
-					unit = gc.unit(unitId);
-					//System.out.println("unload attempt:" + unit.structureGarrison().size());
+				
+					//System.out.println("unload attempt");
 					//if we can unload a unit in this direction, do it
 					if (gc.canUnload(unit.id(), direction)) {	
-						gc.unload(unit.id(), direction);
-						//System.out.println("can unload");	
-						
-						//helpful unload variables
-						Unit unloadUnit = gc.senseUnitAtLocation(currentLocation.add(direction));			
+						//System.out.println("can unload");
+						int unloadId = unit.structureGarrison().get(0);			
+						Unit unloadUnit = gc.unit(unloadId);			//helpful unload variables
 						UnitType unloadType = unloadUnit.unitType();
-						//System.out.println("unloading new " + unloadType);
 						switch (unloadType) {		//determine unit type and then add to the new
 							case Worker:			//units array list
 								Worker newWorker = new Worker(unloadUnit, gc);
@@ -76,16 +75,14 @@ class Rocket extends Structure {
 						}
 						
 						//unload the given unit in given direction
-								
-						
-					}
-					if(unit.structureGarrison().size() == 0){	//if the Rocket is now empty, stop trying to unload
-						break;
+						gc.unload(unit.id(), direction);		
+						if(unit.structureGarrison().size() == 0){	//if the Rocket is now empty, stop trying to unload
+							break;
+
+
+						}
 					}
 				}
-			} else {
-				finished = true;
-				//Player.deadUnits.add(this);
 			}
 		}
 	}

@@ -30,8 +30,7 @@ class Mage extends MobileUnit{
 			}
 		}
 		if(gc.isMoveReady(unitId)){				
-			dest = Path.setDest(unit, enemy, gc);
-			Path.determinePathing(unit, dest, gc);		//move a random direction if possible
+			Utilities.moveRandomDirection(unit, gc);		//move a random direction if possible
 		}
 	}	
 }

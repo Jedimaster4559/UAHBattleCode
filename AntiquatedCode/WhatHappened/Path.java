@@ -27,15 +27,11 @@ class Path {
 		earthMapHeight = (int)earth.getHeight();
 		earthMapWidth = (int)earth.getWidth();
 		frenzy = false;
-		Utilities.invertPositions(gc);
 	}
 	
 	//Fuzzy Path attempts to take the shortest path and can get around really
 	//simple obstacles. It is really low processing but will occasionally fail
 	public static void fuzzyPath(Unit unit, MapLocation dest, GameController gc){
-		if(dest == null){
-			return;
-		}
 		MapLocation start = unit.location().mapLocation();			//sets the current location of the robot
 		Direction toward = start.directionTo(dest);					//sets a direction toward the destination
 		for(int tilt:tryRotate){									//rotate through directions all directions until broken
@@ -51,7 +47,7 @@ class Path {
 	//Positive amounts rotate clockwise and negative rotate counter clockwise
 	public static Direction rotate(Direction dir, int amount, GameController gc){
 		int index = Utilities.getIndex(directions, dir);		//set the amount we want to rotate
-		return directions[(index+amount+8)%8];					//return that as a direction
+		return directions[(index+amount)%8];					//return that as a direction
 	}
 	
 	//Bug path is a much more accurate method of going to a destination
@@ -144,22 +140,8 @@ class Path {
 	//Should be used in the case where you
 	static void determinePathing(Unit unit, MapLocation dest, GameController gc){
 		//UnitType type = unit.unitType();
-		if(dest == null || gc.planet() == Planet.Mars){
-			Utilities.moveRandomDirection(unit, gc);
+		if (unit.movementHeat() < 10) {
+			bugPath(unit, dest, gc);
 		}
-		if (gc.isMoveReady(unit.id())) {
-			fuzzyPath(unit, dest, gc);
-		}
-	}
-	
-	static MapLocation setDest(Unit unit, boolean mode, GameController gc){
-		UnitType type = unit.unitType();
-		MapLocation dest;
-		if(mode){
-			dest = Utilities.enemyStartLocations[0];
-		} else {
-			dest = null;
-		}
-		return dest;
 	}
 }

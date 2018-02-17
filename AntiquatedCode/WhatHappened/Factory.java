@@ -18,6 +18,11 @@ class Factory extends Structure {
 
 	
 	public void process() {
+		if(unit.unitType() != UnitType.Factory){
+			System.out.println("I'm a " + unit.unitType() + " and I'm trying to be a Factory!");
+			Player.deadUnits.add(this);
+			return;
+		}
 		
 		//check to determine if the factory has been built
 		if (!built) {

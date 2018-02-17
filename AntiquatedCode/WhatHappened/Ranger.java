@@ -1,14 +1,14 @@
 import bc.*;
 
 
-class Mage extends MobileUnit{
-	
-	public Mage(Unit unit, GameController gc) {
+class Ranger extends MobileUnit{
+
+	public Ranger(Unit unit, GameController gc) {
 		super(unit, gc);
 	}
 	
 	public void process() {
-        	//Do not process if we are not on Earth or Mars
+		//if bot is not on map, do not process
 		if (!unit.location().isOnMap()) {
 			return;
 		} else {
@@ -21,17 +21,17 @@ class Mage extends MobileUnit{
 			Utilities.moveTowardNearestRocket(unit, gc);		//do so
 		}
 		
-		if (!Player.peaceful) {						//Peaceful catch for debugging purposes
-			if(gc.isAttackReady(unitId)){
-				Utilities.senseAndAttackInRange(unit, gc);	//attack an enemy if possible
+		if (!Player.peaceful) {						//peaceful toggle for debugging purposes
+			if(unit.attackHeat() < 10){
+				Utilities.senseAndAttackInRange(unit, gc);	//attack enemy if possible
 			}
 			if(gc.isMoveReady(unitId)){
 				Utilities.moveToNearestEnemy(unit, gc);		//move toward an enemy if possible
 			}
 		}
-		if(gc.isMoveReady(unitId)){				
-			dest = Path.setDest(unit, enemy, gc);
-			Path.determinePathing(unit, dest, gc);		//move a random direction if possible
+		if(gc.isMoveReady(unitId)){
+			Utilities.moveRandomDirection(unit, gc);		//move a random direction if possible
 		}
-	}	
+	}
+
 }

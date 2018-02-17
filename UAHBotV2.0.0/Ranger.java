@@ -1,5 +1,6 @@
 import bc.*;
 
+
 class Ranger extends MobileUnit{
 
 	public Ranger(Unit unit, GameController gc) {
@@ -10,9 +11,13 @@ class Ranger extends MobileUnit{
 		//if bot is not on map, do not process
 		if (!unit.location().isOnMap()) {
 			return;
+		} else {
+			currentLocation = unit.location().mapLocation();
 		}
 		
-		if (LogicHandler.escaping && unit.movementHeat() < 10) {	//if we should be escaping to Mars, attempt to 
+		//if we should be escaping to Mars, attempt to 
+		if (currentLocation.getPlanet() == Planet.Earth &&
+				LogicHandler.escaping && gc.isMoveReady(unitId)) {	
 			Utilities.moveTowardNearestRocket(unit, gc);		//do so
 		}
 		
@@ -20,12 +25,13 @@ class Ranger extends MobileUnit{
 			if(unit.attackHeat() < 10){
 				Utilities.senseAndAttackInRange(unit, gc);	//attack enemy if possible
 			}
-			if(unit.movementHeat() < 10){
+			if(gc.isMoveReady(unitId)){
 				Utilities.moveToNearestEnemy(unit, gc);		//move toward an enemy if possible
 			}
 		}
-		if(unit.movementHeat() < 10){
-			Utilities.moveRandomDirection(unit, gc);		//move a random direction if possible
+		if(gc.isMoveReady(unitId)){
+			dest = Path.setDest(unit, enemy, gc);
+			Path.determinePathing(unit, dest, gc);		//move a random direction if possible
 		}
 	}
 
