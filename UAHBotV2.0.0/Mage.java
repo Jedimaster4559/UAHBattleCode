@@ -1,12 +1,25 @@
 import bc.*;
 
-
+/**
+ * Class that contains all methods pertaining specifically
+ * to the mage.
+ *
+ */
 class Mage extends MobileUnit{
-	
+	/**
+	 * Processing Method for the Knight. Runs an
+	 * entire knights turn.
+	 * 
+	 */
 	public Mage(Unit unit, GameController gc) {
 		super(unit, gc);
 	}
 	
+	/**
+	 * Processing Method for the Mage. Runs an
+	 * entire Mages turn.
+	 * 
+	 */
 	public void process() {
         	//Do not process if we are not on Earth or Mars
 		if (!unit.location().isOnMap()) {

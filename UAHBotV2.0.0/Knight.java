@@ -1,11 +1,26 @@
 import bc.*;
 
+/**
+ * Class that contains all methods pertaining specifically
+ * to the knight.
+ * 
+ */
 class Knight extends MobileUnit {
 	
+	/**
+	 * Constructor for the knight class
+	 * 
+	 * @param unit
+	 * @param gc
+	 */
 	public Knight(Unit unit, GameController gc) {
 		super(unit, gc);
 	}
 	
+	/**
+	 * Processing Method for the Knight. Runs an
+	 * entire knights turn.
+	 */
 	public void process() {
 		//check to see if the given unit is on the map and therefore controllable
 		if (!unit.location().isOnMap()) {

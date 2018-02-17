@@ -1,22 +1,35 @@
 import bc.*;
 import java.lang.Integer;
 
+/**
+ * Class containing all methods pertaining specifically to workers
+ * @author nbsol
+ *
+ */
 public class Worker extends MobileUnit {
 	
-	//The current production type (depending on how we are running this, is this still necessary)
 	private UnitType productionType;
 	
 	//a statement to prevent the bot from moving away from its current contruction project
 	private boolean isBuilding = false;	
 	private boolean isHarvesting = false;
 
-	
+	/**
+	 * Constructor for the worker. This adds statuses for
+	 * building and harvesting.
+	 * 
+	 * @param unit
+	 * @param gc
+	 */
 	public Worker(Unit unit, GameController gc) {
 		super(unit, gc);
 		isBuilding = false;
 		isHarvesting = false;
 	}
 	
+	/**
+	 * Contains all processing for a workers turn.
+	 */
 	public void process() {
 
 		if (!unit.location().isOnMap()) {	//If the worker is not on the map, then do not process
@@ -48,13 +61,11 @@ public class Worker extends MobileUnit {
 			} 
 			if (Player.numFactories < Player.highFactoryGoal) {
 				boolean worked = blueprintType(UnitType.Factory);
-				//if (worked) System.out.println("Built HPfactory");
 			} 
 			if (!Player.initRocketBuilt) {
 				boolean worked = blueprintType(UnitType.Rocket);
 				if (worked) {
 					Player.initRocketBuilt = true;
-					//System.out.println("Built initRocket");
 
 				}
 			}
@@ -63,7 +74,6 @@ public class Worker extends MobileUnit {
 			}
 			if (Player.numFactories < Player.lowFactoryGoal) {
 				boolean worked = blueprintType(UnitType.Factory);
-				//if (worked) System.out.println("Built LPfactory");
 			}
 			mine();
 
@@ -71,14 +81,13 @@ public class Worker extends MobileUnit {
 		} else {
 			if (Player.numRockets < Player.rocketGoal) {
 				boolean worked = blueprintType(UnitType.Rocket);
-				//if (worked) System.out.println("Built escape rocket");
 			}
 			if (gc.karbonite() < Player.lowKarboniteGoal) {
 				mine();
 			}
 			if (Player.numFactories < Player.highFactoryGoal && !LogicHandler.escaping) {
 				boolean worked = blueprintType(UnitType.Factory);
-				//if (worked) System.out.println("Built HPfactory escaping");
+
 			}
 			mine();
 		}
@@ -96,6 +105,13 @@ public class Worker extends MobileUnit {
 		}
 	}
 	
+	/**
+	 * determines the type of blueprint a worker should create and then
+	 * blueprints this unit.
+	 * 
+	 * @param type
+	 * @return
+	 */
 	public boolean blueprintType(UnitType type) {
 		for(Direction direction:Path.directions) //loop through all directions
 		{
@@ -124,6 +140,10 @@ public class Worker extends MobileUnit {
 		return false;
 	}
 	
+	/**
+	 * Runs the mining logic for a worker and adjusts the array lists
+	 * for karbonite as is necessary.
+	 */
 	public void mine() {
 		if (gc.canHarvest(unitId, Direction.Center))
 		{
@@ -145,7 +165,6 @@ public class Worker extends MobileUnit {
 			}
 		}
 		
-		//Utilities.moveRandomDirection(unit, gc);		//if we are not moving, then blueprint right here
 		else if (!isBuilding && !isHarvesting)
 		{
 			if(unit.movementHeat() < 10){
@@ -160,6 +179,10 @@ public class Worker extends MobileUnit {
 		}
 	}
 		
+	/**
+	 * getter method for the karbonite on the current square.
+	 * @return
+	 */
 	public KarboniteLocation getKarboniteLocation(){
 		for(KarboniteLocation location:Player.karboniteLocations){
 			if(currentLocation.toString().equals(location.getMapLocation().toString())){
@@ -170,6 +193,9 @@ public class Worker extends MobileUnit {
 		
 	}
 	
+	/**
+	 * Finds the best location for the worker to get karbonite
+	 */
 	public void setBestKarbonite() {
 		int index = 0;
 		int counter = 0;
@@ -183,7 +209,6 @@ public class Worker extends MobileUnit {
 		KarboniteLocation bestLocation = Player.karboniteLocations.get(index);
 		dest = bestLocation.mapLocation;
 		isHarvesting = true;
-		//System.out.println("Setting Best Karbonite Location");
 
 	}
 }	

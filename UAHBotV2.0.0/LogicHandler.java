@@ -2,16 +2,27 @@ import bc.*;
 import java.util.*;
 import java.lang.Math;
 
+
+/**
+ * This is a class that handles all overall logical schemes, such as research,
+ * and escaping to mars
+ *
+ */
 class LogicHandler {
 
 	static boolean escaping;					//Are we trying to escape earth to mars?
 	static ArrayList<UAHUnit> rockets = new ArrayList<UAHUnit>();	//List of all rockets so this info is publicly available
 	static int factoryGoal = 10;					//Total numbers of factories we are willing to build
-	static ArrayList<KarboniteLocation> usedDeposit = new ArrayList<KarboniteLocation>();
+	static ArrayList<KarboniteLocation> usedDeposit = new ArrayList<KarboniteLocation>();	//Array of Karbonite Locations so that we know where karbonite is
 	static int marsLanding = 0;
 	static int combatGoal;
 	static int lastTurn = 100;
 	
+	/**
+	 * This is a method that runs at the beginning of the first turn. It
+	 * does all initial research that must be done in order to survive.
+	 * @param gc
+	 */
 	public static void initialize(GameController gc) {		
 		//initialize Pathing
 		Path.initializePathing(gc);
@@ -33,10 +44,18 @@ class LogicHandler {
 		gc.queueResearch(UnitType.Mage);
 		gc.queueResearch(UnitType.Rocket);
 		
+		//sets the goal of how many units we should produce before sending them all to attack the enemy.
 		combatGoal = (int)Math.sqrt((double)Path.earthMapHeight * Path.earthMapWidth);
 		
 	}
 	
+	/**
+	 * This is processed every turn and determines whether conditions have
+	 * changed such that there needs to be a strategic change. Ex: We now
+	 * have a lot of units built up so they should go attack the enemy.
+	 * 
+	 * @param gc
+	 */
 	public static void process(GameController gc) {
 		//initialize count of all units
 		Utilities.countUnits(gc.myUnits());
@@ -49,8 +68,10 @@ class LogicHandler {
 				getRockets(gc);
 			}
 			
+			//counts the number of units we have capable of attacking
 			int combatUnits = Player.numKnights + Player.numRangers + Player.numMages;
 			
+			//determines if we should send a large number of bots to attack the enemy.
 			if(gc.round() - lastTurn >= 100 && combatUnits >= combatGoal){
 				for(UAHUnit unit:Player.UAHUnits){
 					UnitType type = unit.getUnit().unitType();
@@ -65,43 +86,11 @@ class LogicHandler {
 			calculateKarboniteGoals(gc);
 			calculateRocketGoal(gc, (int)gc.myUnits().size());
 		} else {
+			//calculate the turn that we land on mars
 			if(gc.round() == 750){
 				marsLanding = (int)gc.currentDurationOfFlight() + 750;
 			}
 			
-			/*if (gc.round() == marsLanding + 5) {
-				Player.UAHUnits.clear();
-				VecUnit units = gc.myUnits();
-				for (long i = 0; i < units.size(); i++) {
-					Unit unit = units.get(i);
-					switch (unit.unitType()) {	//Go through all unit types and create a new object
-						case Worker:		//of the type of unit we plan to unload
-							Worker newWorker = new Worker(unit, gc);	
-							Player.newUnits.add(newWorker);
-							break;
-						case Knight:
-							Knight newKnight = new Knight(unit, gc);
-							Player.newUnits.add(newKnight);
-							break;
-						case Ranger:
-							Ranger newRanger = new Ranger(unit, gc);
-							Player.newUnits.add(newRanger);
-							break;
-						case Mage:
-							Mage newMage = new Mage(unit, gc);
-							Player.newUnits.add(newMage);
-							break;
-						case Healer:
-							Healer newHealer = new Healer(unit, gc);
-							Player.newUnits.add(newHealer);
-							break;
-						case Rocket:
-							Rocket newRocket = new Rocket(unit, gc);
-							Player.newUnits.add(newRocket);
-							break;
-					}
-				}
-			}*/
 		}
 		
 		if(gc.round() % 50 == 0){
@@ -109,6 +98,12 @@ class LogicHandler {
 		}
 	}
 	
+	/**
+	 * Changes all important strategy conditions to those to escape from
+	 * earth and go to mars
+	 * 
+	 * @param gc
+	 */
 	public static void startEscaping(GameController gc) {
 		//set escaping to true
 		escaping = true;
@@ -117,7 +112,11 @@ class LogicHandler {
 		getRockets(gc);
 	}
 
-
+	/**
+	 * Finds all rockets and puts them in the rockets array.
+	 * 
+	 * @param gc
+	 */
 	public static void getRockets(GameController gc) {
 		//clears the rocket array
 		rockets.clear();						
@@ -135,7 +134,11 @@ class LogicHandler {
 		}
 	}
 	
-
+	/**
+	 * Calculates how much Karbonite we need to acheive our goals
+	 * 
+	 * @param gc
+	 */
 	public static void calculateKarboniteGoals(GameController gc) {
 		if (gc.round() < Player.stage) {
 			Player.highKarboniteGoal = 50;
@@ -147,11 +150,24 @@ class LogicHandler {
 		}
 	}
 	
+	/**
+	 * Calculates the number of rockets we need to successfully escape to mars.
+	 * 
+	 * @param gc
+	 * @param numUnits
+	 */
 	public static void calculateRocketGoal(GameController gc, int numUnits) {
 		getRockets(gc);
 		Player.rocketGoal = (int) Math.ceil((double)numUnits/8) - rockets.size();
 
 	}
+	
+	/**
+	 * Finds all of the karbonite locations throughout the map
+	 * and adds them to an arraylist
+	 * 
+	 * @param gc
+	 */
 	public static void initializeKarboniteLocations(GameController gc) {
 		if(gc.planet() == Planet.Earth){
 			VecMapLocation allLocations = gc.allLocationsWithin(new MapLocation(Planet.Earth,0,0), 5001);
@@ -165,6 +181,12 @@ class LogicHandler {
 		}
 	}
 	
+	/**
+	 * Attempts to check all the karbonite locations to determine
+	 * if they still have karbonite.
+	 * 
+	 * @param gc
+	 */
 	public static void checkKarbonite(GameController gc){
 		for(KarboniteLocation location:Player.karboniteLocations){
 			try{

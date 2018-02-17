@@ -1,12 +1,9 @@
 import bc.*;
 
 /**
- * Please note that this class is very old and
- * is currently being updated with numerous upgrades.
- * These include an A* Algorithm that will be the 
- * main pathing method.
-**/
-
+ * Class containing pathing for our bot
+ *
+ */
 class Path {
 	static PlanetMap earth;
 	static PlanetMap mars;
@@ -17,6 +14,11 @@ class Path {
 	static int[][] map;
 	static boolean frenzy;
 	
+	/**
+	 * Method to initialize everything needed for pathing.
+	 * 
+	 * @param gc
+	 */
 	public static void initializePathing(GameController gc){
 		
 		//Initialize all the variables we may need for successful pathing
@@ -30,8 +32,16 @@ class Path {
 		Utilities.invertPositions(gc);
 	}
 	
-	//Fuzzy Path attempts to take the shortest path and can get around really
-	//simple obstacles. It is really low processing but will occasionally fail
+	/**
+	 * Pathing method that will more or less just try the shortest path
+	 * to the destination. The problem with this pathing method is that
+	 * it will in certain specific conditions just bounce around between
+	 * two locations
+	 * 
+	 * @param unit
+	 * @param dest
+	 * @param gc
+	 */
 	public static void fuzzyPath(Unit unit, MapLocation dest, GameController gc){
 		if(dest == null){
 			return;
@@ -47,17 +57,28 @@ class Path {
 		}
 	}
 	
-	//Method to take a direction and rotate it by a certain amount.
-	//Positive amounts rotate clockwise and negative rotate counter clockwise
+	/**
+	 * Method that returns a direction rotated by a certain amount
+	 * 
+	 * @param dir
+	 * @param amount
+	 * @param gc
+	 * @return
+	 */
 	public static Direction rotate(Direction dir, int amount, GameController gc){
 		int index = Utilities.getIndex(directions, dir);		//set the amount we want to rotate
 		return directions[(index+amount+8)%8];					//return that as a direction
 	}
 	
-	//Bug path is a much more accurate method of going to a destination
-	//but has the problem that it may not be the most intelligent. In most
-	//cases, however, this will be the best method due to a combination of
-	//its simplicity, and it's accuracy.
+	/**
+	 * An attempt at proper bug pathing, however I failed while writing
+	 * this so it ended up being an inefficient implementation of
+	 * fuzzyPath
+	 * 
+	 * @param unit
+	 * @param dest
+	 * @param gc
+	 */
 	public static void bugPath(Unit unit, MapLocation dest, GameController gc){
 		MapLocation start = unit.location().mapLocation();		//create starting location
 		Direction toward = start.directionTo(dest);				//set a direction towards the destination
@@ -77,8 +98,12 @@ class Path {
 		}
 	}
 	
-	//Method that will move a unit from its current point to the frenzy
-	//along the shortest path
+	/**
+	 * Moves a bot toward the frenzy destination along the shortest path.
+	 * 
+	 * @param unit
+	 * @param gc
+	 */
 	public static void frenzyPath(Unit unit, GameController gc){
 		//create variables needed for this path
 		MapLocation currentLocation = unit.location().mapLocation();
@@ -109,7 +134,12 @@ class Path {
 		}
 	}
 	
-	
+	/**
+	 * fills a map from a destination so that a frenzy can be created.
+	 * 
+	 * @param dest
+	 * @param gc
+	 */
 	public static void initializeFrenzyPath(MapLocation dest, GameController gc){
 		map = new int[earthMapHeight][earthMapWidth];	//create an empty map
 		recursiveFillMap(dest, 1, gc);					//recursively fill above map
@@ -117,10 +147,22 @@ class Path {
 		
 	}
 	
+	/**
+	 * Method to turn off frenzy. Could be used in a case where
+	 * the square is found to be empty
+	 */
 	public static void turnOffFrenzy(){
 		frenzy = false;
 	}
 	
+	/**
+	 * Method that fills the map for the frenzy. Basically just numbers each square with the
+	 * distance it is from a specific locationon the map. 
+	 * 
+	 * @param dest
+	 * @param i
+	 * @param gc
+	 */
 	static void recursiveFillMap(MapLocation dest, int i, GameController gc){
 		//set x any y variables
 		int destx = dest.getX();
@@ -140,8 +182,13 @@ class Path {
 		}
 	}
 	
-	//Method designed to be used to determine and run the best pathing algorithm
-	//Should be used in the case where you
+	/**
+	 * Method that will call the appropriate pathing method depending on current circumstances
+	 * 
+	 * @param unit
+	 * @param dest
+	 * @param gc
+	 */
 	static void determinePathing(Unit unit, MapLocation dest, GameController gc){
 		//UnitType type = unit.unitType();
 		if(dest == null || gc.planet() == Planet.Mars){
@@ -152,6 +199,14 @@ class Path {
 		}
 	}
 	
+	/**
+	 * Method to set the proper destination.
+	 * 
+	 * @param unit
+	 * @param mode
+	 * @param gc
+	 * @return
+	 */
 	static MapLocation setDest(Unit unit, boolean mode, GameController gc){
 		UnitType type = unit.unitType();
 		MapLocation dest;

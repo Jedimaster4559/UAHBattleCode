@@ -1,19 +1,30 @@
 import bc.*;
 
+/**
+ * Class that contains all the methods for the Rocket.
+ *
+ */
 class Rocket extends Structure {
 
 
 	private MapLocation currentLocation;
 	private boolean finished = false;
 
-	
+	/**
+	 * Constructor for the Rocket class
+	 * 
+	 * @param unit
+	 * @param gc
+	 */
 	public Rocket(Unit unit, GameController gc) {
 		super(unit, gc);
-		//System.out.println("creating new rocket:" + gc.round());
 	}
 	
+	/**
+	 * Runs a rockets entire turn.
+	 * 
+	 */
 	public void process() {
-		//if (gc.round() % 20 == 0) System.out.println("processing rocket");
 		//abort processing for the turn if we are in space
 		//update currentLocation otherwise
 		if (!unit.location().isOnMap() || finished) {
@@ -38,20 +49,16 @@ class Rocket extends Structure {
 		
 		//mars
 		} else {
-			//System.out.println("on mars");
 			if (unit.structureGarrison().size() > 0) {//if we are on Mars, attempt to unload
 				for (Direction direction : Path.directions) {					
 					unit = gc.unit(unitId);
-					//System.out.println("unload attempt:" + unit.structureGarrison().size());
 					//if we can unload a unit in this direction, do it
 					if (gc.canUnload(unit.id(), direction)) {	
 						gc.unload(unit.id(), direction);
-						//System.out.println("can unload");	
 						
 						//helpful unload variables
 						Unit unloadUnit = gc.senseUnitAtLocation(currentLocation.add(direction));			
 						UnitType unloadType = unloadUnit.unitType();
-						//System.out.println("unloading new " + unloadType);
 						switch (unloadType) {		//determine unit type and then add to the new
 							case Worker:			//units array list
 								Worker newWorker = new Worker(unloadUnit, gc);
@@ -90,21 +97,25 @@ class Rocket extends Structure {
 		}
 	}
 	
-
+	/**
+	 * Finds a spot where it is possible for a rocket to land on mars. Uses
+	 * random values to find this location.
+	 * 
+	 * @param unit
+	 * @param gc
+	 */
 	public void findLandableSpot(Unit unit, GameController gc) {
 		//variable for this process
 		MapLocation randomLocation;
 		int randx;
 		int randy;
 		
-		//System.out.println("launch attempt");
 		for (int i = 0; i < 100; i++) {	//for loop so we don't spend too much time per turn in this step
 			randx = Player.rand.nextInt((int)Path.mars.getWidth()-1);
 			randy = Player.rand.nextInt((int)Path.mars.getHeight()-1);		//set the random location
 			randomLocation = new MapLocation(Planet.Mars, randx,randy);
 			//if this is a safe location to launch to, then launch
 			if(gc.canLaunchRocket(unit.id(), randomLocation)){	
-				//System.out.println("launching");
 				gc.launchRocket(unit.id(), randomLocation);
 				break;
 			}

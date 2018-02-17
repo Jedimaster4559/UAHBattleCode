@@ -2,12 +2,22 @@ import bc.*;
 import java.util.*;
 import java.lang.Long;
 
+/**
+ * Class that contains usefull, multipurpose
+ * methods that can be used in many different
+ * cases.
+ *
+ */
 class Utilities {
 	
 	static Team enemyTeam;
 	static MapLocation[] enemyStartLocations;
 
-	//Method to count all units Should be run at the beginning of each turn.
+	/**
+	 * Method that will count all of our units.
+	 * 
+	 * @param units
+	 */
 	public static void countUnits(VecUnit units){
 		Player.numFactories = 0;
 		Player.numWorkers = 0;
@@ -44,23 +54,23 @@ class Utilities {
 		}
 	}
 	
-	//for mars, add rockets if they didn't exist in the
-	//UAHUnits array before
+	/**
+	 * Verifies our arraylist of units to determine if
+	 * it happens to be missing any units.
+	 * 
+	 * @param gc
+	 */
 	public static void verifyList(GameController gc){
 		if (gc.planet() == Planet.Earth) return;
 		
 		VecUnit units = gc.myUnits();
 		boolean found = false;
 		if (Player.UAHUnits.size() == units.size()) {
-			/*if (gc.planet() == Planet.Mars && gc.round() > 950) {
-				System.out.println("UAHUnits and units sizes matched, yay!");
-			}*/
 			return;
 		}
 		
 		if (gc.planet() == Planet.Mars && gc.round() > 800) {
-			//System.out.println("verifying list on mars");
-			System.out.println(units.size() + ":" + Player.UAHUnits.size());
+			
 		}
 		
 		long foundUnit = 0;
@@ -80,9 +90,6 @@ class Utilities {
 			}
 			if(!found && gc.planet() == Planet.Mars && !(unit.location().isInGarrison()))
 			{
-				
-				//System.out.println("found " + unit.unitType() + unit.location());
-				
 				switch (unit.unitType()) {	//Go through all unit types and create a new object
 					case Worker:		//of the type of unit we plan to unload
 						Worker newWorker = new Worker(unit, gc);	
@@ -114,6 +121,12 @@ class Utilities {
 		
 	}
   
+	/**
+	 * Moves the bot in a random direction
+	 * 
+	 * @param unit
+	 * @param gc
+	 */
 	public static void moveRandomDirection(Unit unit, GameController gc){
 		try{
 			Direction randomDirection = Path.directions[Player.rand.nextInt(Path.directions.length)];
@@ -128,7 +141,12 @@ class Utilities {
 		}		
 	}
 	
-	//Method to attack one enemy within range if possible
+	/**
+	 * If there is an enemy within attack range, then attacks that bot.
+	 * 
+	 * @param unit
+	 * @param gc
+	 */
 	public static void senseAndAttackInRange(Unit unit, GameController gc){
 		try{
 			VecUnit units = gc.senseNearbyUnitsByTeam(
@@ -150,9 +168,13 @@ class Utilities {
 		
 	}
 	
-	//Method to move toward the closest enemy
+	/**
+	 * Moves a bot to the nearest enemy that it can see.
+	 * 
+	 * @param unit
+	 * @param gc
+	 */
 	public static void moveToNearestEnemy(Unit unit, GameController gc) {
-		//System.out.println(unit.movementHeat());
 		if (!gc.isMoveReady(unit.id())) return;
 
 		try{
@@ -180,7 +202,12 @@ class Utilities {
 				
 	}
 	
-	//Method to move toward the closest rocket
+	/**
+	 * Moves a bot to the closest rocket.
+	 * 
+	 * @param unit
+	 * @param gc
+	 */
 	public static void moveTowardNearestRocket(Unit unit, GameController gc){
 		if (!gc.isMoveReady(unit.id())) return;
 		try {
@@ -215,7 +242,14 @@ class Utilities {
 		
 	}
 	
-	//Returns int id of nearby blueprint
+	/**
+	 * returns the nearest blueprint to a unit so that we can
+	 * send more of our workers to help them build.
+	 * 
+	 * @param unit
+	 * @param gc
+	 * @return
+	 */
 	public static int getNearbyBlueprint(Unit unit, GameController gc){
 		VecUnit units = gc.senseNearbyUnits(unit.location().mapLocation(), 4);
 		for(long i = 0; i < units.size(); i++){
@@ -226,7 +260,13 @@ class Utilities {
 		return Integer.MAX_VALUE;
 	}
 	
-	//Method that returns enemy team
+	/**
+	 * Method to return the color of the enemy team. Allows us to
+	 * know who is our friend and who is our enemy since there was
+	 * no easy way to do that this year.
+	 * 
+	 * @param gc
+	 */
 	public static void findEnemyTeam(GameController gc){
 		if(gc.team().equals(Team.Blue)){
 			enemyTeam = Team.Red;
@@ -235,7 +275,13 @@ class Utilities {
 		}
 	}
 	
-	//Method to return the index number of an object in an array
+	/**
+	 * A simple binary search algorithm in a very general form.
+	 * 
+	 * @param obj
+	 * @param target
+	 * @return
+	 */
 	public static int getIndex(Object[] obj, Object target){
 		int counter = 0;
 		for(Object current:obj){
@@ -247,6 +293,12 @@ class Utilities {
 		return -1; //Not quite sure what the best thing would be to put here so we don't throw an error
 	}
 	
+	/**
+	 * sets the enemy starting location to the opposite
+	 * of our current locations
+	 * 
+	 * @param gc
+	 */
 	public static void invertPositions(GameController gc){
 		if (gc.planet() != Planet.Earth) return;
         VecUnit allUnits = Path.earth.getInitial_units();
@@ -261,6 +313,12 @@ class Utilities {
         }
     }
     
+	/**
+	 * Moves a bot closer to the enemy starting location
+	 * 
+	 * @param unit
+	 * @param gc
+	 */
     public static void moveTowardEnemyStart(Unit unit, GameController gc){
         Path.bugPath(unit, enemyStartLocations[0], gc);
     }

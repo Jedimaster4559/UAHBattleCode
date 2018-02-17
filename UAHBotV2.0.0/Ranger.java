@@ -1,12 +1,26 @@
 import bc.*;
 
-
+/**
+ * Class that contains all methods pertaining specifically
+ * to the Ranger.
+ * 
+ */
 class Ranger extends MobileUnit{
 
+	/**
+	 * Constructor for the ranger class
+	 * 
+	 * @param unit
+	 * @param gc
+	 */
 	public Ranger(Unit unit, GameController gc) {
 		super(unit, gc);
 	}
 	
+	/**
+	 * Processing Method for the ranger. Runs an
+	 * entire ranger turn.
+	 */
 	public void process() {
 		//if bot is not on map, do not process
 		if (!unit.location().isOnMap()) {

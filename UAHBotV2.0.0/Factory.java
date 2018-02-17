@@ -1,5 +1,10 @@
 import bc.*;
 
+/**
+ * Class containing all methods pertaining to factories
+ * @author nbsol
+ *
+ */
 class Factory extends Structure {
 	
 	//By default when a factory is created it is still under construction.
@@ -10,13 +15,20 @@ class Factory extends Structure {
 	private final int rangerRatio = 2;	// between the number of each in play.
 	private final int mageRatio = 1;
 	
-	
+	/**
+	 * Constructor for the factory class. This adds whether or
+	 * not the factory is entirely built.
+	 * @param unit
+	 * @param gc
+	 */
 	public Factory(Unit unit, GameController gc) {
 		super(unit, gc);
 		built = false;
 	}
 
-	
+	/**
+	 * Processes a factories entire turn.
+	 */
 	public void process() {
 		
 		//check to determine if the factory has been built
@@ -77,6 +89,10 @@ class Factory extends Structure {
 
 	}
 	
+	/**
+	 * decides what type of unit should be built by the factory.
+	 * @return
+	 */
 	public UnitType decideUnitType() {
 
 		int knightMultiplier = Player.numKnights / knightRatio; // multipliers help determine
