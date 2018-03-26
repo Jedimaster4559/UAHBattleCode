@@ -22,7 +22,7 @@ Project Language: Java
 
 
 ## <a name="strategy"/>Strategy Guide
-
+To stary, we had 1-3 wrokers. With each of these workers, we would attempt to build a factory to create units. After this the workers would spend most of their time attempting to mine Karbonite. Our new factories would begin to try to produce as many combat units as possible. These combat units moved more or less randomly until they happened to see an enemy or they reached a point where they would decide to as a group swarm the enemy start location. Eventually, we had to leave for mars to avoid getting wiped out during the flood on earth. To do this, we eventually task our workers with building one rocket for every 5 combat units. Around turn 700, all of the combat units are told to get on the rockets and fly to mars. Once one Mars, combat units will move randomly until they see an enemy, in which case they will move to attack that enemy.
 
 ## <a name="members"/>Project Members
  - Nathan Solomon
