@@ -45,7 +45,7 @@ We faced numerous challenges while working on this project that we were able to 
   - In general, the longer our bot was able to stay alive, the better we did. We didn't handle early game well but if we could survive long enough to start building an army, we typically could win.
 
 ## <a name="samples"/>Sample Games
-To try a couple sample games, you will need to download the viewer. You can download this by visiting the [Official Scaffold](https://github.com/battlecode/bc18-scaffold). I am not sure how long this will be supported so if there are anny problems, please raise an issue on this repository.<br>
+To try a couple sample games, you will need to download the viewer. You can download this by visiting the [Official Scaffold](https://github.com/battlecode/bc18-scaffold). Download and run `install_viewer.py`. Once installed, you should be able to play the sample games as long as they are downloaded on your computer! I am not sure how long this will be supported so if there are any problems, please raise an issue on this repository.<br>
 <br>
 Sample 1. <br>
 <br>
