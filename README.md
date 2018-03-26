@@ -8,6 +8,7 @@ Project Language: Java
  - [Strategy Guide](#strategy)
  - [Design Considerations](#design)
  - [Challenges](#challenges)
+ - [Things That Went Well](#good)
  - [Project Members](#members)
  - [Other Successful Team's Bots](#otherbots)
 
@@ -34,6 +35,13 @@ We faced numerous challenges while working on this project that we were able to 
  - Planning: We could have done much better in this regard. While we did put some thought into what we wanted our bot to do, we didn't draft out how we wanted to implement this. This resulted in numerous problems down the road when there were several different design concepts throughout the player. This led to us cleaning everything up to the above [design considerations](#design). We may have been able to write a much more complete player if we had done a better job of this in the beginning.
  - [Pathing](https://github.com/UAH-CS-Club/UAHBattleCode2018/blob/master/UAHBotV2.0.0/Path.java): We never really were able to implement a complete and solid pathing method. We did have couple basic pathing methods that were usable, but nothing that was optimal and would calculate the most efficient or a highly efficient path. We were very prone to getting trapped behind corners.
  - Version Control: Most of us were unfamiliar with github when we started. This caused us a number of issues with managing the development process as we often were inefficient in the ways we handled the development process.
+ - Technology issues: We had a number of issues getting all of the software provided by the developers to work. While they are making significant changes next year due to the numerous problems many teams had, This was a challenge we had to work past.
+ 
+ ## <a name ="good"/>Things That Went Well
+  - Error Handling: We never saw an official match where our player timed out or crashed.
+  - Despite not doing to well in tournaments, we were able to win about 60% of our automated scrimmages.
+  - Start Location Rush strategy (when actually used) proved to be extremely effective
+  - In general, the longer our bot was able to stay alive, the better we did. We didn't handle early game well but if we could survive long enough to start building an army, we typically could win.
 
 ## <a name="members"/>Project Members
  - Nathan Solomon
