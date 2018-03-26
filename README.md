@@ -7,7 +7,7 @@ Project Language: Java
  - [Useful Resources](#resources)
  - [Strategy Guide](#strategy)
  - [Design Considerations](#design)
- - [Challenges] (#challenges)
+ - [Challenges](#challenges)
  - [Project Members](#members)
  - [Other Successful Team's Bots](#otherbots)
 
