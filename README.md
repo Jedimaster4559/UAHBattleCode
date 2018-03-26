@@ -9,6 +9,7 @@ Project Language: Java
  - [Design Considerations](#design)
  - [Challenges](#challenges)
  - [Things That Went Well](#good)
+ - [Sample Games](#samples)
  - [Project Members](#members)
  - [Other Successful Team's Bots](#otherbots)
 
@@ -37,11 +38,24 @@ We faced numerous challenges while working on this project that we were able to 
  - Version Control: Most of us were unfamiliar with github when we started. This caused us a number of issues with managing the development process as we often were inefficient in the ways we handled the development process.
  - Technology issues: We had a number of issues getting all of the software provided by the developers to work. While they are making significant changes next year due to the numerous problems many teams had, This was a challenge we had to work past.
  
- ## <a name ="good"/>Things That Went Well
+## <a name="good"/>Things That Went Well
   - Error Handling: We never saw an official match where our player timed out or crashed.
   - Despite not doing to well in tournaments, we were able to win about 60% of our automated scrimmages.
   - Start Location Rush strategy (when actually used) proved to be extremely effective
   - In general, the longer our bot was able to stay alive, the better we did. We didn't handle early game well but if we could survive long enough to start building an army, we typically could win.
+
+## <a name="samples"/>Sample Games
+To try a couple sample games, you will need to download the viewer. You can download this by visiting the [Official Scaffold](https://github.com/battlecode/bc18-scaffold). I am not sure how long this will be supported so if there are anny problems, please raise an issue on this repository.<br>
+<br>
+Sample 1. <br>
+<br>
+Sample 2. <br>
+<br>
+Sample 3. <br>
+<br>
+Sample 4. <br>
+<br>
+Sample 5. <br>
 
 ## <a name="members"/>Project Members
  - Nathan Solomon
