@@ -1,4 +1,4 @@
-# UAHBattleCode <hr>
+# UAHBattleCode
 Welcome to the GitHub Repository for UAH BattleCode 2018
 
 Project Language: Java
