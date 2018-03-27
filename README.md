@@ -1,7 +1,7 @@
 # UAHBattleCode
 Welcome to the GitHub Repository for UAH BattleCode 2018
 
-Project Language: Java
+Project Language: *Java*
 
 ## Table of Contents
  - [Useful Resources](#resources)
@@ -47,15 +47,15 @@ We faced numerous challenges while working on this project that we were able to 
 ## <a name="samples"/>Sample Games
 To try a couple sample games, you will need to download the viewer. You can download this by visiting the [Official Scaffold](https://github.com/battlecode/bc18-scaffold). Download and run `install_viewer.py`. Once installed, you should be able to play the sample games as long as they are downloaded on your computer! I am not sure how long this will be supported so if there are any problems, please raise an issue on this repository.Note: These are selected games and do not represent an even distribution of our matches. What you see here are one of each of the different ways our games tended to go.<br>
 <br>
-Sample 1: In this game, we are the blue team. We get off to a good start on earth but quickly end up dying due to a combination of pathing and target finding issues. We do manage to get to space in this instance and manage to land an empty rocket on Mars. While the enemy managed to do the same thing here, we won the tie breaker because for some reason, their rocket died (either it threw an error they hadn't handled or they made it self-destruct).<br>
+*Sample 1*: In this game, we are the blue team. We get off to a good start on earth but quickly end up dying due to a combination of pathing and target finding issues. We do manage to get to space in this instance and manage to land an empty rocket on Mars. While the enemy managed to do the same thing here, we won the tie breaker because for some reason, their rocket died (either it threw an error they hadn't handled or they made it self-destruct).<br>
 <br>
-Sample 2: In this game, we are the red team.This is probably the best example of our bot doing everything it was supposed to do. While we wipe out the forces on earth really early on (mostly due to luck in moving random directions) but our bot continues to use it's swarming techniques and floods their starting point. If they had still been alive on earth, that would have probably completely wiped them out. We continue doing this until it is time to build rockets and escape to Mars. When we get to Mars, it is just a matter of time until we are able to find and wipe out the enemy forces.<br>
+*Sample 2*: In this game, we are the red team. This is probably the best example of our bot doing everything it was supposed to do. While we wipe out the forces on earth really early on (mostly due to luck in moving random directions) but our bot continues to use it's swarming techniques and floods their starting point. If they had still been alive on earth, that would have probably completely wiped them out. We continue doing this until it is time to build rockets and escape to Mars. When we get to Mars, it is just a matter of time until we are able to find and wipe out the enemy forces.<br>
 <br>
-Sample 3: <br>
+*Sample 3*: In this game, we are the red team. We get off to a good start but the other team made the choice to take advantage of the worker's replication powers. This allows them to get a pretty solid jump start on production since this is a resource rich map. Since it takes us some time to build our strength, they are able to rush us with a bunch of knights pretty early in the game and wipe us out.<br>
 <br>
-Sample 4: <br>
+*Sample 4*: In this game, we are the red team. This map always gave us a lot of trouble due to pathing. You can see on earth, our team has a lot of trouble handling the werid setup of the map. The other team seems to have made the decision that if they can manage to make it to mars, they might win if the other team never leaves. This eventually fails for them because we do eventually leave for Mars and win by a significant margain in the tie breaker.<br>
 <br>
-Sample 5: <br>
+*Sample 5*: In this game, we are the blue team. This map ends up giving both teams some trouble with our pathing. Looking at each teams army, it looks like it will be an interesting match. All of the sudden at round 491, we win. This could mean several things, but probably means they either caused an error to occur, or they used too much of their given processing time.<br>
 
 ## <a name="members"/>Project Members
  - Nathan Solomon
